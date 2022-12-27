@@ -1,0 +1,75 @@
+.login-container, form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
+
+.logo{
+  height: 400px;
+  width: 500px;
+  margin: 15vh auto 5vh auto;
+}
+
+.input-icons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-icon{
+    width: 20px;
+    height: 20px;
+    z-index: 1;
+    position: relative;
+    left: 45px;
+}
+
+input {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    box-sizing: border-box;
+    margin: 0.7rem auto;
+    padding-left: 15%;
+    width: 425px;
+    height: 60px;
+    background: #FFFFFF;
+    border: 0.3px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 4px 15px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+
+    &::placeholder{
+        color: rgba(0, 0, 0, 0.5);
+    }
+}
+
+form div:nth-last-child(2){
+    margin-bottom: 50px;
+}
+
+.btnSubmit{
+    height: 48px;
+    width: 199px;
+    border-radius: 12px;
+    border: 0.5px solid rgba(0, 0, 0, 0.3);
+    background-color: rgba(227, 72, 62, 1);
+    color: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+    text-align: center;
+    text-transform: uppercase;
+
+    &:hover{
+        transition: 0.4s;
+        cursor: pointer;
+        background: #EC847D;
+    }
+
+}
