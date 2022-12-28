@@ -6,6 +6,7 @@ import { RiLockPasswordFill } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom'
 
 import Input from "../../components/inputs/Input"
+import CustomButton from "../../components/buttons/CustomButton"
 
 const Login = () => {
     const [user, setUser] = useState('');
@@ -39,7 +40,7 @@ const Login = () => {
     return (
         <div className="login-container">
                 <img className="logo" src={ logo } alt="Imagem Logo" />
-                <form onSubmit={ handleSubmit }>
+                <form className="formLogin" onSubmit={ handleSubmit }>
                     <div className="input-icons">
                         <FaUser className="user-icon"/>
 
@@ -62,13 +63,8 @@ const Login = () => {
                         />
                     </div>
 
-                    <button
-                    className="btnSubmit"
-                    type="submit"
-                    >
-                        Login
-                    </button>
-                </form>
+                    <CustomButton value="Login" type="submit"/>
+                </form> 
             </div>
     )
 }
