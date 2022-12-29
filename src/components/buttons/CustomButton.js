@@ -1,7 +1,7 @@
 import { React } from 'react'
 import './CustomButton.scss'
 
-const RedButton = props => {
+const CustomButton = props => {
     return (
         <>
             <button
@@ -15,4 +15,4 @@ const RedButton = props => {
     )
 }
 
-export default RedButton
+export default CustomButton

@@ -9,7 +9,7 @@ import Input from "../../components/inputs/Input"
 import CustomButton from "../../components/buttons/CustomButton"
 
 const Login = () => {
-    const [user, setUser] = useState('');
+    const [user, setUser] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
     const pathDashboard = '/dashboard'
