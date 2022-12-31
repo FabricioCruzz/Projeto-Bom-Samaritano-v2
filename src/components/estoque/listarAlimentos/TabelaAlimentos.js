@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import './TabelaAlimentos.scss'
 import Table from 'react-bootstrap/Table'
 
@@ -14,6 +14,7 @@ const TabelaAlimentos = () => {
     // TODO: Trazer dados do backend para popular tabela
     const renderRow = content => {
         return (
+            // TODO: Quando tiver um id para cada item, colocar a key no <tr>
             <tr>
                 <td>1</td>
                 <td>{ content.product}</td>
@@ -24,8 +25,8 @@ const TabelaAlimentos = () => {
     }
     
     return (
-        <>
-         <h1>Listar Alimentos</h1>
+        <div itemID="table-foods">
+            <h1>Listar Alimentos</h1>
                 <Table striped bordered hover responsive>
                     <thead>
                         <tr>
@@ -36,10 +37,10 @@ const TabelaAlimentos = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        { (alimentos == null || alimentos.length === 0) ? <p>Nenhum item!</p> : alimentos.map(renderRow) }
+                        { (alimentos == null || alimentos.length === 0) ? <tr></tr> : alimentos.map(renderRow) }
                     </tbody>
                 </Table>
-        </>
+        </div>
     )
 }
 
