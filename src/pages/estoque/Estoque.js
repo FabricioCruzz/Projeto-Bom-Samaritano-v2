@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './Estoque.scss'
 import Menu from '../../components/menu/Menu'
 import Form from 'react-bootstrap/Form'
-import Table from 'react-bootstrap/Table'
+import TabelaAlimentos from '../../components/estoque/listarAlimentos/TabelaAlimentos'
 
 import CustomButton from '../../components/buttons/CustomButton'
 
@@ -36,7 +36,7 @@ const Estoque = () => {
     
     const handleSubmit = e => {
         itens.push(values)
-        localStorage.setItem(key, JSON.stringify(itens))       
+        localStorage.setItem(key, JSON.stringify(itens))    
         // TODO: Enviar dados para o backend
         console.log(values)
         e.preventDefault()
@@ -83,30 +83,8 @@ const Estoque = () => {
                 </Form>
             </div>
 
-            {/* TODO: SEPARAR EM COMPONENTE O CÓDIGO ABAIXO */}
-            <div>
-                <h1>Listar Alimentos</h1>
-                <Table striped bordered hover responsive>
-                    <thead>
-                        <tr>
-                        <th>ID</th>
-                        <th>Descrição</th>
-                        <th>Tipo</th>
-                        <th>Quantidade</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        <td>1</td>
-                        <td>Descrição do Produto</td>
-                        <td>Tipo - kg, L e etc. </td>
-                        <td>10</td>
-                        </tr>
+            <TabelaAlimentos/>
 
-                    </tbody>
-                </Table>
-
-            </div>
         </>
     )
 }
