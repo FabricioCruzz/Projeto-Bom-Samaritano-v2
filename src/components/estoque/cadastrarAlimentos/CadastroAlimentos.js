@@ -3,9 +3,12 @@ import './CadastroAlimentos.scss'
 import Form from 'react-bootstrap/Form'
 import CustomButton from '../../buttons/CustomButton'
 
+
 const initialValues = {
+    id: (new Date().getTime()).toString(10),
     product: '',
-    select: ''
+    type: '',
+    amount: 0
 }
 
 const datalistValues = [
@@ -22,7 +25,6 @@ let key = 'itens'
 let itens = []
 
 const CadastroAlimentos = () => {
-    
     const [values, setValues] = useState(initialValues)
     
     
@@ -32,11 +34,20 @@ const CadastroAlimentos = () => {
     }
     
     const handleSubmit = e => {
-        itens.push(values)
-        localStorage.setItem(key, JSON.stringify(itens))    
+        e.preventDefault()
+
+        let item = {
+            id: (new Date().getTime()).toString(10),
+            product: values.product,
+            type: values.type,
+            amount: values.amount
+        }
+        itens.push(item)
+        // itens.push(values)
+        localStorage.setItem(key, JSON.stringify(itens))  
+        setValues({ ...values, initialValues }) 
         // TODO: Enviar dados para o backend
         console.log(values)
-        e.preventDefault()
     }
 
     return (
@@ -52,9 +63,9 @@ const CadastroAlimentos = () => {
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formTypeOptions">
-                        <Form.Select aria-label="Selecionar tipo" name="select" onChange={ handleChange }>
+                        <Form.Select aria-label="Selecionar tipo" name="type" onChange={ handleChange }>
                             {/* TODO: Colocar validação para o usuário não enviar um valor vazio (Tipo do Produto:) */}
-                            <option value={ datalistValues[0] } disabled>Tipo do Produto:</option>
+                            <option value={ datalistValues[0] }>Tipo do Produto:</option>
                             <option value={ datalistValues[1] }>KG</option>
                             <option value={ datalistValues[2] }>UN</option>
                             <option value={ datalistValues[3] }>PCT</option>
