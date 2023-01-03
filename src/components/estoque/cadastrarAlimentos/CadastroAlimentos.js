@@ -22,7 +22,9 @@ const datalistValues = [
 ]
 
 let key = 'itens'
-let itens = []
+let storage = localStorage.getItem(key)
+let itens = storage ? JSON.parse(storage) : []
+
 
 const CadastroAlimentos = () => {
     const [values, setValues] = useState(initialValues)
@@ -44,8 +46,8 @@ const CadastroAlimentos = () => {
         }
         itens.push(item)
         // itens.push(values)
-        localStorage.setItem(key, JSON.stringify(itens))  
-        setValues({ ...values, initialValues }) 
+        localStorage.setItem(key, JSON.stringify(itens))
+       
         // TODO: Enviar dados para o backend
         console.log(values)
     }
@@ -59,11 +61,20 @@ const CadastroAlimentos = () => {
                 <Form.Group>
                     <Form.Group className="mb-3" controlId="formDescription">
                         <Form.Label>Descrição</Form.Label>
-                        <Form.Control name="product" onChange={ handleChange } type="text" placeholder="Nome do produto" />
+                        <Form.Control
+                        name="product"
+                        onChange={ handleChange }
+                        type="text"
+                        placeholder="Nome do produto..."
+                        />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formTypeOptions">
-                        <Form.Select aria-label="Selecionar tipo" name="type" onChange={ handleChange }>
+                        <Form.Select
+                        aria-label="Selecionar tipo"
+                        name="type"
+                        onChange={ handleChange }
+                        >
                             {/* TODO: Colocar validação para o usuário não enviar um valor vazio (Tipo do Produto:) */}
                             <option value={ datalistValues[0] }>Tipo do Produto:</option>
                             <option value={ datalistValues[1] }>KG</option>
@@ -73,6 +84,16 @@ const CadastroAlimentos = () => {
                             <option value={ datalistValues[5] }>CX12</option>
                             <option value={ datalistValues[6] }>CX30</option>
                         </Form.Select>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formAmount">
+                        <Form.Label>Quantidade</Form.Label>
+                        <Form.Control
+                        name="amount"
+                        onChange={ handleChange }
+                        type="number"
+                        placeholder="Quantidade do produto..."
+                        />
                     </Form.Group>
             
                 </Form.Group>
