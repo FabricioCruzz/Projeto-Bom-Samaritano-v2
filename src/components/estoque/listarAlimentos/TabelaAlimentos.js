@@ -1,27 +1,63 @@
 import React, { useState } from 'react'
 import './TabelaAlimentos.scss'
+import service from '../../../services/storage.service'
+import Form from 'react-bootstrap/Form'
 import Table from 'react-bootstrap/Table'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+
+import ModalFoods from '../../Modal/Modal'
 import CadastroAlimentos from '../cadastrarAlimentos/CadastroAlimentos'
 
+const initialValues = {
+    id: undefined,
+    product: '',
+    type: '',
+    amount: 0
+}
+
+const datalistValues = [
+    '',
+    'KG',
+    'UN',
+    'PCT',
+    'L',
+    'CX12',
+    'CX30'
+]
+
 const key = 'itens'
-let alimentos = []
+let storage = service.loadData(key)
+let itens = storage ? JSON.parse(storage) : []
 
 
 // TODO:   COLOCAR BOTÕES PARA EDITAR PRODUTOS E PARA ADICIONAR QUANTIDADES ====================================================
 
-const TabelaAlimentos = () => {
+const TabelaAlimentos = () => {    
 
-    const [show, setShow] = useState(false);
+    const [showModal, setShowModal] = useState(false)
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [values, setValues] = useState(initialValues)
 
+    let itemForModal = {}
 
-    
-    let dados = localStorage.getItem(key)
-    alimentos = JSON.parse(dados)
+    const handleChange = e => {
+        const { name, value } = e.target
+        setValues({ ...values, [name]: value })
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault()
+
+        let item = {
+            id: (new Date().getTime()).toString(10),
+            product: values.product,
+            type: values.type,
+            amount: values.amount
+        }
+        itens.push(item)
+        service.saveData(key, itens)
+    }
 
     // TODO: Trazer dados do backend para popular tabela
     const renderRow = content => {
@@ -35,7 +71,11 @@ const TabelaAlimentos = () => {
                 <td>{ content.amount }</td>
                 <td>
                     <button className="btn btn-primary" name='add-btn' onClick={ () =>  addQtd(10) }>ADD QTD</button>
-                    <button className="btn btn-primary" name='edit-btn' onClick={ () =>  onUpdate(content) }>EDITAR</button>
+                    <button className="btn btn-primary" name='edit-btn' onClick={ () => { 
+                        setShowModal(true);
+                        setValues(content);
+                    }
+                        }>EDITAR</button>
                     <button className="btn btn-primary" name='remove-btn' onClick={ () =>  onDelete(content) }>APAGAR</button>
                 </td>
             </tr>
@@ -46,18 +86,12 @@ const TabelaAlimentos = () => {
         // Adicionar quantidade ao item já existente
     }
 
-    const onUpdate = rowContent => {
-        // Atualizar produto e mandar atualizado o banco de dados
-        handleShow()
-    }
-
     const onDelete = rowContent => {
-       const index = alimentos.findIndex(element => element.product === rowContent)
-       alimentos.splice(index, 1)
-       localStorage.setItem(key, JSON.stringify(alimentos))
+       const index = itens.findIndex(element => element.product === rowContent)
+       itens.splice(index, 1)
+       service.saveData(key, itens)
        document.location.reload(true)
     }
-    
     return (
         <div itemID="table-foods">
             <h1>Listar Alimentos</h1>
@@ -72,30 +106,77 @@ const TabelaAlimentos = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        { (alimentos == null || alimentos.length === 0) ? <tr></tr> : alimentos.map(renderRow) }
+                        { (itens == null || itens.length === 0) ? <tr></tr> : itens.map(renderRow) }
                     </tbody>
                 </Table>
+        { showModal ? <ModalFoods item={ values } onClose={ () => setShowModal(false) }/> : null }
+       
 
+{/* 
                 <Modal
-                    show={show}
-                    onHide={handleClose}
-                    backdrop="static"
-                    keyboard={false}
-                >
-                    <Modal.Header closeButton>
-                    <Modal.Title>Editar Produto</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        {/* Colocar os inputs com os valores da tabela. Trazer eles usando o id da linha da tabela.
-                        Reusar o componente de Cadastro de Alimentos??? */}
-                    </Modal.Body>
-                    <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Fechar
-                    </Button>
-                    <Button variant="primary">Atualizar</Button>
-                    </Modal.Footer>
-                </Modal>
+                show={showModal}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                <Modal.Title>Editar Produto</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+
+                    <Form onSubmit={ handleSubmit }>
+                        <Form.Group>
+                            <Form.Group className="mb-3" controlId="formEditDescription">
+                                <Form.Label>Descrição</Form.Label>
+                                <Form.Control
+                                name="product"
+                                onChange={ handleChange }
+                                type="text"
+                                placeholder="Nome do produto..."
+                                value=""
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formTypeOptions">
+                                <Form.Select
+                                aria-label="Selecionar tipo"
+                                name="type"
+                                onChange={ handleChange }
+                                >
+                                    <option value={ datalistValues[0] }>Tipo do Produto:</option>
+                                    <option value={ datalistValues[1] }>KG</option>
+                                    <option value={ datalistValues[2] }>UN</option>
+                                    <option value={ datalistValues[3] }>PCT</option>
+                                    <option value={ datalistValues[4] }>Litro</option>
+                                    <option value={ datalistValues[5] }>CX12</option>
+                                    <option value={ datalistValues[6] }>CX30</option>
+                                </Form.Select>
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formAmount">
+                                <Form.Label>Quantidade</Form.Label>
+                                <Form.Control
+                                name="amount"
+                                onChange={ handleChange }
+                                type="number"
+                                placeholder="Quantidade do produto..."
+                                value=""
+                                />
+                            </Form.Group>
+
+                        </Form.Group>
+                    </Form>
+
+
+                </Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Fechar
+                </Button>
+                <Button variant="primary">Atualizar</Button>
+                </Modal.Footer>
+            </Modal>
+                 */}
         </div>
     )
 }

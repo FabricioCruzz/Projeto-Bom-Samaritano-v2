@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import './CadastroAlimentos.scss'
+import service from '../../../services/storage.service'
 import Form from 'react-bootstrap/Form'
 import CustomButton from '../../buttons/CustomButton'
 
 
 const initialValues = {
-    id: (new Date().getTime()).toString(10),
+    id: undefined,
     product: '',
     type: '',
     amount: 0
@@ -22,7 +23,7 @@ const datalistValues = [
 ]
 
 let key = 'itens'
-let storage = localStorage.getItem(key)
+let storage = service.loadData(key)
 let itens = storage ? JSON.parse(storage) : []
 
 
@@ -45,9 +46,7 @@ const CadastroAlimentos = () => {
             amount: values.amount
         }
         itens.push(item)
-        // itens.push(values)
-        localStorage.setItem(key, JSON.stringify(itens))
-       
+        service.saveData(key, itens)
         // TODO: Enviar dados para o backend
         console.log(values)
     }
