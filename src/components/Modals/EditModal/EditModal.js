@@ -1,15 +1,8 @@
 import React, { useState } from 'react'
-import service from '../../services/storage.service'
+import service from '../../../services/storage.service'
 import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
-
-const initialValues = {
-    id: undefined,
-    product: '',
-    type: '',
-    amount: 0
-}
 
 const datalistValues = [
     '',
@@ -26,7 +19,7 @@ let storage = service.loadData(key)
 let itens = storage ? JSON.parse(storage) : []
 
 
-const ModalFoods = ({item = {}, onClose = ()=>{}}) => {
+const EditModal = ({item = {}, onClose = ()=>{}, children}) => {
     console.log(item)
 
     const [values, setValues] = useState(item)
@@ -64,9 +57,11 @@ const ModalFoods = ({item = {}, onClose = ()=>{}}) => {
             <Modal.Title>Editar Produto</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+                {/* { children } */}
                 {/* Colocar os inputs com os valores da tabela. Trazer eles usando o id da linha da tabela.
                 Reusar o componente de Cadastro de Alimentos??? */}
-                <Form onSubmit={ handleSubmit }>
+                
+                <Form>
                          <Form.Group>
                              <Form.Group className="mb-3" controlId="formEditDescription">
                                  <Form.Label>Descrição</Form.Label>
@@ -84,6 +79,7 @@ const ModalFoods = ({item = {}, onClose = ()=>{}}) => {
                                  aria-label="Selecionar tipo"
                                  name="type"
                                  onChange={ handleChange }
+                                 value={ values.type }
                                  >
                                      <option value={ datalistValues[0] }>Tipo do Produto:</option>
                                      <option value={ datalistValues[1] }>KG</option>
@@ -119,4 +115,4 @@ const ModalFoods = ({item = {}, onClose = ()=>{}}) => {
     )
 }
 
-export default ModalFoods
+export default EditModal

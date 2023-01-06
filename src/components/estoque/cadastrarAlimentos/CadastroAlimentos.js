@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form'
 import CustomButton from '../../buttons/CustomButton'
 
 
-const initialValues = {
+const defaultValues = {
     id: undefined,
     product: '',
     type: '',
@@ -28,8 +28,8 @@ let itens = storage ? JSON.parse(storage) : []
 
 
 const CadastroAlimentos = () => {
-    const [values, setValues] = useState(initialValues)
-    
+
+    const [values, setValues] = useState(defaultValues)
     
     const handleChange = e => {
         const { name, value } = e.target
@@ -49,6 +49,7 @@ const CadastroAlimentos = () => {
         service.saveData(key, itens)
         // TODO: Enviar dados para o backend
         console.log(values)
+        
     }
 
     return (
@@ -96,9 +97,9 @@ const CadastroAlimentos = () => {
                     </Form.Group>
             
                 </Form.Group>
-                
+
                 <CustomButton value="Cadastrar" type="submit"/>
-                
+
             </Form>
         </div>
     )
