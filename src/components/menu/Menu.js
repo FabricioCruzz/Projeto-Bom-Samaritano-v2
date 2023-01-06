@@ -31,7 +31,7 @@ const Menu = () => {
             </LinkContainer>
         </Container>
         
-        <Container className="pbs-flex">
+        <Container className="pbs-flex-menu">
             <LinkContainer to={ pathDashboard }>
                 <Nav.Link>
                     <FaHome className="pbs-icon"/>

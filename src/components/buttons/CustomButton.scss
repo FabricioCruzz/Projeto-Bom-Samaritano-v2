@@ -1,11 +1,13 @@
+@import "../../assets/styles/variables.scss";
+
 .btnComponent{
     height: 48px;
     width: 199px;
     border-radius: 12px;
-    border: 0.5px solid rgba(0, 0, 0, 0.3);
-    background-color: rgba(227, 72, 62, 1);
-    color: #FFFFFF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: 0.5px solid $black-03;
+    background-color: $red-primary;
+    color: $white;
+    box-shadow: 0px 4px 4px $black-025;
     font-style: normal;
     font-weight: 600;
     font-size: 17px;
@@ -15,7 +17,7 @@
     &:hover{
         transition: 0.4s;
         cursor: pointer;
-        background: #EC847D;
+        background: $btn-primary-transparent;
     }
 
 }

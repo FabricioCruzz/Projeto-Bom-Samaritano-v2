@@ -1,0 +1,9 @@
+.pbs-flex{
+    display: flex;
+    &.pbs-row{
+        flex-direction: row;
+    }
+    &.pbs-col{
+        flex-direction: column;
+    }
+}

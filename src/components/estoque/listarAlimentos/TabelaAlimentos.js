@@ -4,6 +4,10 @@ import service from '../../../services/storage.service'
 import Table from 'react-bootstrap/Table'
 import EditModal from '../../Modals/EditModal/EditModal'
 import AddModal from '../../Modals/AddModal/AddModal'
+import { RiAddBoxFill } from 'react-icons/ri'
+import { BiEdit } from 'react-icons/bi'
+import { MdDelete } from 'react-icons/md'
+import { Button } from 'react-bootstrap'
 
 const initialValues = {
     id: undefined,
@@ -35,18 +39,51 @@ const TabelaAlimentos = () => {
                 <td>{ item.product}</td>
                 <td>{ item.type }</td>
                 <td>{ item.amount }</td>
-                <td>
+                <td 
+                // className="pbs-actions-td"
+                className="pbs-flex pbs-row pbs-actions-td"
+                >
+                    <Button
+                    className="btn-actions btn-bkg"
+                    onClick={ () => {
+                        setShowModalAdd(true);
+                        setValues(item);}
+                    }
+                    >
+                        <RiAddBoxFill className="icon-actions"/>
+                        Adicionar
+                    </Button>            
+{/*                    
                     <button className="btn btn-primary" name='add-btn' onClick={ () => {
                         setShowModalAdd(true);
                         setValues(item);}
-                    }>ADD QTD</button>
+                    }>ADD QTD</button> */}
 
+                    <Button
+                    className="btn-actions btn-bkg"
+                    onClick={ () => { 
+                        setShowModalUpdate(true);
+                        setValues(item);}
+                    }
+                    >
+                        <BiEdit className="icon-actions"/>
+                        Editar
+                    </Button>
+{/* 
                     <button className="btn btn-primary" name='edit-btn' onClick={ () => { 
                         setShowModalUpdate(true);
                         setValues(item);}
-                    }>EDITAR</button>
+                    }>EDITAR</button> */}
                     
-                    <button className="btn btn-primary" name='remove-btn' onClick={ () =>  onDelete(item) }>APAGAR</button>
+                    <Button
+                    className="btn-actions btn-bkg"
+                    onClick={ () =>  onDelete(item) }
+                    >
+                        <MdDelete className="icon-actions"/>
+                        Remover
+                    </Button>
+
+                    {/* <button className="btn btn-primary" name='remove-btn' onClick={ () =>  onDelete(item) }>APAGAR</button> */}
                 </td>
             </tr>
         )

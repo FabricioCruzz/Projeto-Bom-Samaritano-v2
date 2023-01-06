@@ -6,7 +6,7 @@
 }
 
 .navbar{
-    background-color: $fundo-menu;
+    background-color: $red-primary;
     border-bottom: 1px solid black;
     height: 3.7rem;
 
@@ -59,7 +59,7 @@
     flex-direction: row;
 }
 
-.pbs-flex{
+.pbs-flex-menu{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;

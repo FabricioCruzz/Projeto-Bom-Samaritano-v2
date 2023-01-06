@@ -1,0 +1,24 @@
+@import "../../../assets/styles/variables.scss";
+
+.pbs-actions-td {
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.btn-actions{
+    display: inherit;
+    flex-direction: inherit;
+    align-items: center;
+    background-color: $red-primary;
+
+    &:hover{
+        transition: 0.4s;
+        cursor: pointer;
+        background: $btn-primary-transparent;
+    }
+}
+
+.icon-actions{
+    margin-right: 0.5rem;
+}

@@ -14,10 +14,8 @@ const AddModal = ({item = {}, onClose = ()=>{}}) => {
     
     const oldValueQtd = item.amount
     
-
     const handleChange = e => {
         const { name, value } = e.target
-        console.log(value)
         setValues({ ...values, [name]: value })
     }
 
