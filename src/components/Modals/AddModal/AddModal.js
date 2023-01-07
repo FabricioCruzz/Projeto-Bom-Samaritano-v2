@@ -56,6 +56,7 @@ const AddModal = ({item = {}, onClose = ()=>{}}) => {
                         <Form.Group controlId="formAddQTD">
                             <Form.Label>Quantidade</Form.Label>
                             <Form.Control
+                            className="pbs-txt-appeareance"
                             name="amount"
                             onChange={ handleChange }
                             type="number"
@@ -70,7 +71,7 @@ const AddModal = ({item = {}, onClose = ()=>{}}) => {
             <Button variant="secondary" onClick={onClose}>
                 Fechar
             </Button>
-            <Button variant="primary" onClick={ handleSubmit }>Adicionar</Button>
+            <Button className="pbs-btn-modal" variant="primary" onClick={ handleSubmit }>Adicionar</Button>
             </Modal.Footer>
         </Modal>
     )

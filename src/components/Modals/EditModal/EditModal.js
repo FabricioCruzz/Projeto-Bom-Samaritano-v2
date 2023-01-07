@@ -94,6 +94,7 @@ const EditModal = ({item = {}, onClose = ()=>{}, children}) => {
                              <Form.Group className="mb-3" controlId="formAmount">
                                  <Form.Label>Quantidade</Form.Label>
                                  <Form.Control
+                                 className="pbs-txt-appeareance"
                                  name="amount"
                                  onChange={ handleChange }
                                  type="number"
@@ -109,7 +110,7 @@ const EditModal = ({item = {}, onClose = ()=>{}, children}) => {
             <Button variant="secondary" onClick={onClose}>
                 Fechar
             </Button>
-            <Button variant="primary" onClick={ handleSubmit }>Atualizar</Button>
+            <Button className="pbs-btn-modal" variant="primary" onClick={ handleSubmit }>Atualizar</Button>
             </Modal.Footer>
         </Modal>
     )
