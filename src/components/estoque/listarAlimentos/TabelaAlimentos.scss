@@ -1,5 +1,9 @@
 @import "../../../assets/styles/variables.scss";
 
+.pbs-title-h2{
+    margin: 1.3rem auto 1.6rem auto;
+}
+
 .pbs-actions-td {
     flex-wrap: nowrap;
     align-items: center;
@@ -10,15 +14,39 @@
     display: inherit;
     flex-direction: inherit;
     align-items: center;
+    border: 0.5px solid $black-025;
     background-color: $red-primary;
 
     &:hover{
         transition: 0.4s;
         cursor: pointer;
         background: $btn-primary-transparent;
+        border-color: $black-025;
     }
 }
 
 .icon-actions{
     margin-right: 0.5rem;
+}
+
+.table-responsive{
+    margin: auto 0.5rem;
+}
+
+.pbs-tr{
+    th:nth-child(1){
+        width: 1vw;
+    }
+    
+    th:nth-child(3){
+        width: 5vw;
+    }
+    
+    th:nth-child(4){
+        width: 10vw;
+    }
+    
+    th:nth-child(5){
+        width: 25vw;
+    }
 }

@@ -55,7 +55,7 @@ const CadastroAlimentos = () => {
     return (
         <div itemID="register-foods">
 
-            <h1 className="t-estoque">Cadastrar Alimento</h1>
+            <h2 className="pbs-title-h2">Cadastrar Alimento</h2>
 
             <Form className="d-flex" onSubmit={ handleSubmit }>
                 <Form.Group>

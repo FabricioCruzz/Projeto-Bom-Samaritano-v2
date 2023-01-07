@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './AddModal.scss'
 import service from '../../../services/storage.service'
 import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal'
@@ -50,7 +51,7 @@ const AddModal = ({item = {}, onClose = ()=>{}}) => {
                 <Form>
                     <Form.Group>
                         
-                        <h2 className="mb-3">{ values.product }</h2>
+                        <h3 className="mb-3">{ values.product }</h3>
 
                         <Form.Group controlId="formAddQTD">
                             <Form.Label>Quantidade</Form.Label>

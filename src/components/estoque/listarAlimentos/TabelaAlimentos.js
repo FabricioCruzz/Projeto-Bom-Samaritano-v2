@@ -39,12 +39,9 @@ const TabelaAlimentos = () => {
                 <td>{ item.product}</td>
                 <td>{ item.type }</td>
                 <td>{ item.amount }</td>
-                <td 
-                // className="pbs-actions-td"
-                className="pbs-flex pbs-row pbs-actions-td"
-                >
+                <td className="pbs-flex pbs-row pbs-actions-td">
                     <Button
-                    className="btn-actions btn-bkg"
+                    className="btn-actions"
                     onClick={ () => {
                         setShowModalAdd(true);
                         setValues(item);}
@@ -53,11 +50,6 @@ const TabelaAlimentos = () => {
                         <RiAddBoxFill className="icon-actions"/>
                         Adicionar
                     </Button>            
-{/*                    
-                    <button className="btn btn-primary" name='add-btn' onClick={ () => {
-                        setShowModalAdd(true);
-                        setValues(item);}
-                    }>ADD QTD</button> */}
 
                     <Button
                     className="btn-actions btn-bkg"
@@ -69,11 +61,6 @@ const TabelaAlimentos = () => {
                         <BiEdit className="icon-actions"/>
                         Editar
                     </Button>
-{/* 
-                    <button className="btn btn-primary" name='edit-btn' onClick={ () => { 
-                        setShowModalUpdate(true);
-                        setValues(item);}
-                    }>EDITAR</button> */}
                     
                     <Button
                     className="btn-actions btn-bkg"
@@ -82,8 +69,6 @@ const TabelaAlimentos = () => {
                         <MdDelete className="icon-actions"/>
                         Remover
                     </Button>
-
-                    {/* <button className="btn btn-primary" name='remove-btn' onClick={ () =>  onDelete(item) }>APAGAR</button> */}
                 </td>
             </tr>
         )
@@ -97,10 +82,10 @@ const TabelaAlimentos = () => {
     }
     return (
         <div itemID="table-foods">
-            <h1>Listar Alimentos</h1>
+            <h2 className="pbs-title-h2">Estoque de Alimentos</h2>
                 <Table striped bordered hover responsive>
                     <thead>
-                        <tr>
+                        <tr className="pbs-tr">
                         <th>ID</th>
                         <th>Descrição</th>
                         <th>Tipo</th>
@@ -113,7 +98,6 @@ const TabelaAlimentos = () => {
                     </tbody>
                 </Table>
         { showModalUpdate ? <EditModal item={ values } onClose={ () => setShowModalUpdate(false) }/> : null }
-        {/* { showModal ? <EditModal onClose={ () => setShowModal(false) }><CadastroAlimentos item={ values } valueBtn="Atualizar"/></EditModal> : null } */}
         { showModalAdd ? <AddModal item={ values } onClose={ () => setShowModalAdd(false) }/> : null }
 
         </div>
