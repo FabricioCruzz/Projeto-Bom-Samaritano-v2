@@ -26,7 +26,7 @@
     &:hover{
         transition: 0.4s;
         cursor: pointer;
-        background: $btn-primary-transparent;
+        background: $red-primary-transparent;
         border-color: $black-025;
     }
 }
@@ -52,6 +52,16 @@
         font-weight: 500;
         color: $black-05;
     }
+
+    &:focus{
+        border-color: $red-secondary-transparent;
+        box-shadow: 0 0 0 0.25rem $red-secondary-transparent;
+    }
+}
+
+.pbs-custom-select:focus{
+    border-color: $red-secondary-transparent;
+    box-shadow: 0 0 0 0.25rem $red-secondary-transparent;
 }
 
 .pbs-login-input{
@@ -69,5 +79,13 @@
 
     &::placeholder{
         color: $black-05;
+    }
+
+    &:focus{
+        color: #212529;
+        background-color: #fff;
+        outline: 0;
+        border-color: $red-secondary-transparent;
+        box-shadow: 0 0 0 0.25rem $red-secondary-transparent;
     }
 }

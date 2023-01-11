@@ -1,13 +1,13 @@
 @import "../../../assets/styles/variables.scss";
 
-.pbs-title-h2{
-    margin: 1.3rem auto 1.6rem auto;
-}
-
 .pbs-actions-td {
     flex-wrap: nowrap;
     align-items: center;
     justify-content: space-around;
+}
+
+.pbs-title-h2{
+    margin: 0.3rem auto 2rem auto;
 }
 
 .btn-actions{
@@ -21,7 +21,7 @@
     &:hover{
         transition: 0.4s;
         cursor: pointer;
-        background: $btn-primary-transparent;
+        background: $red-primary-transparent;
         border-color: $black-025;
     }
 }

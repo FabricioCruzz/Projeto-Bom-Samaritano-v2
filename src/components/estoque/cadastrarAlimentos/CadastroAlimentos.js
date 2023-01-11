@@ -75,6 +75,7 @@ const CadastroAlimentos = () => {
                         <Form.Group className="mb-3" controlId="formTypeOptions">
                             <Form.Label>Tipo</Form.Label>
                             <Form.Select
+                            className="pbs-custom-select"
                             aria-label="Selecionar tipo"
                             name="type"
                             onChange={ handleChange }
@@ -103,7 +104,7 @@ const CadastroAlimentos = () => {
                 
                     </Form.Group>
 
-                    <CustomButton className="mt-3" value="Cadastrar" type="submit"/>
+                    <CustomButton className="btn-margin" value="Cadastrar" type="submit"/>
 
                 </Form>
             </Container>
