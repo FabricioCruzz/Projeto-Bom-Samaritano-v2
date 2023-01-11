@@ -45,6 +45,7 @@ const Login = () => {
                         <FaUser className="user-icon"/>
 
                         <Input
+                        className="pbs-login-input"
                         name="user"
                         type="text"
                         placeholder="Usuário"
@@ -56,6 +57,7 @@ const Login = () => {
                         <RiLockPasswordFill className="user-icon" />
                         
                         <Input
+                        className="pbs-login-input"
                         name="password"
                         type="password"
                         placeholder="Senha"

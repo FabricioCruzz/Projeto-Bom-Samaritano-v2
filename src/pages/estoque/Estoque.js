@@ -14,7 +14,7 @@ const Estoque = () => {
 
             <CadastroAlimentos/>
 
-            <TabelaAlimentos/>
+            {/* <TabelaAlimentos/> */}
 
         </div>
     )

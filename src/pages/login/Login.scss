@@ -31,27 +31,27 @@
     left: 45px;
 }
 
-input {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 500;
-    font-size: 1rem;
-    box-sizing: border-box;
-    margin: 0.7rem auto;
-    padding-left: 15%;
-    width: 425px;
-    height: 60px;
-    background: $white;
-    border: 0.3px solid $black-05;
-    box-shadow: 2px 4px 15px 2px $black-025;
-    border-radius: 12px;
+// input {
+//     font-family: 'Open Sans', sans-serif;
+//     font-weight: 500;
+//     font-size: 1rem;
+//     box-sizing: border-box;
+//     margin: 0.7rem auto;
+//     padding-left: 15%;
+//     width: 425px;
+//     height: 60px;
+//     background: $white;
+//     border: 0.3px solid $black-05;
+//     box-shadow: 2px 4px 15px 2px $black-025;
+//     border-radius: 12px;
 
-    &::placeholder{
-        color: $black-05;
-    }
-}
+//     &::placeholder{
+//         color: $black-05;
+//     }
+// }
 
-form div:nth-last-child(2){
-    margin-bottom: 50px;
+.formLogin div:nth-last-child(2){
+    margin-bottom: 3.1rem;
 }
 
 .btnSubmit{

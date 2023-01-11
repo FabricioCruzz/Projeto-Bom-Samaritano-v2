@@ -1,12 +1,30 @@
-.d-flex{
-    flex-direction: column;
+@import "../../../assets/styles/variables.scss";
+
+.pbs-form{
     flex-wrap: wrap;
     align-content: center;
     align-items: flex-start;
 }
 
-.t-estoque{
+.container-form{
+    border: 1px solid $black-025;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+}
+
+.form-box{
+    min-width: 50%;
+
+    select, input[name="amount"]{
+        max-width: 45%;
+    }
+}
+
+.pbs-form label {
     text-transform: uppercase;
-    text-align: center;
-    font-weight: bold;
+    font-weight: 700;
+}
+
+.mt-3{
+    margin-top: 3.1rem !important;
 }

@@ -3,6 +3,7 @@ import './CadastroAlimentos.scss'
 import service from '../../../services/storage.service'
 import Form from 'react-bootstrap/Form'
 import CustomButton from '../../buttons/CustomButton'
+import { Container } from 'react-bootstrap'
 
 
 const defaultValues = {
@@ -53,55 +54,60 @@ const CadastroAlimentos = () => {
     }
 
     return (
-        <div itemID="register-foods">
+        <Container>
+            <Container className="container-form">
 
-            <h2 className="pbs-title-h2">Cadastrar Alimento</h2>
+                <h2 className="pbs-title-h2">Cadastrar Alimento</h2>
 
-            <Form className="d-flex" onSubmit={ handleSubmit }>
-                <Form.Group>
-                    <Form.Group className="mb-3" controlId="formDescription">
-                        <Form.Label>Descrição</Form.Label>
-                        <Form.Control
-                        name="product"
-                        onChange={ handleChange }
-                        type="text"
-                        placeholder="Nome do produto..."
-                        />
+                <Form className="pbs-flex pbs-col pbs-form" onSubmit={ handleSubmit }>
+                    <Form.Group className="form-box">
+                        <Form.Group className="mb-3" controlId="formDescription">
+                            <Form.Label>Descrição</Form.Label>
+                            <Form.Control
+                            className="pbs-inputs"
+                            name="product"
+                            onChange={ handleChange }
+                            type="text"
+                            placeholder="Nome do produto..."
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="formTypeOptions">
+                            <Form.Label>Tipo</Form.Label>
+                            <Form.Select
+                            aria-label="Selecionar tipo"
+                            name="type"
+                            onChange={ handleChange }
+                            >
+                                {/* TODO: Colocar validação para o usuário não enviar um valor vazio (Tipo do Produto:) */}
+                                <option value={ datalistValues[0] }>Tipo do Produto:</option>
+                                <option value={ datalistValues[1] }>KG</option>
+                                <option value={ datalistValues[2] }>UN</option>
+                                <option value={ datalistValues[3] }>PCT</option>
+                                <option value={ datalistValues[4] }>Litro</option>
+                                <option value={ datalistValues[5] }>CX12</option>
+                                <option value={ datalistValues[6] }>CX30</option>
+                            </Form.Select>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="formAmount">
+                            <Form.Label>Quantidade</Form.Label>
+                            <Form.Control
+                            className="pbs-txt-appeareance pbs-inputs"
+                            name="amount"
+                            onChange={ handleChange }
+                            type="number"
+                            placeholder="Quantidade..."
+                            />
+                        </Form.Group>
+                
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formTypeOptions">
-                        <Form.Select
-                        aria-label="Selecionar tipo"
-                        name="type"
-                        onChange={ handleChange }
-                        >
-                            {/* TODO: Colocar validação para o usuário não enviar um valor vazio (Tipo do Produto:) */}
-                            <option value={ datalistValues[0] }>Tipo do Produto:</option>
-                            <option value={ datalistValues[1] }>KG</option>
-                            <option value={ datalistValues[2] }>UN</option>
-                            <option value={ datalistValues[3] }>PCT</option>
-                            <option value={ datalistValues[4] }>Litro</option>
-                            <option value={ datalistValues[5] }>CX12</option>
-                            <option value={ datalistValues[6] }>CX30</option>
-                        </Form.Select>
-                    </Form.Group>
+                    <CustomButton className="mt-3" value="Cadastrar" type="submit"/>
 
-                    <Form.Group className="mb-3" controlId="formAmount">
-                        <Form.Label>Quantidade</Form.Label>
-                        <Form.Control
-                        name="amount"
-                        onChange={ handleChange }
-                        type="number"
-                        placeholder="Quantidade do produto..."
-                        />
-                    </Form.Group>
-            
-                </Form.Group>
-
-                <CustomButton value="Cadastrar" type="submit"/>
-
-            </Form>
-        </div>
+                </Form>
+            </Container>
+    </Container>
     )
 }
 
