@@ -1,0 +1,63 @@
+@import "../../assets/styles/variables.scss";
+
+.options-container{
+    justify-content: flex-start;
+}
+
+.mascara{
+    background-color: white;
+    color: white;
+    opacity: 0.5;
+    overflow: hidden;
+
+    > img{
+        height: 100%;
+        width: 100%;
+    }
+
+    & img:hover{
+        scale: (1.1);
+        transition: 0.8s ease;
+    }
+}
+
+.card{
+    height: 100%;
+    width: 100%;
+}
+
+.card-body{
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-around;
+
+    >.card-title.h5{
+        text-transform: capitalize;
+    }
+
+    > button{
+        width: 10.474rem;
+        margin: auto 0.5rem;
+        display: inherit;
+        flex-direction: inherit;
+        align-items: center;
+        border: 0.5px solid $black-025;
+        background-color: $red-primary;
+        font-weight: 600;
+        text-shadow: 1px 1px 1px black;
+        
+        &:hover{
+            transition: 0.4s;
+            cursor: pointer;
+            background: $red-primary-transparent;
+            border-color: $black-025;
+        }
+    }
+}
+
+.options-btn{
+    margin: 0 2rem;
+    border: none;
+    width: 31.25rem;
+    height: 31.25rem;
+}
