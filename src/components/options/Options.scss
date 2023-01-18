@@ -2,28 +2,29 @@
 
 .options-container{
     justify-content: flex-start;
+    margin-top: 2rem;
 }
 
 .mascara{
     background-color: white;
-    color: white;
     opacity: 0.5;
     overflow: hidden;
+    height: 60%;
 
     > img{
         height: 100%;
         width: 100%;
-    }
-
-    & img:hover{
-        scale: (1.1);
-        transition: 0.8s ease;
     }
 }
 
 .card{
     height: 100%;
     width: 100%;
+
+    &:hover img{
+        scale: (1.1);
+        transition: 0.8s ease;
+    }
 }
 
 .card-body{
@@ -32,12 +33,13 @@
     justify-content: space-around;
 
     >.card-title.h5{
+        color: black;
         text-transform: capitalize;
     }
 
     > button{
         width: 10.474rem;
-        margin: auto 0.5rem;
+        margin: auto;
         display: inherit;
         flex-direction: inherit;
         align-items: center;
@@ -45,6 +47,7 @@
         background-color: $red-primary;
         font-weight: 600;
         text-shadow: 1px 1px 1px black;
+        text-transform: capitalize;
         
         &:hover{
             transition: 0.4s;
@@ -55,9 +58,10 @@
     }
 }
 
-.options-btn{
+.options-link{
     margin: 0 2rem;
     border: none;
     width: 31.25rem;
     height: 31.25rem;
+    text-decoration: none;
 }
