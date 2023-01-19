@@ -6,7 +6,7 @@ import Options from '../../components/options/Options'
 const Estoque = () => {
 
     return (
-        <div id="pbs-estoque">
+        <div id="estoque-container">
             <Menu/>
             <h1 className="pbs-title-h1">Bem-vindo ao Estoque!</h1>
             <Options variant="estoque"/>

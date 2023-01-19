@@ -1,6 +1,5 @@
 import React from 'react'
 import './Options.scss'
-import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import imagemCard1 from '../../assets/images/agenda/agenda-2.jpg'
 import imagemCard2 from '../../assets/images/estoque/estoque-img-3.jpg'
