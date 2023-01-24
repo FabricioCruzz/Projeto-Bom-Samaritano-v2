@@ -2,8 +2,8 @@ import React from 'react'
 
 const RadioButton = ({ options, name, onChange, onBlur }) => {
   
-  const renderMap = options.map(option => {
-        
+  const renderOptions = options.map(option => {
+
     return (
       <div key={ option.label }>
           <input type="radio"
@@ -20,7 +20,7 @@ const RadioButton = ({ options, name, onChange, onBlur }) => {
 
     return (
         <div>
-          {renderMap}
+          { renderOptions }
         </div>
     )
 }

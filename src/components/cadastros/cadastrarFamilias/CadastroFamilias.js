@@ -27,6 +27,17 @@ const optionsIsWorking = [
     { value: 'nao', label: 'Não' },
 ]
 
+const optionsIncome = [
+    { value: 'trabalho-fixo', label: 'Trabalho Fixo' },
+    { value: 'bicos', label: 'Bicos' },
+    { value: 'aposentadoria_pensaoinss', label: 'Aposentadoria/Pensão INSS' },
+    { value: 'bolsa-familia', label: 'Bolsa Família' },
+    { value: 'auxilio-emergencial', label: 'Auxílio Emergencial' },
+    { value: 'seguro-desemprego', label: 'Seguro Desemprego' },
+    { value: 'sem-renda', label: 'Sem Renda' },
+    { value: 'outro', label: 'Outro' },
+]
+
 const CadastroFamilias = () =>{
 
     return (
@@ -163,41 +174,13 @@ const CadastroFamilias = () =>{
                                     name="isWorking"
                                     options={ optionsIsWorking }
                                     />
-
-                                    <div id="income-radio-group">Fonte de Renda</div>
-                                    <div role="group" aria-labelledby="income-radio-group">
-                                        <label>
-                                            <Field type="radio" name="income" value="trabalho-fixo" />
-                                        Trabalho Fixo
-                                        </label>
-
-                                        <label>
-                                            <Field type="radio" name="income" value="bicos" />
-                                            Bicos
-                                        </label>
-
-                                        
-                                        <label>
-                                            <Field type="radio" name="income" value="aposentadoria" />
-                                            Aposentadoria
-                                        </label>
-
-                                        <label>
-                                            <Field type="radio" name="income" value="aposentadoria_pensaoinss" />
-                                            Aposentadoria/Pensão INSS
-                                        </label>
-
-                                        <label>
-                                            <Field type="radio" name="income" value="bolsa-familia" />
-                                            Bolsa Família
-                                        </label>
-                                    </div>
-                                        
-                                    {/* <Field
+                                    
+                                    <label htmlFor="income">Fonte de Renda</label>
+                                    <Field
                                     component={ CustomRadioButton }
-                                    name="isWorking"
-                                    options={ optionsIsWorking }
-                                    /> */}
+                                    name="income"
+                                    options={ optionsIncome }
+                                    />
 
                                     {/* TODO: Continuar implementando o fomulário */}
 
