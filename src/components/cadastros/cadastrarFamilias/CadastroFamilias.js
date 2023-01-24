@@ -1,8 +1,9 @@
 import React from 'react'
 import './CadastroFamilias.scss'
 import { Container } from 'react-bootstrap'
-import { Formik, Field, Form, useFormik } from 'formik'
+import { Formik, Field, Form } from 'formik'
 import CustomSelect from '../../customSelect/CustomSelect'
+import CustomRadioButton from '../../customRadioButton/CustomRadioButtons'
 
 // Exportar de um arquivo separado???
 const optionsMaritalStatus = [
@@ -23,7 +24,7 @@ const optionsSchoolLevel = [
 
 const optionsIsWorking = [
     { value: 'sim', label: 'Sim' },
-    { value: 'não', label: 'Não' },
+    { value: 'nao', label: 'Não' },
 ]
 
 const CadastroFamilias = () =>{
@@ -47,7 +48,8 @@ const CadastroFamilias = () =>{
                     schoolLevel: '',
                     occupation: '',
                     isWorking: '',
-        
+                    income: '',
+
                 }}
                 onSubmit={values => {
                     console.log(values)
@@ -134,6 +136,7 @@ const CadastroFamilias = () =>{
                                     <label htmlFor="maritalStatus">Estado Civil</label>
                                     <Field
                                     name="maritalStatus"
+                                    id="maritalStatus"
                                     component={ CustomSelect }
                                     options={ optionsMaritalStatus }
                                     />
@@ -141,8 +144,9 @@ const CadastroFamilias = () =>{
                                     <label htmlFor="schoolLevel">Escolaridade</label>
                                     <Field
                                     name="schoolLevel"
+                                    id="schoolLevel"
                                     component={ CustomSelect }
-                                    options={ optionsMaritalStatus }
+                                    options={ optionsSchoolLevel }
                                     />
                                     
                                     <label htmlFor="occupation">Profissão</label>
@@ -153,28 +157,48 @@ const CadastroFamilias = () =>{
                                     placeholder="Digite a profissão..."
                                     />
 
-                                    <div id="isWorking-group">Está trabalhando?</div>
-                                    <div role="group" aria-labelledby="isWorking-group">
+                                    <label htmlFor="isWorking">Está trabalhando?</label>
+                                    <Field
+                                    component={ CustomRadioButton }
+                                    name="isWorking"
+                                    options={ optionsIsWorking }
+                                    />
+
+                                    <div id="income-radio-group">Fonte de Renda</div>
+                                    <div role="group" aria-labelledby="income-radio-group">
                                         <label>
-                                            <Field
-                                                type="radio"
-                                                name="isWorking"
-                                                value="Sim"
-                                            />
-                                            Sim
+                                            <Field type="radio" name="income" value="trabalho-fixo" />
+                                        Trabalho Fixo
                                         </label>
 
                                         <label>
-                                            <Field
-                                                type="radio"
-                                                name="isWorking"
-                                                value="Não"
-                                            />
-                                            Não
+                                            <Field type="radio" name="income" value="bicos" />
+                                            Bicos
+                                        </label>
+
+                                        
+                                        <label>
+                                            <Field type="radio" name="income" value="aposentadoria" />
+                                            Aposentadoria
+                                        </label>
+
+                                        <label>
+                                            <Field type="radio" name="income" value="aposentadoria_pensaoinss" />
+                                            Aposentadoria/Pensão INSS
+                                        </label>
+
+                                        <label>
+                                            <Field type="radio" name="income" value="bolsa-familia" />
+                                            Bolsa Família
                                         </label>
                                     </div>
-                                    
                                         
+                                    {/* <Field
+                                    component={ CustomRadioButton }
+                                    name="isWorking"
+                                    options={ optionsIsWorking }
+                                    /> */}
+
                                     {/* TODO: Continuar implementando o fomulário */}
 
                                 </fieldset>
