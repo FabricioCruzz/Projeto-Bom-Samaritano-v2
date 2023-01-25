@@ -4,6 +4,7 @@ import { Container } from 'react-bootstrap'
 import { Formik, Field, Form } from 'formik'
 import CustomSelect from '../../customSelect/CustomSelect'
 import CustomRadioButton from '../../customRadioButton/CustomRadioButtons'
+import CustomCheckbox from '../../customCheckbox/CustomCheckbox'
 
 // Exportar de um arquivo separado???
 const optionsMaritalStatus = [
@@ -27,7 +28,7 @@ const optionsIsWorking = [
     { value: 'nao', label: 'Não' },
 ]
 
-const optionsIncome = [
+const optionsSrcIncome = [
     { value: 'trabalho-fixo', label: 'Trabalho Fixo' },
     { value: 'bicos', label: 'Bicos' },
     { value: 'aposentadoria_pensaoinss', label: 'Aposentadoria/Pensão INSS' },
@@ -36,6 +37,18 @@ const optionsIncome = [
     { value: 'seguro-desemprego', label: 'Seguro Desemprego' },
     { value: 'sem-renda', label: 'Sem Renda' },
     { value: 'outro', label: 'Outro' },
+]
+
+const optionsHousingSituation = [
+    { value: 'casa-propria', label: 'Casa Própria' },
+    { value: 'casa-alugada', label: 'Casa Alugada' },
+    { value: 'casa-cedida', label: 'Casa Cedida' },
+]
+
+const optionsAppliances = [
+    { value: 'fogao-gas', label: 'Fogão a Gás' },
+    { value: 'fogao-lenha', label: 'Fogão a Lenha' },
+    { value: 'geladeira', label: 'Geladeira' },
 ]
 
 const CadastroFamilias = () =>{
@@ -59,7 +72,11 @@ const CadastroFamilias = () =>{
                     schoolLevel: '',
                     occupation: '',
                     isWorking: '',
-                    income: '',
+                    srcIncome: '',
+                    numberOfResidents: '',
+                    familyIncome: '',
+                    housingSituation: '',
+                    appliances: [],
 
                 }}
                 onSubmit={values => {
@@ -171,16 +188,55 @@ const CadastroFamilias = () =>{
                                     <label htmlFor="isWorking">Está trabalhando?</label>
                                     <Field
                                     component={ CustomRadioButton }
+                                    id="isWorking"
                                     name="isWorking"
                                     options={ optionsIsWorking }
                                     />
                                     
-                                    <label htmlFor="income">Fonte de Renda</label>
+                                    <label htmlFor="srcIncome">Fonte de Renda</label>
                                     <Field
                                     component={ CustomRadioButton }
-                                    name="income"
-                                    options={ optionsIncome }
+                                    id="srcIncome"
+                                    name="srcIncome"
+                                    options={ optionsSrcIncome }
                                     />
+
+                                    <label htmlFor="numberOfResidents">Quantidade de Moradores na Casa</label>
+                                    <Field
+                                    type="number"
+                                    id="numberOfResidents"
+                                    name="numberOfResidents"
+                                    placeholder="Quantidade de moradores..."
+                                    />
+
+                                    <label htmlFor="familyIncome">Renda Familiar</label>
+                                    <label htmlFor="familyIncome">
+                                        R$
+                                        <Field
+                                        type="number"
+                                        id="familyIncome"
+                                        name="familyIncome"
+                                        placeholder="Valor da renda..."
+                                        />
+                                    </label>
+
+                                    <label htmlFor="housingSituation">Situação Habitacional</label>
+                                    <Field
+                                    component={ CustomRadioButton }
+                                    id="housingSituation"
+                                    name="housingSituation"
+                                    options={ optionsHousingSituation }
+                                    />
+
+                                    <label htmlFor="appliances">A Família Possui</label>
+                                    <Field
+                                    component={ CustomCheckbox }
+                                    id="appliances"
+                                    name="appliances"
+                                    options={ optionsAppliances }
+                                    />
+
+
 
                                     {/* TODO: Continuar implementando o fomulário */}
 
