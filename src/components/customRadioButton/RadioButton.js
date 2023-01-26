@@ -7,13 +7,13 @@ const RadioButton = ({ options, name, onChange, onBlur }) => {
     return (
       <div key={ option.label }>
           <input type="radio"
-          id={ option.value }
+          id={ `${ name }-${ option.value }`}
           name={ name }
           value={ option.value }
           onChange={ e => onChange(e.target) }
           onBlur={ onBlur }
           />
-        <label htmlFor={ option.value }>{ option.label }</label>
+        <label htmlFor={ `${ name }-${ option.value }` }>{ option.label }</label>
         </div>
       )
     })

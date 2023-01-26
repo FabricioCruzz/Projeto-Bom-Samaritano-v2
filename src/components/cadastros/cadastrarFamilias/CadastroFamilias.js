@@ -23,7 +23,7 @@ const optionsSchoolLevel = [
     { value: 'ensino superior completo', label: 'Ensino Superior Completo' },
 ]
 
-const optionsIsWorking = [
+const optionsYesOrNo = [
     { value: 'sim', label: 'Sim' },
     { value: 'nao', label: 'Não' },
 ]
@@ -77,6 +77,8 @@ const CadastroFamilias = () =>{
                     familyIncome: '',
                     housingSituation: '',
                     appliances: [],
+                    needBlankets: '',
+
 
                 }}
                 onSubmit={values => {
@@ -190,7 +192,7 @@ const CadastroFamilias = () =>{
                                     component={ CustomRadioButton }
                                     id="isWorking"
                                     name="isWorking"
-                                    options={ optionsIsWorking }
+                                    options={ optionsYesOrNo }
                                     />
                                     
                                     <label htmlFor="srcIncome">Fonte de Renda</label>
@@ -236,6 +238,13 @@ const CadastroFamilias = () =>{
                                     options={ optionsAppliances }
                                     />
 
+                                    <label htmlFor="needBlankets">Precisa de Cobertores</label>
+                                    <Field
+                                    component={ CustomRadioButton }
+                                    id="needBlankets"
+                                    name="needBlankets"
+                                    options={ optionsYesOrNo }
+                                    />
 
 
                                     {/* TODO: Continuar implementando o fomulário */}
