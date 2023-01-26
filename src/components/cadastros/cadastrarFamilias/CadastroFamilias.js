@@ -51,6 +51,12 @@ const optionsAppliances = [
     { value: 'geladeira', label: 'Geladeira' },
 ]
 
+const optionsWorkshop = [
+    { value: 'atividade-fisica', label: 'Atividade Física' },
+    { value: 'musica', label: 'Música' },
+    { value: 'artesanato', label: 'Artesanato' },
+]
+
 const CadastroFamilias = () =>{
 
     return (
@@ -78,8 +84,11 @@ const CadastroFamilias = () =>{
                     housingSituation: '',
                     appliances: [],
                     needBlankets: '',
-
-
+                    needShoes: '',
+                    needClothes: '',
+                    needDiapers: '',
+                    specialNeed: '',
+                    workshop: [],
                 }}
                 onSubmit={values => {
                     console.log(values)
@@ -245,8 +254,57 @@ const CadastroFamilias = () =>{
                                     name="needBlankets"
                                     options={ optionsYesOrNo }
                                     />
+                                    
+                                    <label htmlFor="needShoes">Precisa de Calçados</label>
+                                    <Field
+                                    component={ CustomRadioButton }
+                                    id="needShoes"
+                                    name="needShoes"
+                                    options={ optionsYesOrNo }
+                                    />
 
+                                    {/* 
+                                    TODO: Ver como add input pra capturar número do calçado caso
+                                    opção seja sim
+                                     */}
+                                    {/* { values.needShoes === 'sim' ? <input type="text"/> : ""} */}
 
+                                    <label htmlFor="needClothes">Precisa de Roupas</label>
+                                    <Field
+                                    component={ CustomRadioButton }
+                                    id="needClothes"
+                                    name="needClothes"
+                                    options={ optionsYesOrNo }
+                                    />
+                                    {/* TODO: Ver como add opções de add mais informações na variável do form */}
+
+                                    <label htmlFor="needDiapers">Precisa de Fraldas</label> 
+                                    <Field
+                                    component={ CustomRadioButton }
+                                    id="needDiapers"
+                                    name="needDiapers"
+                                    options={ optionsYesOrNo }
+                                    />
+                                    {/* TODO: Incluir input para capturar 'tamanho' */}
+
+                                    <label htmlFor="specialNeed">Alguma Necessidade Especial</label>
+                                    <Field
+                                    type="text-area"
+                                    id="specialNeed"
+                                    name="specialNeed"
+                                    />
+
+                                    <label htmlFor="workshop">Tem Interesse de Participar de Alguma Oficina</label>
+                                    <Field
+                                    component={ CustomCheckbox }
+                                    id="workshop"
+                                    name="workshop"
+                                    options={ optionsWorkshop }
+                                    />
+                                    
+                                    <legend>Vida Religiosa</legend>
+
+                                    
                                     {/* TODO: Continuar implementando o fomulário */}
 
                                 </fieldset>
