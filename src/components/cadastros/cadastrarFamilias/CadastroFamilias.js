@@ -5,6 +5,7 @@ import { Formik, Field, Form } from 'formik'
 import CustomSelect from '../../customSelect/CustomSelect'
 import CustomRadioButton from '../../customRadioButton/CustomRadioButtons'
 import CustomCheckbox from '../../customCheckbox/CustomCheckbox'
+import AdditionalInput from '../../inputs/AdditionalInput'
 
 // Exportar de um arquivo separado???
 const optionsMaritalStatus = [
@@ -36,7 +37,6 @@ const optionsSrcIncome = [
     { value: 'auxilio-emergencial', label: 'Auxílio Emergencial' },
     { value: 'seguro-desemprego', label: 'Seguro Desemprego' },
     { value: 'sem-renda', label: 'Sem Renda' },
-    { value: 'outro', label: 'Outro' },
 ]
 
 const optionsHousingSituation = [
@@ -55,6 +55,41 @@ const optionsWorkshop = [
     { value: 'atividade-fisica', label: 'Atividade Física' },
     { value: 'musica', label: 'Música' },
     { value: 'artesanato', label: 'Artesanato' },
+]
+
+const optionsReligion = [
+    { value: 'catolica-apostolica-romana', label: 'Católica Apostólica Romana' },
+    { value: 'evangelica', label: 'Evangélica' },
+    { value: 'espirita', label: 'Espírita' },
+    { value: 'religiosidade-multipla', label: 'Religiosidade Múltipla' },
+    { value: 'nenhuma', label: 'Nenhuma' },
+]
+
+const optionsSacraments = [
+    { value: 'batismo', label: 'Batismo' },
+    { value: 'primeira-comunhao', label: 'Primeira Comunhão' },
+    { value: 'crisma', label: 'Crisma' },
+    { value: 'confissao', label: 'Confissão' },
+    { value: 'matrimonio', label: 'Matrimônio' },
+]
+
+const optionsAttendanceMass = [
+    { value: 'mais-de-uma-vez-por-semana', label: 'Mais de uma vez por semana' },
+    { value: 'todos-finais-de-semana', label: 'Todos os finais de semana' },
+    { value: 'uma-vez-por-mes', label: 'Uma vez por mês' },
+    { value: 'raramente', label: 'Raramente' },
+    { value: 'apenas-festas-religiosas-ocasioes-especiais', label: 'Apenas em festas religiosas/Ocasiões especiais' },
+    { value: 'nao-participa', label: 'Não participa' },
+]
+
+const optionsChurchActivity = [
+    { value: 'indo-as-missas', label: 'Indo às Missas' },
+    { value: 'particiando-festas-religiosas-procissoes', label: 'Participando de Festas Religiosas e Procissões' },
+    { value: 'radio-paraisopolis', label: 'Por meio da Rádio Paraisópolis' },
+    { value: 'programas-televisivos', label: 'Por meio de Programas Televisivos' },
+    { value: 'sites-internet', label: 'Sites na Internet' },
+    { value: 'pastorais-movimentos', label: 'Atuando em pastorais e movimentos' },
+    { value: 'fazendo-oracoes-em-casa', label: 'Fazendo suas orações em casa' },
 ]
 
 const CadastroFamilias = () =>{
@@ -84,11 +119,17 @@ const CadastroFamilias = () =>{
                     housingSituation: '',
                     appliances: [],
                     needBlankets: '',
-                    needShoes: '',
-                    needClothes: '',
-                    needDiapers: '',
+                    needShoes: { answer: '', number: '' },
+                    needClothes: { answer: '', pantsNumber: '', tShirtCoatSize: '' },
+                    needDiapers: { answer: '', size: '' },
                     specialNeed: '',
                     workshop: [],
+                    religion: '',
+                    receivedSacraments: [],
+                    wishReceiveSacraments: [],
+                    attendanceMass: '',
+                    churchActivity: [],
+                    memberPastoralsMovements: { answer: '', which: '' },
                 }}
                 onSubmit={values => {
                     console.log(values)
@@ -255,37 +296,76 @@ const CadastroFamilias = () =>{
                                     options={ optionsYesOrNo }
                                     />
                                     
-                                    <label htmlFor="needShoes">Precisa de Calçados</label>
+                                    <label htmlFor="needShoes.answer">Precisa de Calçados</label>
                                     <Field
                                     component={ CustomRadioButton }
-                                    id="needShoes"
-                                    name="needShoes"
+                                    id="needShoes.answer"
+                                    name="needShoes.answer"
                                     options={ optionsYesOrNo }
                                     />
 
-                                    {/* 
-                                    TODO: Ver como add input pra capturar número do calçado caso
-                                    opção seja sim
-                                     */}
-                                    {/* { values.needShoes === 'sim' ? <input type="text"/> : ""} */}
+                                    {
+                                    values.needShoes.answer === 'sim' 
+                                    ? 
+                                    <Field
+                                    component={ AdditionalInput }
+                                    id="needShoes.number"
+                                    name="needShoes.number"
+                                    placeholder="Número do calçado..."
+                                    label="Número do Calçado"
+                                    />
+                                    : ""
+                                    }
 
-                                    <label htmlFor="needClothes">Precisa de Roupas</label>
+                                    <label htmlFor="needClothes.answer">Precisa de Roupas</label>
                                     <Field
                                     component={ CustomRadioButton }
-                                    id="needClothes"
-                                    name="needClothes"
+                                    id="needClothes.answer"
+                                    name="needClothes.answer"
                                     options={ optionsYesOrNo }
                                     />
-                                    {/* TODO: Ver como add opções de add mais informações na variável do form */}
+                                    {
+                                    values.needClothes.answer === 'sim'
+                                    ?
+                                    <div>
+                                        <Field
+                                        component={ AdditionalInput }
+                                        id="needClothes.pantsNumber"
+                                        name="needClothes.pantsNumber"
+                                        placeholder="Número da calça..."
+                                        label="Número da Calça"
+                                        />
 
-                                    <label htmlFor="needDiapers">Precisa de Fraldas</label> 
+                                        <Field
+                                        component={ AdditionalInput }
+                                        id="needClothes.tShirtCoatSize"
+                                        name="needClothes.tShirtCoatSize"
+                                        placeholder="Tamanho da camiseta/agasalho..."
+                                        label="Tamanho da Camiseta/Agasalho"
+                                        />
+                                    </div>
+                                    : ""
+                                    }
+
+                                    <label htmlFor="needDiapers.answer">Precisa de Fraldas</label> 
                                     <Field
                                     component={ CustomRadioButton }
-                                    id="needDiapers"
-                                    name="needDiapers"
+                                    id="needDiapers.answer"
+                                    name="needDiapers.answer"
                                     options={ optionsYesOrNo }
                                     />
-                                    {/* TODO: Incluir input para capturar 'tamanho' */}
+                                    {
+                                    values.needDiapers.answer === 'sim'
+                                    ? 
+                                    <Field
+                                    component={ AdditionalInput }
+                                    id="needDiapers.size"
+                                    name="needDiapers.size"
+                                    placeholder="Tamanho das fraldas..."
+                                    label="Tamanho"
+                                    />
+                                    : ""
+                                    }
 
                                     <label htmlFor="specialNeed">Alguma Necessidade Especial</label>
                                     <Field
@@ -301,13 +381,78 @@ const CadastroFamilias = () =>{
                                     name="workshop"
                                     options={ optionsWorkshop }
                                     />
-                                    
-                                    <legend>Vida Religiosa</legend>
-
-                                    
-                                    {/* TODO: Continuar implementando o fomulário */}
 
                                 </fieldset>
+                                    
+                                <fieldset>
+                                    <legend>Vida Religiosa</legend>
+
+                                    <label htmlFor="religion">Religião</label>
+                                    <Field
+                                    component={ CustomRadioButton }
+                                    id="religion"
+                                    name="religion"
+                                    options={ optionsReligion }
+                                    />
+
+                                    <label htmlFor="receivedSacraments">Sacramentos Recebidos</label>
+                                    <Field
+                                    component={ CustomCheckbox }
+                                    id="receivedSacraments"
+                                    name="receivedSacraments"
+                                    options={ optionsSacraments }
+                                    />
+
+                                    <label htmlFor="wishReceiveSacraments">Sacramentos que Deseja Receber</label>
+                                    <Field
+                                    component={ CustomCheckbox }
+                                    id="wishReceiveSacraments"
+                                    name="wishReceiveSacraments"
+                                    options={ optionsSacraments }
+                                    />
+
+                                    <label htmlFor="attendanceMass">Qual a frequência nas Missas</label>
+                                    <Field
+                                    component={ CustomRadioButton }
+                                    id="attendanceMass"
+                                    name="attendanceMass"
+                                    options={ optionsAttendanceMass }
+                                    />
+
+                                    <label htmlFor="churchActivity">Participação na Igreja</label>
+                                    <Field
+                                    component={ CustomCheckbox }
+                                    id="churchActivity"
+                                    name="churchActivity"
+                                    options={ optionsChurchActivity }
+                                    />
+
+                                    <label htmlFor="memberPastoralsMovements.answer">Participa de Pastoral/Movimento na Igreja</label>
+                                    <Field
+                                    component={ CustomRadioButton }
+                                    id="memberPastoralsMovements.answer"
+                                    name="memberPastoralsMovements.answer"
+                                    options={ optionsYesOrNo }
+                                    />
+                                    { 
+                                    values.memberPastoralsMovements.answer === 'sim'
+                                     ? 
+                                    <Field
+                                    component={ AdditionalInput }
+                                    id="memberPastoralsMovements.which"
+                                    name="memberPastoralsMovements.which"
+                                    placeholder="Pastoral/movimento..."
+                                    label="Qual?"
+                                    />
+                                     : "" 
+                                    }
+
+
+                                    {/* TODO: Continuar implementando o fomulário */
+                                    // Incluir botão para adicionar mais moradores
+                                    }
+                                </fieldset>
+
                                 <button type="submit">Cadastrar</button>
                             </Form>
                         )
