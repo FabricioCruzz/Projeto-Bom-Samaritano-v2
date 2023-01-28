@@ -1,11 +1,14 @@
 import React from 'react'
 import './CadastroFamilias.scss'
 import { Container } from 'react-bootstrap'
-import { Formik, Field, Form } from 'formik'
+import { Formik, Field, Form, ErrorMessage } from 'formik'
 import CustomSelect from '../../customSelect/CustomSelect'
 import CustomRadioButton from '../../customRadioButton/CustomRadioButtons'
 import CustomCheckbox from '../../customCheckbox/CustomCheckbox'
 import AdditionalInput from '../../inputs/AdditionalInput'
+import * as Yup from 'yup'
+import { phoneNumber } from '../../../utils/validations'
+
 
 // Exportar de um arquivo separado???
 const optionsMaritalStatus = [
@@ -92,6 +95,43 @@ const optionsChurchActivity = [
     { value: 'fazendo-oracoes-em-casa', label: 'Fazendo suas orações em casa' },
 ]
 
+const errorMessages = {
+    fieldReq: 'Campo requerido!',
+    phoneInvalid: 'O telefone deve estar no formato (99) 99999-9999',
+}
+
+const validationSchema = Yup.object().shape({
+
+    completeName: Yup.string().required(errorMessages.fieldReq),
+    street: Yup.string().required(errorMessages.fieldReq),
+    houseNumber: Yup.number().required(errorMessages.fieldReq),
+    district: Yup.string().required(errorMessages.fieldReq),
+    city: Yup.string().required(errorMessages.fieldReq),
+    phone1: Yup.string().matches(phoneNumber, errorMessages.phoneInvalid).required(errorMessages.fieldReq),
+    // birthDate: '',
+    // maritalStatus: '',
+    // schoolLevel: '',
+    // occupation: '',
+    // isWorking: '',
+    // srcIncome: '',
+    // numberOfResidents: '',
+    // familyIncome: '',
+    // housingSituation: '',
+    // appliances: [],
+    // needBlankets: '',
+    // needShoes: { answer: '', number: '' },
+    // needClothes: { answer: '', pantsNumber: '', tShirtCoatSize: '' },
+    // needDiapers: { answer: '', size: '' },
+    // specialNeed: '',
+    // workshop: [],
+    // religion: '',
+    // receivedSacraments: [],
+    // wishReceiveSacraments: [],
+    // attendanceMass: '',
+    // churchActivity: [],
+    // memberPastoralsMovements: { answer: '', which: '' },
+})
+
 const CadastroFamilias = () =>{
 
     return (
@@ -99,6 +139,7 @@ const CadastroFamilias = () =>{
             <h2 className="pbs-title-h2">Cadastrar Família</h2>
             <Container className="container-form">
                 <Formik
+                validationSchema={ validationSchema }
                  initialValues= {{
                     completeName: '',
                     street: '',
@@ -137,315 +178,387 @@ const CadastroFamilias = () =>{
                 }}
                 >
                     {
-                        ({values}) => (
-                            <Form>
+                        ({ values, errors }) => (
+                            <Form className="cds-form">
                                 <fieldset>
                                     <legend>Dados Pessoais</legend>
                                     
-                                    <label htmlFor="completeName">Nome</label>
-                                    <Field
-                                    type="text"
-                                    id="completeName"
-                                    name="completeName"
-                                    placeholder="Digite o nome completo..."
-                                    />
+                                    <Container>
+                                        <label htmlFor="completeName">Nome*</label>
+                                        <Field
+                                        type="text"
+                                        id="completeName"
+                                        name="completeName"
+                                        placeholder="Digite o nome completo..."
+                                        />
+
+                                        <ErrorMessage component="div" className="errorMsg" name="completeName"/>
+                                    </Container>
                                     
-                                    <label htmlFor="street">Rua</label>
-                                    <Field
-                                    type="text"
-                                    id="street"
-                                    name="street"
-                                    placeholder="Digite a rua, avenida..."
-                                    />
+                                    <Container>
+                                        <label htmlFor="street">Rua*</label>
+                                        <Field
+                                        type="text"
+                                        id="street"
+                                        name="street"
+                                        placeholder="Digite a rua, avenida..."
+                                        />
+
+                                        <ErrorMessage component="div" className="errorMsg" name="street"/>
+                                    </Container>
                                     
-                                    <label htmlFor="houseNumber">Número</label>
-                                    <Field
-                                    type="text"
-                                    id="houseNumber"
-                                    name="houseNumber"
-                                    placeholder="XXX"
-                                    />
-
-                                    <label htmlFor="district">Bairro</label>
-                                    <Field
-                                    type="text"
-                                    id="district"
-                                    name="district"
-                                    placeholder="Digite o bairro..."
-                                    />
-                                            
-                                    <label htmlFor="addressComplement">Complemento - Ponto de Referência</label>
-                                    <Field
-                                    type="text"
-                                    id="addressComplement"
-                                    name="addressComplement"
-                                    placeholder="Informe um complemento ou ponto de referência..."
-                                    />
-                                            
-                                    <label htmlFor="city">Cidade</label>
-                                    <Field
-                                    type="text"
-                                    id="city"
-                                    name="city"
-                                    placeholder="Digite a cidade..."
-                                    />
-
-                                    <label htmlFor="phone1">Telefone 1</label>
-                                    <Field
-                                    type="text"
-                                    id="phone1"
-                                    name="phone1"
-                                    placeholder="(XX) XXXXX-XXXX"
-                                    />
-                                            
-                                    <label htmlFor="phone2">Telefone 2</label>
-                                    <Field
-                                    type="text"
-                                    id="phone2"
-                                    name="phone2"
-                                    placeholder="(XX) XXXXX-XXXX"
-                                    />
-
-                                    <label htmlFor="birthDate">Data de Nascimento</label>
-                                    <Field
-                                    type="date"
-                                    id="birthDate"
-                                    name="birthDate"
-                                    />
-
-                                    <label htmlFor="maritalStatus">Estado Civil</label>
-                                    <Field
-                                    name="maritalStatus"
-                                    id="maritalStatus"
-                                    component={ CustomSelect }
-                                    options={ optionsMaritalStatus }
-                                    />
-
-                                    <label htmlFor="schoolLevel">Escolaridade</label>
-                                    <Field
-                                    name="schoolLevel"
-                                    id="schoolLevel"
-                                    component={ CustomSelect }
-                                    options={ optionsSchoolLevel }
-                                    />
                                     
-                                    <label htmlFor="occupation">Profissão</label>
-                                    <Field
-                                    type="text"
-                                    id="occupation"
-                                    name="occupation"
-                                    placeholder="Digite a profissão..."
-                                    />
+                                    <Container>
+                                        <label htmlFor="houseNumber">Número*</label>
+                                        <Field
+                                        type="text"
+                                        id="houseNumber"
+                                        name="houseNumber"
+                                        placeholder="XXX"
+                                        />
 
-                                    <label htmlFor="isWorking">Está trabalhando?</label>
-                                    <Field
-                                    component={ CustomRadioButton }
-                                    id="isWorking"
-                                    name="isWorking"
-                                    options={ optionsYesOrNo }
-                                    />
+                                        <ErrorMessage component="div" className="errorMsg" name="houseNumber"/>
+                                    </Container>
+
+                                    <Container>
+                                        <label htmlFor="district">Bairro*</label>
+                                        <Field
+                                        type="text"
+                                        id="district"
+                                        name="district"
+                                        placeholder="Digite o bairro..."
+                                        />
+                                        
+                                        <ErrorMessage component="div" className="errorMsg" name="district"/>                                     
+                                    </Container>
+
+                                    <Container>    
+                                        <label htmlFor="addressComplement">Complemento - Ponto de Referência</label>
+                                        <Field
+                                        type="text"
+                                        id="addressComplement"
+                                        name="addressComplement"
+                                        placeholder="Informe um complemento ou ponto de referência..."
+                                        /> 
+                                    </Container> 
+
+                                    <Container>    
+                                        <label htmlFor="city">Cidade*</label>
+                                        <Field
+                                        type="text"
+                                        id="city"
+                                        name="city"
+                                        placeholder="Digite a cidade..."
+                                        />
+                                        <ErrorMessage component="div" className="errorMsg" name="city"/>                                     
+                                    </Container>    
                                     
-                                    <label htmlFor="srcIncome">Fonte de Renda</label>
-                                    <Field
-                                    component={ CustomRadioButton }
-                                    id="srcIncome"
-                                    name="srcIncome"
-                                    options={ optionsSrcIncome }
-                                    />
+                                    <Container>
+                                        <label htmlFor="phone1">Telefone 1*</label>
+                                        <Field
+                                        type="tel"
+                                        id="phone1"
+                                        name="phone1"
+                                        placeholder="(XX) XXXXX-XXXX"
+                                        />
+                                        <ErrorMessage component="div" className="errorMsg" name="phone1"/>
+                                    </Container>
 
-                                    <label htmlFor="numberOfResidents">Quantidade de Moradores na Casa</label>
-                                    <Field
-                                    type="number"
-                                    id="numberOfResidents"
-                                    name="numberOfResidents"
-                                    placeholder="Quantidade de moradores..."
-                                    />
+                                    <Container>
+                                        <label htmlFor="phone2">Telefone 2</label>
+                                        <Field
+                                        type="tel"
+                                        id="phone2"
+                                        name="phone2"
+                                        placeholder="(XX) XXXXX-XXXX"
+                                        />
+                                    </Container>        
 
-                                    <label htmlFor="familyIncome">Renda Familiar</label>
-                                    <label htmlFor="familyIncome">
-                                        R$
+                                    <Container>
+                                        <label htmlFor="birthDate">Data de Nascimento</label>
+                                        <Field
+                                        type="date"
+                                        id="birthDate"
+                                        name="birthDate"
+                                        />
+                                        <ErrorMessage component="div" className="errorMsg" name="birthDate"/>
+                                    </Container>
+
+                                    <Container>
+                                        <label htmlFor="maritalStatus">Estado Civil</label>
+                                        <Field
+                                        name="maritalStatus"
+                                        id="maritalStatus"
+                                        component={ CustomSelect }
+                                        options={ optionsMaritalStatus }
+                                        />
+                                    </Container>
+
+                                    <Container>
+                                        <label htmlFor="schoolLevel">Escolaridade</label>
+                                        <Field
+                                        name="schoolLevel"
+                                        id="schoolLevel"
+                                        component={ CustomSelect }
+                                        options={ optionsSchoolLevel }
+                                        />
+                                    </Container>
+                                    
+                                    <Container>
+                                        <label htmlFor="occupation">Profissão</label>
+                                        <Field
+                                        type="text"
+                                        id="occupation"
+                                        name="occupation"
+                                        placeholder="Digite a profissão..."
+                                        />
+                                    </Container>
+
+                                    <Container>
+                                        <label htmlFor="isWorking">Está trabalhando?</label>
+                                        <Field
+                                        component={ CustomRadioButton }
+                                        id="isWorking"
+                                        name="isWorking"
+                                        options={ optionsYesOrNo }
+                                        />
+                                    </Container>
+                                    
+                                    <Container>
+                                        <label htmlFor="srcIncome">Fonte de Renda</label>
+                                        <Field
+                                        component={ CustomRadioButton }
+                                        id="srcIncome"
+                                        name="srcIncome"
+                                        options={ optionsSrcIncome }
+                                        />
+                                    </Container>
+
+                                    <Container>
+                                        <label htmlFor="numberOfResidents">Quantidade de Moradores na Casa</label>
                                         <Field
                                         type="number"
-                                        id="familyIncome"
-                                        name="familyIncome"
-                                        placeholder="Valor da renda..."
+                                        id="numberOfResidents"
+                                        name="numberOfResidents"
+                                        placeholder="Quantidade de moradores..."
                                         />
-                                    </label>
+                                    </Container>
 
-                                    <label htmlFor="housingSituation">Situação Habitacional</label>
-                                    <Field
-                                    component={ CustomRadioButton }
-                                    id="housingSituation"
-                                    name="housingSituation"
-                                    options={ optionsHousingSituation }
-                                    />
+                                    <Container>
+                                        <label htmlFor="familyIncome">Renda Familiar</label>
+                                        <label htmlFor="familyIncome">
+                                            R$
+                                            <Field
+                                            type="number"
+                                            id="familyIncome"
+                                            name="familyIncome"
+                                            placeholder="Valor da renda..."
+                                            />
+                                        </label>
+                                    </Container>
 
-                                    <label htmlFor="appliances">A Família Possui</label>
-                                    <Field
-                                    component={ CustomCheckbox }
-                                    id="appliances"
-                                    name="appliances"
-                                    options={ optionsAppliances }
-                                    />
+                                    <Container>
+                                        <label htmlFor="housingSituation">Situação Habitacional</label>
+                                        <Field
+                                        component={ CustomRadioButton }
+                                        id="housingSituation"
+                                        name="housingSituation"
+                                        options={ optionsHousingSituation }
+                                        />
+                                    </Container>
 
-                                    <label htmlFor="needBlankets">Precisa de Cobertores</label>
-                                    <Field
-                                    component={ CustomRadioButton }
-                                    id="needBlankets"
-                                    name="needBlankets"
-                                    options={ optionsYesOrNo }
-                                    />
+                                    <Container>
+                                        <label htmlFor="appliances">A Família Possui</label>
+                                        <Field
+                                        component={ CustomCheckbox }
+                                        id="appliances"
+                                        name="appliances"
+                                        options={ optionsAppliances }
+                                        />
+                                    </Container>
+
+                                    <Container>
+                                        <label htmlFor="needBlankets">Precisa de Cobertores</label>
+                                        <Field
+                                        component={ CustomRadioButton }
+                                        id="needBlankets"
+                                        name="needBlankets"
+                                        options={ optionsYesOrNo }
+                                        />
+                                    </Container>
                                     
-                                    <label htmlFor="needShoes.answer">Precisa de Calçados</label>
-                                    <Field
-                                    component={ CustomRadioButton }
-                                    id="needShoes.answer"
-                                    name="needShoes.answer"
-                                    options={ optionsYesOrNo }
-                                    />
-
-                                    {
-                                    values.needShoes.answer === 'sim' 
-                                    ? 
-                                    <Field
-                                    component={ AdditionalInput }
-                                    id="needShoes.number"
-                                    name="needShoes.number"
-                                    placeholder="Número do calçado..."
-                                    label="Número do Calçado"
-                                    />
-                                    : ""
-                                    }
-
-                                    <label htmlFor="needClothes.answer">Precisa de Roupas</label>
-                                    <Field
-                                    component={ CustomRadioButton }
-                                    id="needClothes.answer"
-                                    name="needClothes.answer"
-                                    options={ optionsYesOrNo }
-                                    />
-                                    {
-                                    values.needClothes.answer === 'sim'
-                                    ?
-                                    <div>
+                                    <Container>
+                                        <label htmlFor="needShoes.answer">Precisa de Calçados</label>
                                         <Field
-                                        component={ AdditionalInput }
-                                        id="needClothes.pantsNumber"
-                                        name="needClothes.pantsNumber"
-                                        placeholder="Número da calça..."
-                                        label="Número da Calça"
+                                        component={ CustomRadioButton }
+                                        id="needShoes.answer"
+                                        name="needShoes.answer"
+                                        options={ optionsYesOrNo }
                                         />
 
+                                    {
+                                        values.needShoes.answer === 'sim' 
+                                        ? 
                                         <Field
                                         component={ AdditionalInput }
-                                        id="needClothes.tShirtCoatSize"
-                                        name="needClothes.tShirtCoatSize"
-                                        placeholder="Tamanho da camiseta/agasalho..."
-                                        label="Tamanho da Camiseta/Agasalho"
+                                        id="needShoes.number"
+                                        name="needShoes.number"
+                                        placeholder="Número do calçado..."
+                                        label="Número do Calçado"
                                         />
-                                    </div>
-                                    : ""
+                                        : ""
                                     }
+                                    </Container>
+                                    
+                                    <Container>
+                                        <label htmlFor="needClothes.answer">Precisa de Roupas</label>
+                                        <Field
+                                        component={ CustomRadioButton }
+                                        id="needClothes.answer"
+                                        name="needClothes.answer"
+                                        options={ optionsYesOrNo }
+                                        />
+                                        {
+                                            values.needClothes.answer === 'sim'
+                                            ?
+                                            <div>
+                                            <Field
+                                            component={ AdditionalInput }
+                                            id="needClothes.pantsNumber"
+                                            name="needClothes.pantsNumber"
+                                            placeholder="Número da calça..."
+                                            label="Número da Calça"
+                                            />
 
-                                    <label htmlFor="needDiapers.answer">Precisa de Fraldas</label> 
-                                    <Field
-                                    component={ CustomRadioButton }
-                                    id="needDiapers.answer"
-                                    name="needDiapers.answer"
-                                    options={ optionsYesOrNo }
-                                    />
-                                    {
-                                    values.needDiapers.answer === 'sim'
-                                    ? 
-                                    <Field
-                                    component={ AdditionalInput }
-                                    id="needDiapers.size"
-                                    name="needDiapers.size"
-                                    placeholder="Tamanho das fraldas..."
-                                    label="Tamanho"
-                                    />
-                                    : ""
-                                    }
+                                            <Field
+                                            component={ AdditionalInput }
+                                            id="needClothes.tShirtCoatSize"
+                                            name="needClothes.tShirtCoatSize"
+                                            placeholder="Tamanho da camiseta/agasalho..."
+                                            label="Tamanho da Camiseta/Agasalho"
+                                            />
+                                            </div>
+                                            : ""
+                                        }
+                                    </Container>
 
-                                    <label htmlFor="specialNeed">Alguma Necessidade Especial</label>
-                                    <Field
-                                    type="text-area"
-                                    id="specialNeed"
-                                    name="specialNeed"
-                                    />
-
-                                    <label htmlFor="workshop">Tem Interesse de Participar de Alguma Oficina</label>
-                                    <Field
-                                    component={ CustomCheckbox }
-                                    id="workshop"
-                                    name="workshop"
-                                    options={ optionsWorkshop }
-                                    />
+                                    <Container>
+                                        <label htmlFor="needDiapers.answer">Precisa de Fraldas</label> 
+                                        <Field
+                                        component={ CustomRadioButton }
+                                        id="needDiapers.answer"
+                                        name="needDiapers.answer"
+                                        options={ optionsYesOrNo }
+                                        />
+                                        {
+                                        values.needDiapers.answer === 'sim'
+                                        ? 
+                                        <Field
+                                        component={ AdditionalInput }
+                                        id="needDiapers.size"
+                                        name="needDiapers.size"
+                                        placeholder="Tamanho das fraldas..."
+                                        label="Tamanho"
+                                        />
+                                        : ""
+                                        }
+                                    </Container>
+                                    
+                                    <Container>
+                                        <label htmlFor="specialNeed">Alguma Necessidade Especial</label>
+                                        <Field
+                                        type="text-area"
+                                        id="specialNeed"
+                                        name="specialNeed"
+                                        />
+                                    </Container>
+                                    
+                                    <Container>
+                                        <label htmlFor="workshop">Tem Interesse de Participar de Alguma Oficina</label>
+                                        <Field
+                                        component={ CustomCheckbox }
+                                        id="workshop"
+                                        name="workshop"
+                                        options={ optionsWorkshop }
+                                        />
+                                    </Container>
 
                                 </fieldset>
                                     
                                 <fieldset>
                                     <legend>Vida Religiosa</legend>
+                                    
+                                    <Container>
+                                        <label htmlFor="religion">Religião</label>
+                                        <Field
+                                        component={ CustomRadioButton }
+                                        id="religion"
+                                        name="religion"
+                                        options={ optionsReligion }
+                                        />
+                                    </Container>
 
-                                    <label htmlFor="religion">Religião</label>
-                                    <Field
-                                    component={ CustomRadioButton }
-                                    id="religion"
-                                    name="religion"
-                                    options={ optionsReligion }
-                                    />
+                                    <Container>
+                                        <label htmlFor="receivedSacraments">Sacramentos Recebidos</label>
+                                        <Field
+                                        component={ CustomCheckbox }
+                                        id="receivedSacraments"
+                                        name="receivedSacraments"
+                                        options={ optionsSacraments }
+                                        />
+                                    </Container>
 
-                                    <label htmlFor="receivedSacraments">Sacramentos Recebidos</label>
-                                    <Field
-                                    component={ CustomCheckbox }
-                                    id="receivedSacraments"
-                                    name="receivedSacraments"
-                                    options={ optionsSacraments }
-                                    />
+                                    <Container>
+                                        <label htmlFor="wishReceiveSacraments">Sacramentos que Deseja Receber</label>
+                                        <Field
+                                        component={ CustomCheckbox }
+                                        id="wishReceiveSacraments"
+                                        name="wishReceiveSacraments"
+                                        options={ optionsSacraments }
+                                        />
+                                    </Container>
 
-                                    <label htmlFor="wishReceiveSacraments">Sacramentos que Deseja Receber</label>
-                                    <Field
-                                    component={ CustomCheckbox }
-                                    id="wishReceiveSacraments"
-                                    name="wishReceiveSacraments"
-                                    options={ optionsSacraments }
-                                    />
+                                    <Container>
+                                        <label htmlFor="attendanceMass">Qual a frequência nas Missas</label>
+                                        <Field
+                                        component={ CustomRadioButton }
+                                        id="attendanceMass"
+                                        name="attendanceMass"
+                                        options={ optionsAttendanceMass }
+                                        />
+                                    </Container>
 
-                                    <label htmlFor="attendanceMass">Qual a frequência nas Missas</label>
-                                    <Field
-                                    component={ CustomRadioButton }
-                                    id="attendanceMass"
-                                    name="attendanceMass"
-                                    options={ optionsAttendanceMass }
-                                    />
-
-                                    <label htmlFor="churchActivity">Participação na Igreja</label>
-                                    <Field
-                                    component={ CustomCheckbox }
-                                    id="churchActivity"
-                                    name="churchActivity"
-                                    options={ optionsChurchActivity }
-                                    />
-
-                                    <label htmlFor="memberPastoralsMovements.answer">Participa de Pastoral/Movimento na Igreja</label>
-                                    <Field
-                                    component={ CustomRadioButton }
-                                    id="memberPastoralsMovements.answer"
-                                    name="memberPastoralsMovements.answer"
-                                    options={ optionsYesOrNo }
-                                    />
-                                    { 
-                                    values.memberPastoralsMovements.answer === 'sim'
-                                     ? 
-                                    <Field
-                                    component={ AdditionalInput }
-                                    id="memberPastoralsMovements.which"
-                                    name="memberPastoralsMovements.which"
-                                    placeholder="Pastoral/movimento..."
-                                    label="Qual?"
-                                    />
-                                     : "" 
-                                    }
+                                    <Container>
+                                        <label htmlFor="churchActivity">Participação na Igreja</label>
+                                        <Field
+                                        component={ CustomCheckbox }
+                                        id="churchActivity"
+                                        name="churchActivity"
+                                        options={ optionsChurchActivity }
+                                        />
+                                    </Container>
+                                    
+                                    <Container>
+                                        <label htmlFor="memberPastoralsMovements.answer">Participa de Pastoral/Movimento na Igreja</label>
+                                        <Field
+                                        component={ CustomRadioButton }
+                                        id="memberPastoralsMovements.answer"
+                                        name="memberPastoralsMovements.answer"
+                                        options={ optionsYesOrNo }
+                                        />
+                                        { 
+                                        values.memberPastoralsMovements.answer === 'sim'
+                                        ? 
+                                        <Field
+                                        component={ AdditionalInput }
+                                        id="memberPastoralsMovements.which"
+                                        name="memberPastoralsMovements.which"
+                                        placeholder="Pastoral/movimento..."
+                                        label="Qual?"
+                                        />
+                                        : "" 
+                                        }
+                                    </Container>
 
 
                                     {/* TODO: Continuar implementando o fomulário */
