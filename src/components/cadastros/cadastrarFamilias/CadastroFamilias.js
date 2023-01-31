@@ -52,12 +52,14 @@ const optionsAppliances = [
     { value: 'fogao-gas', label: 'Fogão a Gás' },
     { value: 'fogao-lenha', label: 'Fogão a Lenha' },
     { value: 'geladeira', label: 'Geladeira' },
+    { value: 'nenhuma-das-opcoes', label: 'Nehuma das Opções' },
 ]
 
 const optionsWorkshop = [
     { value: 'atividade-fisica', label: 'Atividade Física' },
     { value: 'musica', label: 'Música' },
     { value: 'artesanato', label: 'Artesanato' },
+    { value: 'nao', label: 'Não' },
 ]
 
 const optionsReligion = [
@@ -98,32 +100,44 @@ const optionsChurchActivity = [
 const errorMessages = {
     fieldReq: 'Campo requerido!',
     phoneInvalid: 'O telefone deve estar no formato (99) 99999-9999',
+    positiveNumber: 'Este campo deve ser maior que zero!',
+    integerNumber: 'Este campo deve possuir um valor inteiro!',
+    minOneReq: 'Ao menos uma opção deve estar selecionada!'
 }
 
 const validationSchema = Yup.object().shape({
 
     completeName: Yup.string().required(errorMessages.fieldReq),
     street: Yup.string().required(errorMessages.fieldReq),
-    houseNumber: Yup.number().required(errorMessages.fieldReq),
+    houseNumber: Yup.number().required(errorMessages.fieldReq).positive(errorMessages.positiveNumber).integer(errorMessages.integerNumber),
     district: Yup.string().required(errorMessages.fieldReq),
     city: Yup.string().required(errorMessages.fieldReq),
     phone1: Yup.string().matches(phoneNumber, errorMessages.phoneInvalid).required(errorMessages.fieldReq),
-    // birthDate: '',
-    // maritalStatus: '',
-    // schoolLevel: '',
-    // occupation: '',
-    // isWorking: '',
-    // srcIncome: '',
-    // numberOfResidents: '',
-    // familyIncome: '',
-    // housingSituation: '',
-    // appliances: [],
-    // needBlankets: '',
-    // needShoes: { answer: '', number: '' },
-    // needClothes: { answer: '', pantsNumber: '', tShirtCoatSize: '' },
-    // needDiapers: { answer: '', size: '' },
-    // specialNeed: '',
-    // workshop: [],
+    birthDate: Yup.date().required(errorMessages.fieldReq),
+    maritalStatus: Yup.string().ensure().required(errorMessages.fieldReq),
+    schoolLevel: Yup.string().ensure().required(errorMessages.fieldReq),
+    occupation: Yup.string().required(errorMessages.fieldReq),
+    isWorking: Yup.string().required(errorMessages.fieldReq),
+    srcIncome: Yup.string().required(errorMessages.fieldReq),
+    numberOfResidents: Yup.number().required(errorMessages.fieldReq).positive(errorMessages.positiveNumber).integer(errorMessages.integerNumber),
+    familyIncome: Yup.number().required(errorMessages.fieldReq).positive(errorMessages.positiveNumber),
+    housingSituation: Yup.string().required(errorMessages.fieldReq),
+    appliances: Yup.array().min(1, errorMessages.minOneReq),
+    needBlankets: Yup.string().required(errorMessages.fieldReq),
+    needShoes: Yup.object().shape({
+        answer: Yup.string().required(errorMessages.fieldReq),
+        number: Yup.number().required(errorMessages.fieldReq).positive(errorMessages.positiveNumber).integer(errorMessages.integerNumber),
+    }),
+    needClothes: Yup.object().shape({
+        answer: Yup.string().required(errorMessages.fieldReq),
+        pantsNumber: Yup.number().optional().positive(errorMessages.positiveNumber).integer(errorMessages.integerNumber),
+        tShirtCoatSize: Yup.string().optional()
+    }),
+    needDiapers: Yup.object().shape({
+        answer: Yup.string().required(errorMessages.fieldReq),
+        size: Yup.string().required(errorMessages.fieldReq),
+    }),
+    workshop: Yup.array().min(1, errorMessages.minOneReq),
     // religion: '',
     // receivedSacraments: [],
     // wishReceiveSacraments: [],
@@ -178,7 +192,7 @@ const CadastroFamilias = () =>{
                 }}
                 >
                     {
-                        ({ values, errors }) => (
+                        ({ values }) => (
                             <Form className="cds-form">
                                 <fieldset>
                                     <legend>Dados Pessoais</legend>
@@ -192,7 +206,7 @@ const CadastroFamilias = () =>{
                                         placeholder="Digite o nome completo..."
                                         />
 
-                                        <ErrorMessage component="div" className="errorMsg" name="completeName"/>
+                                        <ErrorMessage component="div" className="formErrorMsg" name="completeName"/>
                                     </Container>
                                     
                                     <Container>
@@ -204,20 +218,20 @@ const CadastroFamilias = () =>{
                                         placeholder="Digite a rua, avenida..."
                                         />
 
-                                        <ErrorMessage component="div" className="errorMsg" name="street"/>
+                                        <ErrorMessage component="div" className="formErrorMsg" name="street"/>
                                     </Container>
                                     
                                     
                                     <Container>
                                         <label htmlFor="houseNumber">Número*</label>
                                         <Field
-                                        type="text"
+                                        type="number"
                                         id="houseNumber"
                                         name="houseNumber"
                                         placeholder="XXX"
                                         />
 
-                                        <ErrorMessage component="div" className="errorMsg" name="houseNumber"/>
+                                        <ErrorMessage component="div" className="formErrorMsg" name="houseNumber"/>
                                     </Container>
 
                                     <Container>
@@ -229,7 +243,7 @@ const CadastroFamilias = () =>{
                                         placeholder="Digite o bairro..."
                                         />
                                         
-                                        <ErrorMessage component="div" className="errorMsg" name="district"/>                                     
+                                        <ErrorMessage component="div" className="formErrorMsg" name="district"/>                                     
                                     </Container>
 
                                     <Container>    
@@ -250,7 +264,7 @@ const CadastroFamilias = () =>{
                                         name="city"
                                         placeholder="Digite a cidade..."
                                         />
-                                        <ErrorMessage component="div" className="errorMsg" name="city"/>                                     
+                                        <ErrorMessage component="div" className="formErrorMsg" name="city"/>                                     
                                     </Container>    
                                     
                                     <Container>
@@ -261,7 +275,7 @@ const CadastroFamilias = () =>{
                                         name="phone1"
                                         placeholder="(XX) XXXXX-XXXX"
                                         />
-                                        <ErrorMessage component="div" className="errorMsg" name="phone1"/>
+                                        <ErrorMessage component="div" className="formErrorMsg" name="phone1"/>
                                     </Container>
 
                                     <Container>
@@ -275,77 +289,88 @@ const CadastroFamilias = () =>{
                                     </Container>        
 
                                     <Container>
-                                        <label htmlFor="birthDate">Data de Nascimento</label>
+                                        <label htmlFor="birthDate">Data de Nascimento*</label>
                                         <Field
                                         type="date"
                                         id="birthDate"
                                         name="birthDate"
                                         />
-                                        <ErrorMessage component="div" className="errorMsg" name="birthDate"/>
+                                        <ErrorMessage component="div" className="formErrorMsg" name="birthDate"/>
                                     </Container>
 
                                     <Container>
-                                        <label htmlFor="maritalStatus">Estado Civil</label>
+                                        <label htmlFor="maritalStatus">Estado Civil*</label>
                                         <Field
                                         name="maritalStatus"
                                         id="maritalStatus"
                                         component={ CustomSelect }
                                         options={ optionsMaritalStatus }
                                         />
+                                        <ErrorMessage component="div" className="formErrorMsg" name="maritalStatus"/>
+                                        {/* {!!errors['maritalStatus'] && touched['react-select-3-input'] && (
+                                        <div className="formErrorMsg">
+                                            { errors['maritalStatus'] }
+                                        </div>
+                                        )} */}
                                     </Container>
 
                                     <Container>
-                                        <label htmlFor="schoolLevel">Escolaridade</label>
+                                        <label htmlFor="schoolLevel">Escolaridade*</label>
                                         <Field
                                         name="schoolLevel"
                                         id="schoolLevel"
                                         component={ CustomSelect }
                                         options={ optionsSchoolLevel }
                                         />
+                                        <ErrorMessage component="div" className="formErrorMsg" name="schoolLevel"/>
                                     </Container>
                                     
                                     <Container>
-                                        <label htmlFor="occupation">Profissão</label>
+                                        <label htmlFor="occupation">Profissão*</label>
                                         <Field
                                         type="text"
                                         id="occupation"
                                         name="occupation"
                                         placeholder="Digite a profissão..."
                                         />
+                                        <ErrorMessage component="div" className="formErrorMsg" name="occupation"/>
                                     </Container>
 
                                     <Container>
-                                        <label htmlFor="isWorking">Está trabalhando?</label>
+                                        <label htmlFor="isWorking">Está trabalhando?*</label>
                                         <Field
                                         component={ CustomRadioButton }
                                         id="isWorking"
                                         name="isWorking"
                                         options={ optionsYesOrNo }
                                         />
+                                        <ErrorMessage component="div" className="formErrorMsg" name="isWorking"/>
                                     </Container>
                                     
                                     <Container>
-                                        <label htmlFor="srcIncome">Fonte de Renda</label>
+                                        <label htmlFor="srcIncome">Fonte de Renda*</label>
                                         <Field
                                         component={ CustomRadioButton }
                                         id="srcIncome"
                                         name="srcIncome"
                                         options={ optionsSrcIncome }
                                         />
+                                        <ErrorMessage component="div" className="formErrorMsg" name="srcIncome"/>
                                     </Container>
 
                                     <Container>
-                                        <label htmlFor="numberOfResidents">Quantidade de Moradores na Casa</label>
+                                        <label htmlFor="numberOfResidents">Quantidade de Moradores na Casa*</label>
                                         <Field
                                         type="number"
                                         id="numberOfResidents"
                                         name="numberOfResidents"
                                         placeholder="Quantidade de moradores..."
                                         />
+                                        <ErrorMessage component="div" className="formErrorMsg" name="numberOfResidents"/>
                                     </Container>
 
                                     <Container>
-                                        <label htmlFor="familyIncome">Renda Familiar</label>
+                                        <label htmlFor="familyIncome">Renda Familiar*</label>
                                         <label htmlFor="familyIncome">
                                             R$
                                             <Field
@@ -355,40 +380,44 @@ const CadastroFamilias = () =>{
                                             placeholder="Valor da renda..."
                                             />
                                         </label>
+                                        <ErrorMessage component="div" className="formErrorMsg" name="familyIncome"/>
                                     </Container>
 
                                     <Container>
-                                        <label htmlFor="housingSituation">Situação Habitacional</label>
+                                        <label htmlFor="housingSituation">Situação Habitacional*</label>
                                         <Field
                                         component={ CustomRadioButton }
                                         id="housingSituation"
                                         name="housingSituation"
                                         options={ optionsHousingSituation }
                                         />
+                                        <ErrorMessage component="div" className="formErrorMsg" name="housingSituation"/>
                                     </Container>
 
                                     <Container>
-                                        <label htmlFor="appliances">A Família Possui</label>
+                                        <label htmlFor="appliances">A Família Possui*</label>
                                         <Field
                                         component={ CustomCheckbox }
                                         id="appliances"
                                         name="appliances"
                                         options={ optionsAppliances }
                                         />
+                                        <ErrorMessage component="div" className="formErrorMsg" name="appliances"/>
                                     </Container>
 
                                     <Container>
-                                        <label htmlFor="needBlankets">Precisa de Cobertores</label>
+                                        <label htmlFor="needBlankets">Precisa de Cobertores*</label>
                                         <Field
                                         component={ CustomRadioButton }
                                         id="needBlankets"
                                         name="needBlankets"
                                         options={ optionsYesOrNo }
                                         />
+                                        <ErrorMessage component="div" className="formErrorMsg" name="needBlankets"/>
                                     </Container>
                                     
                                     <Container>
-                                        <label htmlFor="needShoes.answer">Precisa de Calçados</label>
+                                        <label htmlFor="needShoes.answer">Precisa de Calçados*</label>
                                         <Field
                                         component={ CustomRadioButton }
                                         id="needShoes.answer"
@@ -398,20 +427,24 @@ const CadastroFamilias = () =>{
 
                                     {
                                         values.needShoes.answer === 'sim' 
-                                        ? 
-                                        <Field
-                                        component={ AdditionalInput }
-                                        id="needShoes.number"
-                                        name="needShoes.number"
-                                        placeholder="Número do calçado..."
-                                        label="Número do Calçado"
-                                        />
+                                        ?
+                                        <div>
+                                            <Field
+                                            component={ AdditionalInput }
+                                            id="needShoes.number"
+                                            name="needShoes.number"
+                                            placeholder="Número do calçado..."
+                                            label="Número do Calçado"
+                                            />
+                                            <ErrorMessage component="div" className="formErrorMsg" name="needShoes.number"/>
+                                        </div>
                                         : ""
                                     }
+                                    <ErrorMessage component="div" className="formErrorMsg" name="needShoes.answer"/>
                                     </Container>
                                     
                                     <Container>
-                                        <label htmlFor="needClothes.answer">Precisa de Roupas</label>
+                                        <label htmlFor="needClothes.answer">Precisa de Roupas*</label>
                                         <Field
                                         component={ CustomRadioButton }
                                         id="needClothes.answer"
@@ -430,6 +463,8 @@ const CadastroFamilias = () =>{
                                             label="Número da Calça"
                                             />
 
+                                            <ErrorMessage component="div" className="formErrorMsg" name="needClothes.pantsNumber"/>
+
                                             <Field
                                             component={ AdditionalInput }
                                             id="needClothes.tShirtCoatSize"
@@ -437,13 +472,15 @@ const CadastroFamilias = () =>{
                                             placeholder="Tamanho da camiseta/agasalho..."
                                             label="Tamanho da Camiseta/Agasalho"
                                             />
+                                            <ErrorMessage component="div" className="formErrorMsg" name="needClothes.tShirtCoatSize"/>
                                             </div>
                                             : ""
                                         }
+                                        <ErrorMessage component="div" className="formErrorMsg" name="needClothes.answer"/>
                                     </Container>
 
                                     <Container>
-                                        <label htmlFor="needDiapers.answer">Precisa de Fraldas</label> 
+                                        <label htmlFor="needDiapers.answer">Precisa de Fraldas*</label> 
                                         <Field
                                         component={ CustomRadioButton }
                                         id="needDiapers.answer"
@@ -452,16 +489,20 @@ const CadastroFamilias = () =>{
                                         />
                                         {
                                         values.needDiapers.answer === 'sim'
-                                        ? 
-                                        <Field
-                                        component={ AdditionalInput }
-                                        id="needDiapers.size"
-                                        name="needDiapers.size"
-                                        placeholder="Tamanho das fraldas..."
-                                        label="Tamanho"
-                                        />
+                                        ?
+                                        <div>
+                                            <Field
+                                            component={ AdditionalInput }
+                                            id="needDiapers.size"
+                                            name="needDiapers.size"
+                                            placeholder="Tamanho das fraldas..."
+                                            label="Tamanho"
+                                            />
+                                            <ErrorMessage component="div" className="formErrorMsg" name="needDiapers.size"/>
+                                        </div>
                                         : ""
                                         }
+                                        <ErrorMessage component="div" className="formErrorMsg" name="needDiapers.answer"/>
                                     </Container>
                                     
                                     <Container>
@@ -474,13 +515,14 @@ const CadastroFamilias = () =>{
                                     </Container>
                                     
                                     <Container>
-                                        <label htmlFor="workshop">Tem Interesse de Participar de Alguma Oficina</label>
+                                        <label htmlFor="workshop">Tem Interesse de Participar de Alguma Oficina*</label>
                                         <Field
                                         component={ CustomCheckbox }
                                         id="workshop"
                                         name="workshop"
                                         options={ optionsWorkshop }
                                         />
+                                        <ErrorMessage component="div" className="formErrorMsg" name="workshop"/>
                                     </Container>
 
                                 </fieldset>
