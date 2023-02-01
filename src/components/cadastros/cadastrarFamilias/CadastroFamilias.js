@@ -76,6 +76,7 @@ const optionsSacraments = [
     { value: 'crisma', label: 'Crisma' },
     { value: 'confissao', label: 'Confissão' },
     { value: 'matrimonio', label: 'Matrimônio' },
+    { value: 'nenhum', label: 'Nenhum' },
 ]
 
 const optionsAttendanceMass = [
@@ -113,6 +114,7 @@ const validationSchema = Yup.object().shape({
     district: Yup.string().required(errorMessages.fieldReq),
     city: Yup.string().required(errorMessages.fieldReq),
     phone1: Yup.string().matches(phoneNumber, errorMessages.phoneInvalid).required(errorMessages.fieldReq),
+    phone2: Yup.string().matches(phoneNumber, errorMessages.phoneInvalid).optional(),
     birthDate: Yup.date().required(errorMessages.fieldReq),
     maritalStatus: Yup.string().ensure().required(errorMessages.fieldReq),
     schoolLevel: Yup.string().ensure().required(errorMessages.fieldReq),
@@ -138,12 +140,15 @@ const validationSchema = Yup.object().shape({
         size: Yup.string().required(errorMessages.fieldReq),
     }),
     workshop: Yup.array().min(1, errorMessages.minOneReq),
-    // religion: '',
-    // receivedSacraments: [],
-    // wishReceiveSacraments: [],
-    // attendanceMass: '',
-    // churchActivity: [],
-    // memberPastoralsMovements: { answer: '', which: '' },
+    religion: Yup.string().required(errorMessages.fieldReq),
+    receivedSacraments: Yup.array().min(1, errorMessages.minOneReq),
+    wishReceiveSacraments: Yup.array().min(1, errorMessages.minOneReq),
+    attendanceMass: Yup.string().required(errorMessages.fieldReq),
+    churchActivity: Yup.array().min(1, errorMessages.minOneReq),
+    memberPastoralsMovements: Yup.object().shape({
+        answer: Yup.string().required(errorMessages.fieldReq),
+        which: Yup.string().required(errorMessages.fieldReq)
+    }),
 })
 
 const CadastroFamilias = () =>{
@@ -286,6 +291,7 @@ const CadastroFamilias = () =>{
                                         name="phone2"
                                         placeholder="(XX) XXXXX-XXXX"
                                         />
+                                        <ErrorMessage component="div" className="formErrorMsg" name="phone2"/>
                                     </Container>        
 
                                     <Container>
@@ -307,11 +313,6 @@ const CadastroFamilias = () =>{
                                         options={ optionsMaritalStatus }
                                         />
                                         <ErrorMessage component="div" className="formErrorMsg" name="maritalStatus"/>
-                                        {/* {!!errors['maritalStatus'] && touched['react-select-3-input'] && (
-                                        <div className="formErrorMsg">
-                                            { errors['maritalStatus'] }
-                                        </div>
-                                        )} */}
                                     </Container>
 
                                     <Container>
@@ -531,57 +532,62 @@ const CadastroFamilias = () =>{
                                     <legend>Vida Religiosa</legend>
                                     
                                     <Container>
-                                        <label htmlFor="religion">Religião</label>
+                                        <label htmlFor="religion">Religião*</label>
                                         <Field
                                         component={ CustomRadioButton }
                                         id="religion"
                                         name="religion"
                                         options={ optionsReligion }
                                         />
+                                        <ErrorMessage component="div" className="formErrorMsg" name="religion"/>
                                     </Container>
 
                                     <Container>
-                                        <label htmlFor="receivedSacraments">Sacramentos Recebidos</label>
+                                        <label htmlFor="receivedSacraments">Sacramentos Recebidos*</label>
                                         <Field
                                         component={ CustomCheckbox }
                                         id="receivedSacraments"
                                         name="receivedSacraments"
                                         options={ optionsSacraments }
                                         />
+                                        <ErrorMessage component="div" className="formErrorMsg" name="receivedSacraments"/>
                                     </Container>
 
                                     <Container>
-                                        <label htmlFor="wishReceiveSacraments">Sacramentos que Deseja Receber</label>
+                                        <label htmlFor="wishReceiveSacraments">Sacramentos que Deseja Receber*</label>
                                         <Field
                                         component={ CustomCheckbox }
                                         id="wishReceiveSacraments"
                                         name="wishReceiveSacraments"
                                         options={ optionsSacraments }
                                         />
+                                        <ErrorMessage component="div" className="formErrorMsg" name="wishReceiveSacraments"/>
                                     </Container>
 
                                     <Container>
-                                        <label htmlFor="attendanceMass">Qual a frequência nas Missas</label>
+                                        <label htmlFor="attendanceMass">Qual a frequência nas Missas*</label>
                                         <Field
                                         component={ CustomRadioButton }
                                         id="attendanceMass"
                                         name="attendanceMass"
                                         options={ optionsAttendanceMass }
                                         />
+                                        <ErrorMessage component="div" className="formErrorMsg" name="attendanceMass"/>
                                     </Container>
 
                                     <Container>
-                                        <label htmlFor="churchActivity">Participação na Igreja</label>
+                                        <label htmlFor="churchActivity">Participação na Igreja*</label>
                                         <Field
                                         component={ CustomCheckbox }
                                         id="churchActivity"
                                         name="churchActivity"
                                         options={ optionsChurchActivity }
                                         />
+                                        <ErrorMessage component="div" className="formErrorMsg" name="churchActivity"/>
                                     </Container>
                                     
                                     <Container>
-                                        <label htmlFor="memberPastoralsMovements.answer">Participa de Pastoral/Movimento na Igreja</label>
+                                        <label htmlFor="memberPastoralsMovements.answer">Participa de Pastoral/Movimento na Igreja*</label>
                                         <Field
                                         component={ CustomRadioButton }
                                         id="memberPastoralsMovements.answer"
@@ -590,16 +596,20 @@ const CadastroFamilias = () =>{
                                         />
                                         { 
                                         values.memberPastoralsMovements.answer === 'sim'
-                                        ? 
-                                        <Field
-                                        component={ AdditionalInput }
-                                        id="memberPastoralsMovements.which"
-                                        name="memberPastoralsMovements.which"
-                                        placeholder="Pastoral/movimento..."
-                                        label="Qual?"
-                                        />
+                                        ?
+                                        <div>
+                                            <Field
+                                            component={ AdditionalInput }
+                                            id="memberPastoralsMovements.which"
+                                            name="memberPastoralsMovements.which"
+                                            placeholder="Pastoral/movimento..."
+                                            label="Qual?"
+                                            />
+                                            <ErrorMessage component="div" className="formErrorMsg" name="memberPastoralsMovements.which"/>
+                                        </div>
                                         : "" 
                                         }
+                                        <ErrorMessage component="div" className="formErrorMsg" name="memberPastoralsMovements.answer"/>
                                     </Container>
 
 
