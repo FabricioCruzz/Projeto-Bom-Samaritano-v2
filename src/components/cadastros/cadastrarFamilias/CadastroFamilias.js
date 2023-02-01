@@ -99,12 +99,21 @@ const optionsChurchActivity = [
 ]
 
 const errorMessages = {
-    fieldReq: 'Campo requerido!',
+    fieldReq: 'Campo requerido',
     phoneInvalid: 'O telefone deve estar no formato (99) 99999-9999',
-    positiveNumber: 'Este campo deve ser maior que zero!',
-    integerNumber: 'Este campo deve possuir um valor inteiro!',
-    minOneReq: 'Ao menos uma opção deve estar selecionada!'
+    positiveNumber: 'Este campo deve ser maior que zero',
+    integerNumber: 'Este campo deve possuir um valor inteiro',
+    minOneReq: 'Ao menos uma opção deve estar selecionada',
+    currentDateInvalid: 'A data deve ser antes da data informada',
+    tooOldDate: 'A data não pode ser anterior a 01/01/1900'
 }
+
+
+
+const getFormatedDate = currentDate => currentDate.split('/').reverse().join('-')
+
+const minDate = '01/01/1900'
+const currentDate = new Date().toLocaleDateString('pt-BR')
 
 const validationSchema = Yup.object().shape({
 
@@ -115,7 +124,10 @@ const validationSchema = Yup.object().shape({
     city: Yup.string().required(errorMessages.fieldReq),
     phone1: Yup.string().matches(phoneNumber, errorMessages.phoneInvalid).required(errorMessages.fieldReq),
     phone2: Yup.string().matches(phoneNumber, errorMessages.phoneInvalid).optional(),
-    birthDate: Yup.date().required(errorMessages.fieldReq),
+    birthDate: Yup.date()
+        .required(errorMessages.fieldReq)
+        .min(getFormatedDate(minDate), errorMessages.tooOldDate)
+        .max(getFormatedDate(currentDate), errorMessages.currentDateInvalid),
     maritalStatus: Yup.string().ensure().required(errorMessages.fieldReq),
     schoolLevel: Yup.string().ensure().required(errorMessages.fieldReq),
     occupation: Yup.string().required(errorMessages.fieldReq),
