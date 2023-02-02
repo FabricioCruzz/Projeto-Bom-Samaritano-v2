@@ -150,8 +150,19 @@ const validationSchema = Yup.object().shape({
     }),
 })
 
-const CadastroFamilias = () =>{
 
+
+const CadastroFamilias = () =>{
+    
+    const generateResidentFields = () => {
+        return (
+            <React.Fragment>
+                <div>
+                    TESTE!!!
+                </div>
+            </React.Fragment>
+        )
+    }
     return (
         <Container id="cds-fam-container">
             <h2 className="pbs-title-h2">Cadastrar Família</h2>
@@ -427,7 +438,7 @@ const CadastroFamilias = () =>{
 
                                     {
                                         values.needShoes.answer === 'sim' 
-                                        ?
+                                        &&
                                         <div>
                                             <Field
                                             component={ AdditionalInput }
@@ -438,7 +449,7 @@ const CadastroFamilias = () =>{
                                             />
                                             <ErrorMessage component="div" className="formErrorMsg" name="needShoes.number"/>
                                         </div>
-                                        : ""
+                                        
                                     }
                                     <ErrorMessage component="div" className="formErrorMsg" name="needShoes.answer"/>
                                     </Container>
@@ -453,7 +464,7 @@ const CadastroFamilias = () =>{
                                         />
                                         {
                                             values.needClothes.answer === 'sim'
-                                            ?
+                                            &&
                                             <div>
                                             <Field
                                             component={ AdditionalInput }
@@ -474,7 +485,6 @@ const CadastroFamilias = () =>{
                                             />
                                             <ErrorMessage component="div" className="formErrorMsg" name="needClothes.tShirtCoatSize"/>
                                             </div>
-                                            : ""
                                         }
                                         <ErrorMessage component="div" className="formErrorMsg" name="needClothes.answer"/>
                                     </Container>
@@ -489,7 +499,7 @@ const CadastroFamilias = () =>{
                                         />
                                         {
                                         values.needDiapers.answer === 'sim'
-                                        ?
+                                        &&
                                         <div>
                                             <Field
                                             component={ AdditionalInput }
@@ -500,7 +510,6 @@ const CadastroFamilias = () =>{
                                             />
                                             <ErrorMessage component="div" className="formErrorMsg" name="needDiapers.size"/>
                                         </div>
-                                        : ""
                                         }
                                         <ErrorMessage component="div" className="formErrorMsg" name="needDiapers.answer"/>
                                     </Container>
@@ -595,7 +604,7 @@ const CadastroFamilias = () =>{
                                         />
                                         { 
                                         values.memberPastoralsMovements.answer === 'sim'
-                                        ?
+                                        &&
                                         <div>
                                             <Field
                                             component={ AdditionalInput }
@@ -605,8 +614,7 @@ const CadastroFamilias = () =>{
                                             label="Qual?"
                                             />
                                             <ErrorMessage component="div" className="formErrorMsg" name="memberPastoralsMovements.which"/>
-                                        </div>
-                                        : "" 
+                                        </div> 
                                         }
                                         <ErrorMessage component="div" className="formErrorMsg" name="memberPastoralsMovements.answer"/>
                                     </Container>
