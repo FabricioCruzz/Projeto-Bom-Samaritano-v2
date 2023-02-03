@@ -2,10 +2,12 @@ import React from 'react'
 
 const CheckboxButton = ({ options, name, onChange, onBlur }) => {
   
+  const classNameCheckboxBtn = 'checkbox-btn-component'
+
   const renderOptions = options.map(option => {
 
     return (
-      <div key={ option.label }>
+      <div className={ classNameCheckboxBtn } key={ option.label }>
           <input type="checkbox"
           id={ `${ name }-${ option.value }` }
           name={ name }

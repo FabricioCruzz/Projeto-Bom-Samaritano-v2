@@ -1,3 +1,25 @@
-.cds-form > fieldset >.container {
-    margin: 10px auto;
+@import '../../../assets/styles/variables.scss';
+
+#cds-fam-container {
+    padding: 1rem;
+}
+
+.pbs-form {
+    > fieldset {
+        > .container {
+            margin: 1rem auto;
+        }  
+    } 
+}
+
+
+
+.container > input {
+    display: block;
+}
+
+#{selector-append(".radio, .checkbox", "-btn-component")} {
+    > label{
+        font-weight: 400;
+    }
 }

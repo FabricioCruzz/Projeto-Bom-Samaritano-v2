@@ -20,6 +20,7 @@ import CustomSelect from '../../customSelect/CustomSelect'
 import CustomRadioButton from '../../customRadioButton/CustomRadioButtons'
 import CustomCheckbox from '../../customCheckbox/CustomCheckbox'
 import AdditionalInput from '../../inputs/AdditionalInput'
+import CustomButton from '../../buttons/CustomButton'
 import * as Yup from 'yup'
 import { phoneNumber } from '../../../utils/validations'
 
@@ -208,7 +209,7 @@ const CadastroFamilias = () =>{
                 >
                     {
                         ({ values }) => (
-                            <Form className="cds-form">
+                            <Form className="pbs-flex pbs-col pbs-form">
                                 <fieldset>
                                     <legend>Dados Pessoais</legend>
                                     
@@ -624,8 +625,19 @@ const CadastroFamilias = () =>{
                                     // Incluir botão para adicionar mais moradores
                                     }
                                 </fieldset>
+                                
+                                <fieldset>
+                                    <legend>Moradores</legend>
+                                    
 
-                                <button type="submit">Cadastrar</button>
+                                    <div id="morador-container">
+                                    <button type='button' onClick={ generateResidentFields }>Adicionar Morador</button>
+                                        
+                                    </div>
+
+                                </fieldset>
+                                
+                                <CustomButton className="btn-margin" value="Cadastrar" type="submit"/>
                             </Form>
                         )
                     }

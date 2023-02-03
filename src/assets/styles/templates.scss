@@ -15,6 +15,15 @@
     font-weight: bold;
 }
 
+.pbs-title-h2 {
+    margin: 0.3rem auto 2rem auto;
+}
+
+.pbs-form label {
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
 .pbs-btn-modal{
     margin: auto 0.5rem;
     display: inherit;
@@ -31,31 +40,45 @@
     }
 }
 
-// Classe usada para retirar botões laterais dos inputs do tipo number
-.pbs-txt-appeareance::-webkit-inner-spin-button,
-.pbs-txt-appeareance::-webkit-outer-spin-button{
-    -webkit-appearance: none;
-    margin: 0;
+.btn-margin{
+    margin: 3.1rem auto 0 auto !important;
 }
 
-.pbs-inputs{
-    font-size: 1rem;
-    box-sizing: border-box;
-    width: 425px;
-    height: 60px;
-    background: $white;
-    border: 0.3px solid $gray-01;
-    box-shadow: 2px 4px 15px 2px $black-025;
-    border-radius: 12px;
-    
-    &::placeholder{
-        font-weight: 500;
-        color: $black-05;
+// Classe usada para retirar botões laterais dos inputs do tipo number
+.pbs-txt-appeareance{
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button{
+        -webkit-appearance: none;
+        margin: 0;
     }
+}
 
-    &:focus{
-        border-color: $red-secondary-transparent;
-        box-shadow: 0 0 0 0.25rem $red-secondary-transparent;
+input {
+    &[type="text"], 
+    &[type="text-area"], 
+    &[type="tel"],
+    &[type="number"],
+    &[type="date"] {
+        font-size: 1rem;
+        box-sizing: border-box;
+        width: 425px;
+        height: 60px;
+        background: $white;
+        border: 0.3px solid $gray-01;
+        box-shadow: 2px 4px 15px 2px $black-025;
+        border-radius: 12px;
+        
+        &::placeholder{
+            font-style: italic;
+            font-weight: 500;
+            color: $black-05;
+            padding: 10px 10px 10px 15px;
+        }
+        
+        &:focus{
+            border-color: $red-secondary-transparent;
+            box-shadow: 0 0 0 0.25rem $red-secondary-transparent;
+        }
     }
 }
 
