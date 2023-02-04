@@ -64,7 +64,6 @@ const CadastroAlimentos = () => {
                         <Form.Group className="mb-3" controlId="formDescription">
                             <Form.Label>Descrição</Form.Label>
                             <Form.Control
-                            className="pbs-inputs"
                             name="product"
                             onChange={ handleChange }
                             type="text"
@@ -94,7 +93,6 @@ const CadastroAlimentos = () => {
                         <Form.Group className="mb-3" controlId="formAmount">
                             <Form.Label>Quantidade</Form.Label>
                             <Form.Control
-                            className="pbs-txt-appeareance pbs-inputs"
                             name="amount"
                             onChange={ handleChange }
                             type="number"

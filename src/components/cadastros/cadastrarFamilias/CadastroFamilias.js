@@ -521,6 +521,7 @@ const CadastroFamilias = () =>{
                                         type="text-area"
                                         id="specialNeed"
                                         name="specialNeed"
+                                        placeholder="Alguma informação adicional?"
                                         />
                                     </Container>
                                     
