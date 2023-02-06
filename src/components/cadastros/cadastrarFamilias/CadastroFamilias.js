@@ -518,7 +518,7 @@ const CadastroFamilias = () =>{
                                     <Container>
                                         <label htmlFor="specialNeed">Alguma Necessidade Especial</label>
                                         <Field
-                                        type="text-area"
+                                        as="textarea"
                                         id="specialNeed"
                                         name="specialNeed"
                                         placeholder="Alguma informação adicional?"

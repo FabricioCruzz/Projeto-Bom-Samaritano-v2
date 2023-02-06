@@ -21,6 +21,10 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+
+    & > input::placeholder{
+        padding-left: 12%;
+    }
 }
 
 .user-icon{

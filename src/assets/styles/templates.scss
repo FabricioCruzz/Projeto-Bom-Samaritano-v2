@@ -68,6 +68,7 @@ input {
         }
         
         &:focus{
+            outline: 0.3px solid $gray-01;
             border-color: $red-secondary-transparent;
             box-shadow: 0 0 0 0.25rem $red-secondary-transparent;
         }
@@ -79,6 +80,31 @@ input {
             -webkit-appearance: none;
             margin: 0;
         }
+    }
+}
+
+textarea{
+    display: block;
+    width: 500px;
+    height: 170px;
+    background: $white;
+    border: 0.3px solid $gray-01;
+    box-sizing: border-box;
+    box-shadow: 2px 4px 15px 2px $black-025;
+    border-radius: 12px;
+    padding: 10px 10px 10px 15px;
+    resize: none;
+
+    &::placeholder{
+        font-style: italic;
+        font-weight: 500;
+        color: $black-05;
+    }
+    
+    &:focus{
+        outline: 0.3px solid $gray-01;
+        border-color: $red-secondary-transparent;
+        box-shadow: 0 0 0 0.25rem $red-secondary-transparent;
     }
 }
 

@@ -17,6 +17,10 @@
     > label[for="familyIncome"]:nth-child(2){
         display: block;
         font-size: 1.4rem;
+
+        > input{
+            margin-left: 10px;
+        }
     }
 
     > input {
@@ -70,3 +74,10 @@
         margin-left: 5px;
     }
 }
+
+/* TODO: 
+    1. Estilizar scrollbar do TextArea
+    2. Estilizar as tags <legend>
+    3. Ajustar layout para ficar mais parecido com o do Figma (Usar Grid???)
+
+*/
