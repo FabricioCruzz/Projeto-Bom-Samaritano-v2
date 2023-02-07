@@ -11,15 +11,15 @@ html {
   height: 100%;
   scroll-behavior: smooth;
   scrollbar-color: #777 #555;
-  background-color: var(--gray-dark);
-
-    &::-webkit-scrollbar {
-      width: 0.9vw;
+  
+  &::-webkit-scrollbar {
+    width: 0.9vw;
+    background-color: $gray-dark;
     }
 
     &::-webkit-scrollbar-thumb {
       background-color: #777;
-      border: .25em solid var(--gray-dark);
+      border: .25em solid $gray-dark;
       border-radius: 100vw;
 
       &:hover {
@@ -28,13 +28,13 @@ html {
     }
     
     &::-webkit-scrollbar-track {
-      background-color: var(--gray-dark);
+      background-color: $gray-dark;
       border-radius: 100vw;
       margin-block: 0.5em;
       margin-inline: 2em;
 
       &:hover {
-        background-color: var(--gray-dark);
+        background-color: $gray-dark;
       }
     }
 }

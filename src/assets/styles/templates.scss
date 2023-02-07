@@ -95,6 +95,36 @@ textarea{
     padding: 10px 10px 10px 15px;
     resize: none;
 
+    scroll-behavior: smooth;
+    scrollbar-color: #777 #555;
+    
+    &::-webkit-scrollbar {
+        width: 1vw;
+        background-color: $gray-dark;
+        border-radius: 100vw;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #777;
+      border: .25em solid $gray-dark;
+      border-radius: 100vw;
+
+      &:hover {
+        background-color: #888;
+      }
+    }
+    
+    &::-webkit-scrollbar-track {
+      background-color: $gray-dark;
+      border-radius: 100vw;
+      margin-block: 0.5em;
+      margin-inline: 2em;
+
+      &:hover {
+        background-color: $gray-dark;
+      }
+    }
+
     &::placeholder{
         font-style: italic;
         font-weight: 500;
@@ -146,5 +176,7 @@ textarea{
 }
 
 .formErrorMsg {
+    margin: 0.8rem 0.3rem;
     color: red;
+    font-weight: 500;
 }

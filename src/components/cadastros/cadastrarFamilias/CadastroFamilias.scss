@@ -6,9 +6,36 @@
 
 .pbs-form {
     > fieldset {
+        display: flex;
+        flex-flow: row wrap;
+        min-width: 0;
+        padding: 1rem 1.5rem;
+        border: 1px solid black;
+        width: 100%;
+        margin: 1rem auto;
+
         > .container {
             margin: 2rem auto;
-        }  
+            flex-basis: 40%;
+            flex-grow: 1;
+        }
+
+        > legend {
+            margin: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+
+            &::after{
+                content: "";
+                display: block;
+                min-width: 240px;
+                width: 30%;
+                border-bottom: 3px solid black;
+                border-radius: 10px;
+                margin-bottom: 1.5rem;
+            }
+        }
     } 
 }
 
@@ -31,6 +58,22 @@
         font-size: 1.063rem;
         margin-bottom: 0.5rem;
     }
+
+    > .container {
+        margin-top: 1rem;
+        padding-left: 0 !important;
+    }
+
+    > .additionalFields {
+        > div {
+            margin-bottom: 1rem;
+
+            > label, input{
+                display: block;
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
 }
 
 #{selector-append("input", "[id="maritalStatus"], [id="schoolLevel"]")} {
@@ -45,7 +88,7 @@
 }
 
 .custom-select {
-
+    width: 74%;
     border: 0.3px solid $gray-01;
     box-shadow: 2px 4px 15px 2px $black-025;
     border-radius: 12px;
@@ -74,10 +117,3 @@
         margin-left: 5px;
     }
 }
-
-/* TODO: 
-    1. Estilizar scrollbar do TextArea
-    2. Estilizar as tags <legend>
-    3. Ajustar layout para ficar mais parecido com o do Figma (Usar Grid???)
-
-*/

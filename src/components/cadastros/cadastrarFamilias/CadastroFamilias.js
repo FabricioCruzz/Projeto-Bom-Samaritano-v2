@@ -167,7 +167,7 @@ const CadastroFamilias = () =>{
     return (
         <Container id="cds-fam-container">
             <h2 className="pbs-title-h2">Cadastrar Família</h2>
-            <Container className="container-form">
+            <Container>
                 <Formik
                 validationSchema={ validationSchema }
                  initialValues= {{
@@ -440,7 +440,7 @@ const CadastroFamilias = () =>{
                                     {
                                         values.needShoes.answer === 'sim' 
                                         &&
-                                        <div>
+                                        <Container className="additionalFields">
                                             <Field
                                             component={ AdditionalInput }
                                             id="needShoes.number"
@@ -449,7 +449,7 @@ const CadastroFamilias = () =>{
                                             label="Número do Calçado"
                                             />
                                             <ErrorMessage component="div" className="formErrorMsg" name="needShoes.number"/>
-                                        </div>
+                                        </Container>
                                         
                                     }
                                     <ErrorMessage component="div" className="formErrorMsg" name="needShoes.answer"/>
@@ -466,26 +466,26 @@ const CadastroFamilias = () =>{
                                         {
                                             values.needClothes.answer === 'sim'
                                             &&
-                                            <div>
-                                            <Field
-                                            component={ AdditionalInput }
-                                            id="needClothes.pantsNumber"
-                                            name="needClothes.pantsNumber"
-                                            placeholder="Número da calça..."
-                                            label="Número da Calça"
-                                            />
+                                            <Container className="additionalFields">
+                                                <Field
+                                                component={ AdditionalInput }
+                                                id="needClothes.pantsNumber"
+                                                name="needClothes.pantsNumber"
+                                                placeholder="Número da calça..."
+                                                label="Número da Calça"
+                                                />
 
-                                            <ErrorMessage component="div" className="formErrorMsg" name="needClothes.pantsNumber"/>
+                                                <ErrorMessage component="div" className="formErrorMsg" name="needClothes.pantsNumber"/>
 
-                                            <Field
-                                            component={ AdditionalInput }
-                                            id="needClothes.tShirtCoatSize"
-                                            name="needClothes.tShirtCoatSize"
-                                            placeholder="Tamanho da camiseta/agasalho..."
-                                            label="Tamanho da Camiseta/Agasalho"
-                                            />
-                                            <ErrorMessage component="div" className="formErrorMsg" name="needClothes.tShirtCoatSize"/>
-                                            </div>
+                                                <Field
+                                                component={ AdditionalInput }
+                                                id="needClothes.tShirtCoatSize"
+                                                name="needClothes.tShirtCoatSize"
+                                                placeholder="Tamanho da camiseta/agasalho..."
+                                                label="Tamanho da Camiseta/Agasalho"
+                                                />
+                                                <ErrorMessage component="div" className="formErrorMsg" name="needClothes.tShirtCoatSize"/>
+                                            </Container>
                                         }
                                         <ErrorMessage component="div" className="formErrorMsg" name="needClothes.answer"/>
                                     </Container>
@@ -501,7 +501,7 @@ const CadastroFamilias = () =>{
                                         {
                                         values.needDiapers.answer === 'sim'
                                         &&
-                                        <div>
+                                        <Container className="additionalFields">
                                             <Field
                                             component={ AdditionalInput }
                                             id="needDiapers.size"
@@ -510,7 +510,7 @@ const CadastroFamilias = () =>{
                                             label="Tamanho"
                                             />
                                             <ErrorMessage component="div" className="formErrorMsg" name="needDiapers.size"/>
-                                        </div>
+                                        </Container>
                                         }
                                         <ErrorMessage component="div" className="formErrorMsg" name="needDiapers.answer"/>
                                     </Container>
@@ -607,7 +607,7 @@ const CadastroFamilias = () =>{
                                         { 
                                         values.memberPastoralsMovements.answer === 'sim'
                                         &&
-                                        <div>
+                                        <Container className="additionalFields">
                                             <Field
                                             component={ AdditionalInput }
                                             id="memberPastoralsMovements.which"
@@ -616,7 +616,7 @@ const CadastroFamilias = () =>{
                                             label="Qual?"
                                             />
                                             <ErrorMessage component="div" className="formErrorMsg" name="memberPastoralsMovements.which"/>
-                                        </div> 
+                                        </Container> 
                                         }
                                         <ErrorMessage component="div" className="formErrorMsg" name="memberPastoralsMovements.answer"/>
                                     </Container>
