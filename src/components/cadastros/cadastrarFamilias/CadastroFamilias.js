@@ -1,7 +1,7 @@
 import React from 'react'
 import './CadastroFamilias.scss'
 import { Container } from 'react-bootstrap'
-import { Formik, Field, Form, ErrorMessage } from 'formik'
+import { Formik, Field, Form, ErrorMessage, FieldArray } from 'formik'
 import { 
     optionsMaritalStatus,
     optionsSchoolLevel, 
@@ -154,16 +154,6 @@ const validationSchema = Yup.object().shape({
 
 
 const CadastroFamilias = () =>{
-    
-    const generateResidentFields = () => {
-        return (
-            <React.Fragment>
-                <div>
-                    TESTE!!!
-                </div>
-            </React.Fragment>
-        )
-    }
     return (
         <Container id="cds-fam-container">
             <h2 className="pbs-title-h2">Cadastrar Família</h2>
@@ -201,7 +191,11 @@ const CadastroFamilias = () =>{
                     attendanceMass: '',
                     churchActivity: [],
                     memberPastoralsMovements: { answer: '', which: '' },
+                    residents: [
+                        '',
+                    ],
                 }}
+
                 onSubmit={values => {
                     console.log(values)
                     
@@ -622,22 +616,172 @@ const CadastroFamilias = () =>{
                                     </Container>
 
 
-                                    {/* TODO: Continuar implementando o fomulário */
-                                    // Incluir botão para adicionar mais moradores
+                                    {/* TODO: Continuar implementando o fomulário
+                                        Incluir botão para adicionar mais moradores
+                                     ----->   Usar FieldArray pra gerar os campos?     <----
+                                        Ver o video nos favoritos do navegador de novo
+                                    */
                                     }
                                 </fieldset>
                                 
                                 <fieldset>
                                     <legend>Moradores</legend>
                                     
+                                    <div>
+                                        <label>Novo Morador</label>
+                                        <FieldArray name="residents">
+                                            {
+                                                fieldArrayProps => {
+                                                    // console.log('fieldArrayProps', fieldArrayProps)
+                                                    
+                                                    const { push, remove, form } = fieldArrayProps
+                                                    const { values } = form
+                                                    const { residents } = values
 
-                                    <div id="morador-container">
-                                    <button type='button' onClick={ generateResidentFields }>Adicionar Morador</button>
-                                        
+                                                    return (
+                                                        <div>
+                                                            {
+                                                                residents.map((resident, index) => (
+                                                                    <div key={ index }>
+                                                                        <fieldset>
+
+                                                                            {/* <Field name={ `residents[${ index }].completeName` }/> */}
+                                                                            <Container>
+                                                                                <label htmlFor={ `residents[${ index }].completeName` }>Nome*</label>
+                                                                                <Field
+                                                                                type="text"
+                                                                                id={ `residents[${ index }].completeName` }
+                                                                                name={ `residents[${ index }].completeName` }
+                                                                                placeholder="Digite o nome completo..."
+                                                                                />
+                                                                            </Container>
+
+                                                                            {/* <Field name={ `residents[${ index }].birthDate` }/> */}
+                                                                            <Container>
+                                                                                <label htmlFor={ `residents[${ index }].birthDate` }>Data de Nascimento*</label>
+                                                                                <Field
+                                                                                type="date"
+                                                                                id={ `residents[${ index }].birthDate` }
+                                                                                name={ `residents[${ index }].birthDate` }
+                                                                                />
+                                                                            </Container>
+
+                                                                            <Container>
+                                                                                <label htmlFor={ `residents[${ index }].relationship` }>Parentesco</label>
+                                                                                <Field
+                                                                                type="text"
+                                                                                id={ `residents[${ index }].relationship` }
+                                                                                name={ `residents[${ index }].relationship` }
+                                                                                placeholder="Filho, irmão, tio, sobrinho..."
+                                                                                />
+                                                                            </Container>
+
+                                                                            {/* <Field name={ `residents[${ index }].schoolLevel` }/> */}
+                                                                            <Container>
+                                                                                <label htmlFor={ `residents[${ index }].schoolLevel` }>Escolaridade*</label>
+                                                                                <Field
+                                                                                name={ `residents[${ index }].schoolLevel` }
+                                                                                id={ `residents[${ index }].schoolLevel` }
+                                                                                component={ CustomSelect }
+                                                                                options={ optionsSchoolLevel }
+                                                                                />
+                                                                            </Container>
+
+                                                                            {/* <Field type="text" name={ `residents[${ index }].occupation` }/> */}
+                                                                            <Container>
+                                                                                <label htmlFor={ `residents[${ index }].occupation` }>Profissão*</label>
+                                                                                <Field
+                                                                                type="text"
+                                                                                id={ `residents[${ index }].occupation` }
+                                                                                name={ `residents[${ index }].occupation` }
+                                                                                placeholder="Digite a profissão..."
+                                                                                />
+                                                                            </Container>
+
+                                                                            {/* <Field name={ `residents[${ index }].isWorking` }/> Field do tipo Radio */}
+                                                                            <Container>
+                                                                                <label htmlFor={ `residents[${ index }].isWorking` }>Está trabalhando?*</label>
+                                                                                <Field
+                                                                                component={ CustomRadioButton }
+                                                                                id={ `residents[${ index }].isWorking` }
+                                                                                name={ `residents[${ index }].isWorking` }
+                                                                                options={ optionsYesOrNo }
+                                                                                />
+                                                                            </Container>
+
+                                                                            <Field name={ `residents[${ index }].needClothes` }/> { /* Field do tipo Radio */ }
+                                                                            <Field name={ `residents[${ index }].needShoes` }/> { /* Field do tipo Radio */ }
+                                                                            
+                                                                            {/* <Field name={ `residents[${ index }].workshop` }/> Field do tipo Checkbox  */}
+                                                                            <Container>
+                                                                                <label htmlFor={ `residents[${ index }].workshop` }>Tem Interesse de Participar de Alguma Oficina*</label>
+                                                                                <Field
+                                                                                component={ CustomCheckbox }
+                                                                                id={ `residents[${ index }].workshop` }
+                                                                                name={ `residents[${ index }].workshop` }
+                                                                                options={ optionsWorkshop }
+                                                                                />
+                                                                            </Container>
+                                                                        </fieldset>
+                                                                        
+                                                                        <fieldset>
+                                                                            <Field name={ `residents[${ index }].religion` }/> {/* Field do tipo Radio */}
+                                                                            <Field name={ `residents[${ index }].receivedSacraments` }/> { /* Field do tipo Checkbox */}
+                                                                            <Field name={ `residents[${ index }].wishReceiveSacraments` }/> { /* Field do tipo Checkbox */}
+                                                                            <Field name={ `residents[${ index }].attendanceMass` }/> {/* Field do tipo Radio */}
+                                                                            <Field name={ `residents[${ index }].churchActivity` }/> { /* Field do tipo Checkbox */}
+                                                                            {/* <Field name={ `residents[${ index }].memberPastoralMovements` }/> Field do tipo Radio */}
+                                                                            <Container>
+                                                                                <label htmlFor={ `residents[${ index }].memberPastoralMovements` }>Participa de Pastoral/Movimento na Igreja*</label>
+                                                                                <Field
+                                                                                component={ CustomRadioButton }
+                                                                                id={ `residents[${ index }].memberPastoralMovements` }
+                                                                                name={ `residents[${ index }].memberPastoralMovements` }
+                                                                                options={ optionsYesOrNo }
+                                                                                />
+                                                                                {/* { 
+                                                                                values.residents[index].memberPastoralsMovements.answer === 'sim'
+                                                                                &&
+                                                                                <Container className="additionalFields">
+                                                                                    <Field
+                                                                                    component={ AdditionalInput }
+                                                                                    id={ `residents[${ index }].memberPastoralMovements.which` }
+                                                                                    name={ `residents[${ index }].memberPastoralMovements.which` }
+                                                                                    placeholder="Pastoral/movimento..."
+                                                                                    label="Qual?"
+                                                                                    />
+                                                                                    
+                                                                                </Container> 
+                                                                                } */}
+                                                                            </Container>
+                                                                        </fieldset>
+                                                                        {/* <button type="button" onClick={ () => remove(index) }>
+                                                                            { ' ' }
+                                                                            -{ ' ' }
+                                                                        </button>
+
+                                                                        <button type="button" onClick={ () => push('') }>
+                                                                            { ' ' }
+                                                                            +{ ' ' }
+                                                                        </button> */}
+                                                                    </div>
+                                                                ))
+                                                            }
+                                                        </div>
+                                                    )
+                                                }
+                                            }
+                                        </FieldArray>
                                     </div>
 
                                 </fieldset>
                                 
+                                {/* 
+                                    TODO: Arrumar o submit
+                                            -> Pq ele está submetendo somente quando todos os field required
+                                                estiverem preenchidos (Lembrar que alguns não precisam. Ex: Os que respondem
+                                                    "não")
+                                */}
                                 <CustomButton className="btn-margin" value="Cadastrar" type="submit"/>
                             </Form>
                         )

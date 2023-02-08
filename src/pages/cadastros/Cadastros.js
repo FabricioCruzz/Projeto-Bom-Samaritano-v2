@@ -1,6 +1,3 @@
-// TODO: Criar componente de cadastros das famílias.
-// Lembrar de usar os arquivos que estão no celular
-
 import React from 'react'
 import './Cadastros.scss'
 import Menu from '../../components/menu/Menu'
