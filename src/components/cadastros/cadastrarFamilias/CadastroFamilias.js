@@ -192,7 +192,23 @@ const CadastroFamilias = () =>{
                     churchActivity: [],
                     memberPastoralsMovements: { answer: '', which: '' },
                     residents: [
-                        '',
+                        {
+                            completeName: '',
+                            birthDate: '',
+                            relationship: '',
+                            schoolLevel: '',
+                            occupation: '',
+                            isWorking: '',
+                            needShoes: { answer: '', number: '' },
+                            needClothes: { answer: '', pantsNumber: '', tShirtCoatSize: '' },
+                            workshop: [],
+                            religion: '',
+                            receivedSacraments: [],
+                            wishReceiveSacraments: [],
+                            attendanceMass: '',
+                            churchActivity: [],
+                            memberPastoralMovements: { answer: '', which: '' },
+                        },
                     ],
                 }}
 
@@ -644,7 +660,6 @@ const CadastroFamilias = () =>{
                                                                 residents.map((resident, index) => (
                                                                     <div key={ index }>
                                                                         <fieldset>
-
                                                                             {/* <Field name={ `residents[${ index }].completeName` }/> */}
                                                                             <Container>
                                                                                 <label htmlFor={ `residents[${ index }].completeName` }>Nome*</label>
@@ -709,8 +724,70 @@ const CadastroFamilias = () =>{
                                                                                 />
                                                                             </Container>
 
-                                                                            <Field name={ `residents[${ index }].needClothes` }/> { /* Field do tipo Radio */ }
-                                                                            <Field name={ `residents[${ index }].needShoes` }/> { /* Field do tipo Radio */ }
+                                                                            {/* <Field name={ `residents[${ index }].needClothes` }/> Field do tipo Radio */}
+                                                                            <Container>
+                                                                                <label htmlFor={ `residents[${ index }].needClothes.answer` }>Precisa de Roupas*</label>
+                                                                                <Field
+                                                                                component={ CustomRadioButton }
+                                                                                id={ `residents[${ index }].needClothes.answer` }
+                                                                                name={ `residents[${ index }].needClothes.answer` }
+                                                                                options={ optionsYesOrNo }
+                                                                                />
+                                                                                
+                                                                                {
+                                                                                values.residents[index].needClothes.answer === 'sim'
+                                                                                &&
+                                                                                    <Container className="additionalFields">
+                                                                                        <Field
+                                                                                        component={ AdditionalInput }
+                                                                                        id={ `residents[${ index }].needClothes.pantsNumber` }
+                                                                                        name={ `residents[${ index }].needClothes.pantsNumber` }
+                                                                                        placeholder="Número da calça..."
+                                                                                        label="Número da Calça"
+                                                                                        />
+
+                                                                                        {/* <ErrorMessage component="div" className="formErrorMsg" name="needClothes.pantsNumber"/> */}
+
+                                                                                        <Field
+                                                                                        component={ AdditionalInput }
+                                                                                        id={ `residents[${ index }].needClothes.tShirtCoatSize` }
+                                                                                        name={ `residents[${ index }].needClothes.tShirtCoatSize` }
+                                                                                        placeholder="Tamanho da camiseta/agasalho..."
+                                                                                        label="Tamanho da Camiseta/Agasalho"
+                                                                                        />
+                                                                                        {/* <ErrorMessage component="div" className="formErrorMsg" name="needClothes.tShirtCoatSize"/> */}
+                                                                                    </Container>
+                                                                                }
+                                                                                {/* <ErrorMessage component="div" className="formErrorMsg" name="needClothes.answer"/> */}
+                                                                                </Container>
+
+
+                                                                            {/* <Field name={ `residents[${ index }].needShoes` }/> Field do tipo Radio */}
+                                                                            <Container>
+                                                                                <label htmlFor={ `residents[${ index }].needShoes.answer` }>Precisa de Calçados*</label>
+                                                                                <Field
+                                                                                component={ CustomRadioButton }
+                                                                                id={ `residents[${ index }].needShoes.answer` }
+                                                                                name={ `residents[${ index }].needShoes.answer` }
+                                                                                options={ optionsYesOrNo }
+                                                                                />
+
+                                                                                {
+                                                                                values.residents[index].needShoes.answer === 'sim' 
+                                                                                &&
+                                                                                <Container className="additionalFields">
+                                                                                    <Field
+                                                                                    component={ AdditionalInput }
+                                                                                    id={ `residents[${ index }].needShoes.number` }
+                                                                                    name={ `residents[${ index }].needShoes.number` }
+                                                                                    placeholder="Número do calçado..."
+                                                                                    label="Número do Calçado"
+                                                                                    />
+                                                                                    {/* <ErrorMessage component="div" className="formErrorMsg" name="needShoes.number"/> */}
+                                                                                </Container>                                                                                
+                                                                                }
+                                                                            {/* <ErrorMessage component="div" className="formErrorMsg" name="needShoes.answer"/> */}
+                                                                            </Container>
                                                                             
                                                                             {/* <Field name={ `residents[${ index }].workshop` }/> Field do tipo Checkbox  */}
                                                                             <Container>
@@ -725,22 +802,77 @@ const CadastroFamilias = () =>{
                                                                         </fieldset>
                                                                         
                                                                         <fieldset>
-                                                                            <Field name={ `residents[${ index }].religion` }/> {/* Field do tipo Radio */}
-                                                                            <Field name={ `residents[${ index }].receivedSacraments` }/> { /* Field do tipo Checkbox */}
-                                                                            <Field name={ `residents[${ index }].wishReceiveSacraments` }/> { /* Field do tipo Checkbox */}
-                                                                            <Field name={ `residents[${ index }].attendanceMass` }/> {/* Field do tipo Radio */}
-                                                                            <Field name={ `residents[${ index }].churchActivity` }/> { /* Field do tipo Checkbox */}
-                                                                            {/* <Field name={ `residents[${ index }].memberPastoralMovements` }/> Field do tipo Radio */}
+                                                                            {/* <Field name={ `residents[${ index }].religion` }/> Field do tipo Radio */}
                                                                             <Container>
-                                                                                <label htmlFor={ `residents[${ index }].memberPastoralMovements` }>Participa de Pastoral/Movimento na Igreja*</label>
+                                                                                <label htmlFor={ `residents[${ index }].religion` }>Religião*</label>
                                                                                 <Field
                                                                                 component={ CustomRadioButton }
-                                                                                id={ `residents[${ index }].memberPastoralMovements` }
-                                                                                name={ `residents[${ index }].memberPastoralMovements` }
+                                                                                id={ `residents[${ index }].religion` }
+                                                                                name={ `residents[${ index }].religion` }
+                                                                                options={ optionsReligion }
+                                                                                />
+                                                                                {/* <ErrorMessage component="div" className="formErrorMsg" name="religion"/> */}
+                                                                            </Container>
+
+                                                                            {/* <Field name={ `residents[${ index }].receivedSacraments` }/> Field do tipo Checkbox */}
+                                                                            <Container>
+                                                                                <label htmlFor={ `residents[${ index }].receivedSacraments` }>Sacramentos Recebidos*</label>
+                                                                                <Field
+                                                                                component={ CustomCheckbox }
+                                                                                id={ `residents[${ index }].receivedSacraments` }
+                                                                                name={ `residents[${ index }].receivedSacraments` }
+                                                                                options={ optionsSacraments }
+                                                                                />
+                                                                                {/* <ErrorMessage component="div" className="formErrorMsg" name="receivedSacraments"/> */}
+                                                                            </Container>
+
+                                                                            {/* <Field name={ `residents[${ index }].wishReceiveSacraments` }/> Field do tipo Checkbox */}
+                                                                            <Container>
+                                                                                <label htmlFor={ `residents[${ index }].wishReceiveSacraments` }>Sacramentos que Deseja Receber*</label>
+                                                                                <Field
+                                                                                component={ CustomCheckbox }
+                                                                                id={ `residents[${ index }].wishReceiveSacraments` }
+                                                                                name={ `residents[${ index }].wishReceiveSacraments` }
+                                                                                options={ optionsSacraments }
+                                                                                />
+                                                                                {/* <ErrorMessage component="div" className="formErrorMsg" name="wishReceiveSacraments"/> */}
+                                                                            </Container>
+
+                                                                            {/* <Field name={ `residents[${ index }].attendanceMass` }/> Field do tipo Radio */}
+                                                                            <Container>
+                                                                                <label htmlFor={ `residents[${ index }].attendanceMass` }>Qual a frequência nas Missas*</label>
+                                                                                <Field
+                                                                                component={ CustomRadioButton }
+                                                                                id={ `residents[${ index }].attendanceMass` }
+                                                                                name={ `residents[${ index }].attendanceMass` }
+                                                                                options={ optionsAttendanceMass }
+                                                                                />
+                                                                                {/* <ErrorMessage component="div" className="formErrorMsg" name="attendanceMass"/> */}
+                                                                            </Container>
+                                                                            
+                                                                            {/* <Field name={ `residents[${ index }].churchActivity` }/> Field do tipo Checkbox */}
+                                                                            <Container>
+                                                                                <label htmlFor={ `residents[${ index }].churchActivity` }>Participação na Igreja*</label>
+                                                                                <Field
+                                                                                component={ CustomCheckbox }
+                                                                                id={ `residents[${ index }].churchActivity` }
+                                                                                name={ `residents[${ index }].churchActivity` }
+                                                                                options={ optionsChurchActivity }
+                                                                                />
+                                                                                {/* <ErrorMessage component="div" className="formErrorMsg" name="churchActivity"/> */}
+                                                                            </Container>
+
+                                                                            {/* <Field name={ `residents[${ index }].memberPastoralMovements` }/> Field do tipo Radio */}
+                                                                            <Container>
+                                                                                <label htmlFor={ `residents[${ index }].memberPastoralMovements.answer` }>Participa de Pastoral/Movimento na Igreja*</label>
+                                                                                <Field
+                                                                                component={ CustomRadioButton }
+                                                                                id={ `residents[${ index }].memberPastoralMovements.answer` }
+                                                                                name={ `residents[${ index }].memberPastoralMovements.answer` }
                                                                                 options={ optionsYesOrNo }
                                                                                 />
-                                                                                {/* { 
-                                                                                values.residents[index].memberPastoralsMovements.answer === 'sim'
+                                                                                { 
+                                                                                values.residents[index].memberPastoralMovements.answer === 'sim'
                                                                                 &&
                                                                                 <Container className="additionalFields">
                                                                                     <Field
@@ -750,9 +882,8 @@ const CadastroFamilias = () =>{
                                                                                     placeholder="Pastoral/movimento..."
                                                                                     label="Qual?"
                                                                                     />
-                                                                                    
                                                                                 </Container> 
-                                                                                } */}
+                                                                                }
                                                                             </Container>
                                                                         </fieldset>
                                                                         {/* <button type="button" onClick={ () => remove(index) }>
@@ -781,6 +912,8 @@ const CadastroFamilias = () =>{
                                             -> Pq ele está submetendo somente quando todos os field required
                                                 estiverem preenchidos (Lembrar que alguns não precisam. Ex: Os que respondem
                                                     "não")
+                                            -> Os campos que colocam sim e abrem mais inputs precisam ser limpados do objeto caso clique
+                                                novamente em não depois de digitar nesses campos
                                 */}
                                 <CustomButton className="btn-margin" value="Cadastrar" type="submit"/>
                             </Form>
