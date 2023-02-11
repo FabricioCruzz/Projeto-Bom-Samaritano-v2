@@ -5,5 +5,6 @@ export const errorMessages = {
     integerNumber: 'Este campo deve possuir um valor inteiro',
     minOneReq: 'Ao menos uma opção deve estar selecionada',
     currentDateInvalid: 'A data deve ser antes da data informada',
-    tooOldDate: 'A data não pode ser anterior a 01/01/1900'
+    tooOldDate: 'A data não pode ser anterior a 01/01/1900',
+    needToBeEighteen: "A pessoa precisa ter mais de 18 anos",
 }

@@ -28,7 +28,6 @@ import { phoneNumber } from '../../../utils/validations'
 const getFormatedDate = currentDate => currentDate.split('/').reverse().join('-')
 
 const minDate = '01/01/1900'
-const currentDate = new Date().toLocaleDateString('pt-BR')
 
 const validationSchema = Yup.object().shape({
 
@@ -60,7 +59,7 @@ const validationSchema = Yup.object().shape({
     birthDate: Yup.date()
         .required(errorMessages.fieldReq)
         .min(getFormatedDate(minDate), errorMessages.tooOldDate)
-        .max(getFormatedDate(currentDate), errorMessages.currentDateInvalid),
+        .max(new Date().getFullYear() - 18, errorMessages.needToBeEighteen),
     
     maritalStatus: Yup.string()
         .ensure()
@@ -149,6 +148,78 @@ const validationSchema = Yup.object().shape({
         which: Yup.string()
             .required(errorMessages.fieldReq)
     }),
+    residents: Yup.array()
+        .of(
+            Yup.object().shape({
+                
+                completeName: Yup.string()
+                    .required(errorMessages.fieldReq),
+                
+                birthDate: Yup.date()
+                    .required(errorMessages.fieldReq)
+                    .min(getFormatedDate(minDate), errorMessages.tooOldDate)
+                    .max(new Date().getFullYear() - 18, errorMessages.needToBeEighteen),
+                
+                relationship: Yup.string()
+                    .required(errorMessages.fieldReq),
+                
+                schoolLevel: Yup.string()
+                    .ensure()
+                    .required(errorMessages.fieldReq),
+                
+                occupation: Yup.string()
+                    .required(errorMessages.fieldReq),
+                
+                isWorking: Yup.string()
+                    .required(errorMessages.fieldReq),
+                
+                needShoes: Yup.object().shape({
+                    answer: Yup.string()
+                        .required(errorMessages.fieldReq),
+                    number: Yup.number()
+                        .required(errorMessages.fieldReq)
+                        .positive(errorMessages.positiveNumber)
+                        .integer(errorMessages.integerNumber),
+                }),
+
+                needClothes: Yup.object().shape({
+                    answer: Yup.string()
+                        
+                        .required(errorMessages.fieldReq),
+                    pantsNumber: Yup.number()
+                        .optional()
+                        .positive(errorMessages.positiveNumber)
+                        .integer(errorMessages.integerNumber),
+                    tShirtCoatSize: Yup.string()
+                        .optional()
+                }),
+
+                workshop: Yup.array()
+                    .min(1, errorMessages.minOneReq),
+    
+                religion: Yup.string()
+                    .required(errorMessages.fieldReq),
+                
+                receivedSacraments: Yup.array()
+                    .min(1, errorMessages.minOneReq),
+                
+                wishReceiveSacraments: Yup.array()
+                    .min(1, errorMessages.minOneReq),
+                
+                attendanceMass: Yup.string()
+                    .required(errorMessages.fieldReq),
+                
+                churchActivity: Yup.array()
+                    .min(1, errorMessages.minOneReq),
+
+                memberPastoralsMovements: Yup.object().shape({
+                    answer: Yup.string()
+                        .required(errorMessages.fieldReq),
+                    which: Yup.string()
+                        .required(errorMessages.fieldReq),
+                }),
+            }),
+        ),
 })
 
 
@@ -207,7 +278,7 @@ const CadastroFamilias = () =>{
                             wishReceiveSacraments: [],
                             attendanceMass: '',
                             churchActivity: [],
-                            memberPastoralMovements: { answer: '', which: '' },
+                            memberPastoralsMovements: { answer: '', which: '' },
                         },
                     ],
                 }}
@@ -657,10 +728,9 @@ const CadastroFamilias = () =>{
                                                     return (
                                                         <div>
                                                             {
-                                                                residents.map((resident, index) => (
+                                                                residents.map((_, index) => (
                                                                     <div key={ index }>
                                                                         <fieldset>
-                                                                            {/* <Field name={ `residents[${ index }].completeName` }/> */}
                                                                             <Container>
                                                                                 <label htmlFor={ `residents[${ index }].completeName` }>Nome*</label>
                                                                                 <Field
@@ -669,9 +739,9 @@ const CadastroFamilias = () =>{
                                                                                 name={ `residents[${ index }].completeName` }
                                                                                 placeholder="Digite o nome completo..."
                                                                                 />
+                                                                                <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].completeName` }/>
                                                                             </Container>
 
-                                                                            {/* <Field name={ `residents[${ index }].birthDate` }/> */}
                                                                             <Container>
                                                                                 <label htmlFor={ `residents[${ index }].birthDate` }>Data de Nascimento*</label>
                                                                                 <Field
@@ -679,19 +749,20 @@ const CadastroFamilias = () =>{
                                                                                 id={ `residents[${ index }].birthDate` }
                                                                                 name={ `residents[${ index }].birthDate` }
                                                                                 />
+                                                                                <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].birthDate` }/>
                                                                             </Container>
 
                                                                             <Container>
-                                                                                <label htmlFor={ `residents[${ index }].relationship` }>Parentesco</label>
+                                                                                <label htmlFor={ `residents[${ index }].relationship` }>Parentesco*</label>
                                                                                 <Field
                                                                                 type="text"
                                                                                 id={ `residents[${ index }].relationship` }
                                                                                 name={ `residents[${ index }].relationship` }
                                                                                 placeholder="Filho, irmão, tio, sobrinho..."
                                                                                 />
+                                                                                <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].relationship` }/>
                                                                             </Container>
 
-                                                                            {/* <Field name={ `residents[${ index }].schoolLevel` }/> */}
                                                                             <Container>
                                                                                 <label htmlFor={ `residents[${ index }].schoolLevel` }>Escolaridade*</label>
                                                                                 <Field
@@ -700,9 +771,9 @@ const CadastroFamilias = () =>{
                                                                                 component={ CustomSelect }
                                                                                 options={ optionsSchoolLevel }
                                                                                 />
+                                                                                <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].schoolLevel` }/>
                                                                             </Container>
 
-                                                                            {/* <Field type="text" name={ `residents[${ index }].occupation` }/> */}
                                                                             <Container>
                                                                                 <label htmlFor={ `residents[${ index }].occupation` }>Profissão*</label>
                                                                                 <Field
@@ -711,9 +782,9 @@ const CadastroFamilias = () =>{
                                                                                 name={ `residents[${ index }].occupation` }
                                                                                 placeholder="Digite a profissão..."
                                                                                 />
+                                                                                <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].occupation` }/>
                                                                             </Container>
 
-                                                                            {/* <Field name={ `residents[${ index }].isWorking` }/> Field do tipo Radio */}
                                                                             <Container>
                                                                                 <label htmlFor={ `residents[${ index }].isWorking` }>Está trabalhando?*</label>
                                                                                 <Field
@@ -722,9 +793,9 @@ const CadastroFamilias = () =>{
                                                                                 name={ `residents[${ index }].isWorking` }
                                                                                 options={ optionsYesOrNo }
                                                                                 />
+                                                                                <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].isWorking` }/>
                                                                             </Container>
 
-                                                                            {/* <Field name={ `residents[${ index }].needClothes` }/> Field do tipo Radio */}
                                                                             <Container>
                                                                                 <label htmlFor={ `residents[${ index }].needClothes.answer` }>Precisa de Roupas*</label>
                                                                                 <Field
@@ -746,7 +817,7 @@ const CadastroFamilias = () =>{
                                                                                         label="Número da Calça"
                                                                                         />
 
-                                                                                        {/* <ErrorMessage component="div" className="formErrorMsg" name="needClothes.pantsNumber"/> */}
+                                                                                        <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].needClothes.pantsNumber` }/>
 
                                                                                         <Field
                                                                                         component={ AdditionalInput }
@@ -755,14 +826,13 @@ const CadastroFamilias = () =>{
                                                                                         placeholder="Tamanho da camiseta/agasalho..."
                                                                                         label="Tamanho da Camiseta/Agasalho"
                                                                                         />
-                                                                                        {/* <ErrorMessage component="div" className="formErrorMsg" name="needClothes.tShirtCoatSize"/> */}
+                                                                                        <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].needClothes.tShirtCoatSize` }/>
                                                                                     </Container>
                                                                                 }
-                                                                                {/* <ErrorMessage component="div" className="formErrorMsg" name="needClothes.answer"/> */}
+                                                                                <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].needClothes.answer` }/>
                                                                                 </Container>
 
 
-                                                                            {/* <Field name={ `residents[${ index }].needShoes` }/> Field do tipo Radio */}
                                                                             <Container>
                                                                                 <label htmlFor={ `residents[${ index }].needShoes.answer` }>Precisa de Calçados*</label>
                                                                                 <Field
@@ -783,13 +853,12 @@ const CadastroFamilias = () =>{
                                                                                     placeholder="Número do calçado..."
                                                                                     label="Número do Calçado"
                                                                                     />
-                                                                                    {/* <ErrorMessage component="div" className="formErrorMsg" name="needShoes.number"/> */}
+                                                                                    <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].needShoes.number` }/>
                                                                                 </Container>                                                                                
                                                                                 }
-                                                                            {/* <ErrorMessage component="div" className="formErrorMsg" name="needShoes.answer"/> */}
+                                                                            <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].needShoes.answer` }/>
                                                                             </Container>
                                                                             
-                                                                            {/* <Field name={ `residents[${ index }].workshop` }/> Field do tipo Checkbox  */}
                                                                             <Container>
                                                                                 <label htmlFor={ `residents[${ index }].workshop` }>Tem Interesse de Participar de Alguma Oficina*</label>
                                                                                 <Field
@@ -798,11 +867,11 @@ const CadastroFamilias = () =>{
                                                                                 name={ `residents[${ index }].workshop` }
                                                                                 options={ optionsWorkshop }
                                                                                 />
+                                                                                <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].workshop` }/>
                                                                             </Container>
                                                                         </fieldset>
                                                                         
                                                                         <fieldset>
-                                                                            {/* <Field name={ `residents[${ index }].religion` }/> Field do tipo Radio */}
                                                                             <Container>
                                                                                 <label htmlFor={ `residents[${ index }].religion` }>Religião*</label>
                                                                                 <Field
@@ -811,10 +880,9 @@ const CadastroFamilias = () =>{
                                                                                 name={ `residents[${ index }].religion` }
                                                                                 options={ optionsReligion }
                                                                                 />
-                                                                                {/* <ErrorMessage component="div" className="formErrorMsg" name="religion"/> */}
+                                                                                <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].religion` }/>
                                                                             </Container>
 
-                                                                            {/* <Field name={ `residents[${ index }].receivedSacraments` }/> Field do tipo Checkbox */}
                                                                             <Container>
                                                                                 <label htmlFor={ `residents[${ index }].receivedSacraments` }>Sacramentos Recebidos*</label>
                                                                                 <Field
@@ -823,10 +891,9 @@ const CadastroFamilias = () =>{
                                                                                 name={ `residents[${ index }].receivedSacraments` }
                                                                                 options={ optionsSacraments }
                                                                                 />
-                                                                                {/* <ErrorMessage component="div" className="formErrorMsg" name="receivedSacraments"/> */}
+                                                                                <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].receivedSacraments` }/>
                                                                             </Container>
 
-                                                                            {/* <Field name={ `residents[${ index }].wishReceiveSacraments` }/> Field do tipo Checkbox */}
                                                                             <Container>
                                                                                 <label htmlFor={ `residents[${ index }].wishReceiveSacraments` }>Sacramentos que Deseja Receber*</label>
                                                                                 <Field
@@ -835,10 +902,9 @@ const CadastroFamilias = () =>{
                                                                                 name={ `residents[${ index }].wishReceiveSacraments` }
                                                                                 options={ optionsSacraments }
                                                                                 />
-                                                                                {/* <ErrorMessage component="div" className="formErrorMsg" name="wishReceiveSacraments"/> */}
+                                                                                <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].wishReceiveSacraments` }/>
                                                                             </Container>
 
-                                                                            {/* <Field name={ `residents[${ index }].attendanceMass` }/> Field do tipo Radio */}
                                                                             <Container>
                                                                                 <label htmlFor={ `residents[${ index }].attendanceMass` }>Qual a frequência nas Missas*</label>
                                                                                 <Field
@@ -847,10 +913,9 @@ const CadastroFamilias = () =>{
                                                                                 name={ `residents[${ index }].attendanceMass` }
                                                                                 options={ optionsAttendanceMass }
                                                                                 />
-                                                                                {/* <ErrorMessage component="div" className="formErrorMsg" name="attendanceMass"/> */}
+                                                                                <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].attendanceMass` }/>
                                                                             </Container>
                                                                             
-                                                                            {/* <Field name={ `residents[${ index }].churchActivity` }/> Field do tipo Checkbox */}
                                                                             <Container>
                                                                                 <label htmlFor={ `residents[${ index }].churchActivity` }>Participação na Igreja*</label>
                                                                                 <Field
@@ -859,31 +924,32 @@ const CadastroFamilias = () =>{
                                                                                 name={ `residents[${ index }].churchActivity` }
                                                                                 options={ optionsChurchActivity }
                                                                                 />
-                                                                                {/* <ErrorMessage component="div" className="formErrorMsg" name="churchActivity"/> */}
+                                                                                <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].churchActivity` }/>
                                                                             </Container>
 
-                                                                            {/* <Field name={ `residents[${ index }].memberPastoralMovements` }/> Field do tipo Radio */}
                                                                             <Container>
-                                                                                <label htmlFor={ `residents[${ index }].memberPastoralMovements.answer` }>Participa de Pastoral/Movimento na Igreja*</label>
+                                                                                <label htmlFor={ `residents[${ index }].memberPastoralsMovements.answer` }>Participa de Pastoral/Movimento na Igreja*</label>
                                                                                 <Field
                                                                                 component={ CustomRadioButton }
-                                                                                id={ `residents[${ index }].memberPastoralMovements.answer` }
-                                                                                name={ `residents[${ index }].memberPastoralMovements.answer` }
+                                                                                id={ `residents[${ index }].memberPastoralsMovements.answer` }
+                                                                                name={ `residents[${ index }].memberPastoralsMovements.answer` }
                                                                                 options={ optionsYesOrNo }
                                                                                 />
                                                                                 { 
-                                                                                values.residents[index].memberPastoralMovements.answer === 'sim'
+                                                                                values.residents[index].memberPastoralsMovements.answer === 'sim'
                                                                                 &&
                                                                                 <Container className="additionalFields">
                                                                                     <Field
                                                                                     component={ AdditionalInput }
-                                                                                    id={ `residents[${ index }].memberPastoralMovements.which` }
-                                                                                    name={ `residents[${ index }].memberPastoralMovements.which` }
+                                                                                    id={ `residents[${ index }].memberPastoralsMovements.which` }
+                                                                                    name={ `residents[${ index }].memberPastoralsMovements.which` }
                                                                                     placeholder="Pastoral/movimento..."
                                                                                     label="Qual?"
                                                                                     />
+                                                                                    <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].memberPastoralsMovements.which` }/>
                                                                                 </Container> 
                                                                                 }
+                                                                                <ErrorMessage component="div" className="formErrorMsg" name={ `residents[${ index }].memberPastoralsMovements.answer` }/>
                                                                             </Container>
                                                                         </fieldset>
                                                                         {/* <button type="button" onClick={ () => remove(index) }>
@@ -891,7 +957,7 @@ const CadastroFamilias = () =>{
                                                                             -{ ' ' }
                                                                         </button>
 
-                                                                        <button type="button" onClick={ () => push('') }>
+                                                                        <button type="button" onClick={ () => push({}) }>
                                                                             { ' ' }
                                                                             +{ ' ' }
                                                                         </button> */}
@@ -926,3 +992,11 @@ const CadastroFamilias = () =>{
 }
 
 export default CadastroFamilias
+
+
+/* TODO:
+    1. Criar as validações no campo "Moradores" (Yup) Ok
+    2. Limpar inputs onde se responde "sim" e abrem novos inputs pra escrever
+    3. Ver como fazer pra aparecer o campo "Moradores" quando clicar em botão (usar State???)
+    4. Organizar layout
+*/
