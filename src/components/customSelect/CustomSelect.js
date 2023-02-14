@@ -3,7 +3,8 @@ import Select from 'react-select'
 
 const CustomSelect = ({ id, options, field, form }) => {
 
-    const selectClassName = 'custom-select'
+    const selectClassName = 'custom-react-select-container'
+    const selectClassNamePrefix = 'pbs-custom-react-select'
     const selectClassPlaceholder = 'custom-select-placeholder'
     const selectPlaceholder = 'Selecione uma opção...'
 
@@ -28,6 +29,7 @@ const CustomSelect = ({ id, options, field, form }) => {
                 theme={ customTheme }
                 options={ options }
                 className={ selectClassName }
+                classNamePrefix={ selectClassNamePrefix }
                 inputId={ id }
                 name={ field.name }
                 placeholder={ <div className={ selectClassPlaceholder }>{ selectPlaceholder }</div> }

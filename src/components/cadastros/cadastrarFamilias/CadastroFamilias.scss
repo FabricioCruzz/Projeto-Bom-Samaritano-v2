@@ -1,120 +1,138 @@
-@import '../../../assets/styles/variables.scss';
+@import "../../../assets/styles/variables.scss";
 
 #cds-fam-container {
-    padding: 1rem;
+  padding: 1rem;
 }
 
 .pbs-form {
-    > fieldset {
-        display: flex;
-        flex-flow: row wrap;
-        min-width: 0;
-        padding: 1rem 1.5rem;
-        border: 1px solid black;
-        border-radius: 8px;
-        width: 100%;
-        margin: 1rem auto;
+  > fieldset {
+    display: flex;
+    flex-flow: row wrap;
+    min-width: 0;
+    padding: 1rem 1.5rem;
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 100%;
+    margin: 1rem auto;
 
-        > .container {
-            margin: 2rem auto;
-            flex-basis: 40%;
-            flex-grow: 1;
-        }
+    > .container {
+      margin: 2rem auto;
+      flex-basis: 40%;
+      flex-grow: 1;
+    }
 
-        > legend {
-            margin: 1rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-transform: uppercase;
+    > legend {
+      margin: 1rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
 
-            &::after{
-                content: "";
-                display: block;
-                min-width: 240px;
-                width: 30%;
-                border-bottom: 3px solid black;
-                border-radius: 10px;
-                margin-bottom: 1.5rem;
-            }
-        }
-    } 
+      &::after {
+        content: "";
+        display: block;
+        min-width: 240px;
+        width: 30%;
+        border-bottom: 3px solid black;
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+      }
+    }
+  }
 }
 
-.container {
-    
-    > label[for="familyIncome"]:nth-child(2){
-        display: block;
-        font-size: 1.4rem;
+.new-resident {
+  > fieldset {
+    display: flex;
+    flex-flow: row wrap;
+    min-width: 0;
+    width: 100%;
+    margin: 1rem auto;
 
-        > input{
-            margin-left: 10px;
-        }
-    }
-
-    > input {
-        display: block;
-    }
-
-    > label {
-        font-size: 1.063rem;
-        margin-bottom: 0.5rem;
+    > legend {
+      margin: 1rem;
+      text-transform: uppercase;
     }
 
     > .container {
-        margin-top: 1rem;
-        padding-left: 0 !important;
+      margin: 2rem auto;
+      flex-basis: 40%;
+      flex-grow: 1;
     }
-
-    > .additionalFields {
-        > div {
-            margin-bottom: 1rem;
-
-            > label, input{
-                display: block;
-                margin-bottom: 0.5rem;
-            }
-        }
-    }
+  }
 }
 
-#{selector-append("input", "[id="maritalStatus"], [id="schoolLevel"]")} {
-    
-    width: 0;
-    box-shadow: none;
-    
-    &:focus{
-        width: 0;
-        box-shadow: none;
+.container {
+  > label[for="familyIncome"]:nth-child(2) {
+    display: block;
+    font-size: 1.4rem;
+
+    > input {
+      margin-left: 10px;
     }
+  }
+
+  > input {
+    display: block;
+  }
+
+  > label {
+    font-size: 1.063rem;
+    margin-bottom: 0.5rem;
+  }
+
+  > .container {
+    margin-top: 1rem;
+    padding-left: 0 !important;
+  }
+
+  > .additionalFields {
+    > div {
+      margin-bottom: 1rem;
+
+      > label,
+      input {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
 }
 
-.custom-select {
-    width: 74%;
-    border: 0.3px solid $gray-01;
-    box-shadow: 2px 4px 15px 2px $black-025;
-    border-radius: 12px;
+.pbs-custom-react-select__input {
+  box-shadow: none !important;
 
-    &::placeholder{
-        font-style: italic;
-        font-weight: 500;
-        color: $black-05;
-    }
-    
-    &:focus{
-        border-color: $red-secondary-transparent;
-        box-shadow: 0 0 0 0.25rem $red-secondary-transparent;
-    }
+  &:focus {
+    box-shadow: none !important;
+  }
 }
 
-.custom-select-placeholder {
+.custom-react-select-container {
+  width: 74%;
+  border: 0.3px solid $gray-01;
+  box-shadow: 2px 4px 15px 2px $black-025;
+  border-radius: 12px;
+
+  &::placeholder {
     font-style: italic;
     font-weight: 500;
     color: $black-05;
+  }
+
+  &:focus {
+    border-color: $red-secondary-transparent;
+    box-shadow: 0 0 0 0.25rem $red-secondary-transparent;
+  }
+}
+
+.custom-select-placeholder {
+  font-style: italic;
+  font-weight: 500;
+  color: $black-05;
 }
 
 #{selector-append(".radio, .checkbox", "-btn-component")} {
-    > label{
-        font-weight: 400;
-        margin-left: 5px;
-    }
+  > label {
+    font-weight: 400;
+    margin-left: 5px;
+  }
 }

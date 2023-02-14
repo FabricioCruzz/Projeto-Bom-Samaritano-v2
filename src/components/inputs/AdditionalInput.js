@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CustomRadioButton = ({ field, form, label, placeholder }) => {
+const AdditionalInput = ({ field, form, label, placeholder }) => {
     
   return (
     <div>
@@ -18,4 +18,4 @@ const CustomRadioButton = ({ field, form, label, placeholder }) => {
   )
 }
 
-export default CustomRadioButton
+export default AdditionalInput
