@@ -21,6 +21,7 @@ import CustomRadioButton from "../../customRadioButton/CustomRadioButtons";
 import CustomCheckbox from "../../customCheckbox/CustomCheckbox";
 import AdditionalInput from "../../inputs/AdditionalInput";
 import CustomButton from "../../buttons/CustomButton";
+import { RiAddBoxFill, RiCloseFill } from "react-icons/ri";
 import * as Yup from "yup";
 import { phoneNumber } from "../../../utils/validations";
 
@@ -90,8 +91,7 @@ const validationSchema = Yup.object().shape({
   }),
 
   needClothes: Yup.object().shape({
-    answer: Yup.string()
-    .required(errorMessages.fieldReq),
+    answer: Yup.string().required(errorMessages.fieldReq),
     pantsNumber: Yup.number()
       .optional()
       .positive(errorMessages.positiveNumber)
@@ -146,8 +146,7 @@ const validationSchema = Yup.object().shape({
       }),
 
       needClothes: Yup.object().shape({
-        answer: Yup.string()
-        .required(errorMessages.fieldReq),
+        answer: Yup.string().required(errorMessages.fieldReq),
         pantsNumber: Yup.number()
           .optional()
           .positive(errorMessages.positiveNumber)
@@ -240,6 +239,7 @@ const CadastroFamilias = () => {
             ],
           }}
           onSubmit={(values) => {
+            
             console.log(values);
           }}
         >
@@ -803,11 +803,17 @@ const CadastroFamilias = () => {
               </fieldset>
 
               <CustomButton
-                className="btn-margin"
+                className="btn-margin btn-actions btn-flex"
                 type="button"
-                value={show ? "Remover Morador" : "Adicionar Morador"}
+                value={show ? "Remover Morador" : "Incluir Morador"}
                 onClick={() => setShow(!show)}
-              />
+              >
+                {show ? (
+                  <RiCloseFill className="icon-actions" />
+                ) : (
+                  <RiAddBoxFill className="icon-actions" />
+                )}
+              </CustomButton>
               {show && (
                 <fieldset>
                   <legend>Moradores</legend>
@@ -1052,7 +1058,9 @@ const CadastroFamilias = () => {
                               </fieldset>
 
                               <fieldset>
-                                <legend>Vida Religiosa do Morador { index + 1 }</legend>
+                                <legend>
+                                  Vida Religiosa do Morador {index + 1}
+                                </legend>
                                 <Container>
                                   <label
                                     htmlFor={`residents[${index}].religion`}
@@ -1185,17 +1193,20 @@ const CadastroFamilias = () => {
                                   />
                                 </Container>
                               </fieldset>
-
+                              
+                              <div id="btn-container">
                               {index > 0 && (
                                 <CustomButton
-                                  className="btn-side-margin"
+                                  className="btn-side-margin btn-actions btn-flex"
                                   value="Remover Morador"
                                   type="button"
                                   onClick={() => remove(index)}
-                                />
+                                >
+                                  <RiCloseFill className="icon-actions" />
+                                </CustomButton>
                               )}
                               <CustomButton
-                                className="btn-side-margin"
+                                className="btn-side-margin btn-actions btn-flex"
                                 value="Adicionar Morador"
                                 type="button"
                                 onClick={() =>
@@ -1224,7 +1235,10 @@ const CadastroFamilias = () => {
                                     },
                                   })
                                 }
-                              />
+                              >
+                                <RiAddBoxFill className="icon-actions" />
+                              </CustomButton>
+                              </div>
                             </div>
                           ))}
                         </div>

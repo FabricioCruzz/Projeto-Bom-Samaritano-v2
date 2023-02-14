@@ -1,7 +1,7 @@
 import React from 'react'
 import './CustomButton.scss'
 
-const CustomButton = (props, { children }) => {
+const CustomButton = props => {
     
     const componentClasses = `btnComponent ${ props.className }`
     
@@ -13,7 +13,7 @@ const CustomButton = (props, { children }) => {
         onClick={ props.onClick }
         >
             { props.value }
-            { children }
+            { props.children }
         </button>
     )
 }
