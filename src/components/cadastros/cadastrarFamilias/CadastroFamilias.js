@@ -30,6 +30,28 @@ const getFormatedDate = (currentDate) =>
 
 const minDate = "01/01/1900";
 
+const emptyResident = {
+  completeName: "",
+  birthDate: "",
+  relationship: "",
+  schoolLevel: "",
+  occupation: "",
+  isWorking: "",
+  needShoes: { answer: "", number: "" },
+  needClothes: {
+    answer: "",
+    pantsNumber: "",
+    tShirtCoatSize: "",
+  },
+  workshop: [],
+  religion: "",
+  receivedSacraments: [],
+  wishReceiveSacraments: [],
+  attendanceMass: "",
+  churchActivity: [],
+  memberPastoralsMovements: { answer: "", which: "" },
+};
+
 const validationSchema = Yup.object().shape({
   completeName: Yup.string().required(errorMessages.fieldReq),
 
@@ -214,33 +236,10 @@ const CadastroFamilias = () => {
             attendanceMass: "",
             churchActivity: [],
             memberPastoralsMovements: { answer: "", which: "" },
-            residents: [
-              {
-                completeName: "",
-                birthDate: "",
-                relationship: "",
-                schoolLevel: "",
-                occupation: "",
-                isWorking: "",
-                needShoes: { answer: "", number: "" },
-                needClothes: {
-                  answer: "",
-                  pantsNumber: "",
-                  tShirtCoatSize: "",
-                },
-                workshop: [],
-                religion: "",
-                receivedSacraments: [],
-                wishReceiveSacraments: [],
-                attendanceMass: "",
-                churchActivity: [],
-                memberPastoralsMovements: { answer: "", which: "" },
-              },
-            ],
+            residents: [emptyResident],
           }}
           onSubmit={(values) => {
-            
-            console.log(values);
+             console.log(values)
           }}
         >
           {({ values }) => (
@@ -820,8 +819,6 @@ const CadastroFamilias = () => {
 
                   <FieldArray name="residents">
                     {(fieldArrayProps) => {
-                      // console.log('fieldArrayProps', fieldArrayProps)
-
                       const { push, remove, form } = fieldArrayProps;
                       const { values } = form;
                       const { residents } = values;
@@ -829,10 +826,7 @@ const CadastroFamilias = () => {
                       return (
                         <div>
                           {residents.map((_, index) => (
-                            <div
-                              className="new-resident"
-                              key={crypto.randomUUID()}
-                            >
+                            <div className="new-resident" key={index}>
                               <fieldset>
                                 <legend>Morador {index + 1}</legend>
                                 <Container>
@@ -1193,51 +1187,26 @@ const CadastroFamilias = () => {
                                   />
                                 </Container>
                               </fieldset>
-                              
+
                               <div id="btn-container">
-                              {index > 0 && (
+                                {index > 0 && (
+                                  <CustomButton
+                                    className="btn-side-margin btn-actions btn-flex"
+                                    value="Remover Morador"
+                                    type="button"
+                                    onClick={() => remove(index)}
+                                  >
+                                    <RiCloseFill className="icon-actions" />
+                                  </CustomButton>
+                                )}
                                 <CustomButton
                                   className="btn-side-margin btn-actions btn-flex"
-                                  value="Remover Morador"
+                                  value="Adicionar Morador"
                                   type="button"
-                                  onClick={() => remove(index)}
+                                  onClick={() => push(emptyResident)}
                                 >
-                                  <RiCloseFill className="icon-actions" />
+                                  <RiAddBoxFill className="icon-actions" />
                                 </CustomButton>
-                              )}
-                              <CustomButton
-                                className="btn-side-margin btn-actions btn-flex"
-                                value="Adicionar Morador"
-                                type="button"
-                                onClick={() =>
-                                  push({
-                                    completeName: "",
-                                    birthDate: "",
-                                    relationship: "",
-                                    schoolLevel: "",
-                                    occupation: "",
-                                    isWorking: "",
-                                    needShoes: { answer: "", number: "" },
-                                    needClothes: {
-                                      answer: "",
-                                      pantsNumber: "",
-                                      tShirtCoatSize: "",
-                                    },
-                                    workshop: [],
-                                    religion: "",
-                                    receivedSacraments: [],
-                                    wishReceiveSacraments: [],
-                                    attendanceMass: "",
-                                    churchActivity: [],
-                                    memberPastoralsMovements: {
-                                      answer: "",
-                                      which: "",
-                                    },
-                                  })
-                                }
-                              >
-                                <RiAddBoxFill className="icon-actions" />
-                              </CustomButton>
                               </div>
                             </div>
                           ))}
@@ -1248,13 +1217,13 @@ const CadastroFamilias = () => {
                 </fieldset>
               )}
               {/* 
-                                    TODO: Arrumar o submit
-                                            -> Pq ele está submetendo somente quando todos os field required
-                                                estiverem preenchidos (Lembrar que alguns não precisam. Ex: Os que respondem
-                                                    "não")
-                                            -> Os campos que colocam sim e abrem mais inputs precisam ser limpados do objeto caso clique
-                                                novamente em não depois de digitar nesses campos
-                                */}
+                TODO: Arrumar o submit
+                -> Pq ele está submetendo somente quando todos os field required
+                 estiverem preenchidos (Lembrar que alguns não precisam. Ex: Os que respondem
+                     "não")
+                 -> Os campos que colocam sim e abrem mais inputs precisam ser limpados do objeto caso clique
+                       novamente em não depois de digitar nesses campos
+               */}
               <CustomButton
                 className="btn-margin"
                 value="Cadastrar"
@@ -1274,5 +1243,6 @@ export default CadastroFamilias;
     1. Criar as validações no campo "Moradores" (Yup) Ok
     2. Limpar inputs onde se responde "sim" e abrem novos inputs pra escrever
     3. Ver como fazer pra aparecer o campo "Moradores" quando clicar em botão (usar State???) OK --> PRECISA MELHORAR
-    4. Organizar layout
+    4. Organizar layout OK
+    5. Implementar Submit (Salvar no Local Storage)
 */
