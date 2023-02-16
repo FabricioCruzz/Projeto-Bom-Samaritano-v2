@@ -24,6 +24,11 @@ import CustomButton from "../../buttons/CustomButton";
 import { RiAddBoxFill, RiCloseFill } from "react-icons/ri";
 import * as Yup from "yup";
 import { phoneNumber } from "../../../utils/validations";
+import service from "../../../services/storage.service";
+
+const key = "cadastros";
+const storage = service.loadData(key);
+const registrations = storage ? JSON.parse(storage) : [];
 
 const getFormatedDate = (currentDate) =>
   currentDate.split("/").reverse().join("-");
@@ -106,24 +111,36 @@ const validationSchema = Yup.object().shape({
 
   needShoes: Yup.object().shape({
     answer: Yup.string().required(errorMessages.fieldReq),
-    number: Yup.number()
-      .required(errorMessages.fieldReq)
-      .positive(errorMessages.positiveNumber)
-      .integer(errorMessages.integerNumber),
+    number: Yup.number().when("answer", {
+      is: "sim",
+      then: Yup.number()
+        .required(errorMessages.fieldReq)
+        .positive(errorMessages.positiveNumber)
+        .integer(errorMessages.integerNumber),
+    }),
   }),
 
   needClothes: Yup.object().shape({
     answer: Yup.string().required(errorMessages.fieldReq),
-    pantsNumber: Yup.number()
-      .optional()
-      .positive(errorMessages.positiveNumber)
-      .integer(errorMessages.integerNumber),
-    tShirtCoatSize: Yup.string().optional(),
+    pantsNumber: Yup.number().when("answer", {
+      is: "sim",
+      then: Yup.number()
+        .required(errorMessages.fieldReq)
+        .positive(errorMessages.positiveNumber)
+        .integer(errorMessages.integerNumber),
+    }),
+    tShirtCoatSize: Yup.string().when("answer", {
+      is: "sim",
+      then: Yup.string().required(errorMessages.fieldReq),
+    }),
   }),
 
   needDiapers: Yup.object().shape({
     answer: Yup.string().required(errorMessages.fieldReq),
-    size: Yup.string().required(errorMessages.fieldReq),
+    size: Yup.string().when("answer", {
+      is: "sim",
+      then: Yup.string().required(errorMessages.fieldReq),
+    }),
   }),
 
   workshop: Yup.array().min(1, errorMessages.minOneReq),
@@ -140,8 +157,12 @@ const validationSchema = Yup.object().shape({
 
   memberPastoralsMovements: Yup.object().shape({
     answer: Yup.string().required(errorMessages.fieldReq),
-    which: Yup.string().required(errorMessages.fieldReq),
+    which: Yup.string().when("answer", {
+      is: "sim",
+      then: Yup.string().required(errorMessages.fieldReq),
+    }),
   }),
+
   residents: Yup.array().of(
     Yup.object().shape({
       completeName: Yup.string().required(errorMessages.fieldReq),
@@ -161,19 +182,28 @@ const validationSchema = Yup.object().shape({
 
       needShoes: Yup.object().shape({
         answer: Yup.string().required(errorMessages.fieldReq),
-        number: Yup.number()
-          .required(errorMessages.fieldReq)
-          .positive(errorMessages.positiveNumber)
-          .integer(errorMessages.integerNumber),
+        number: Yup.number().when("answer", {
+          is: "sim",
+          then: Yup.number()
+            .required(errorMessages.fieldReq)
+            .positive(errorMessages.positiveNumber)
+            .integer(errorMessages.integerNumber),
+        }),
       }),
 
       needClothes: Yup.object().shape({
         answer: Yup.string().required(errorMessages.fieldReq),
-        pantsNumber: Yup.number()
-          .optional()
-          .positive(errorMessages.positiveNumber)
-          .integer(errorMessages.integerNumber),
-        tShirtCoatSize: Yup.string().optional(),
+        pantsNumber: Yup.number().when("answer", {
+          is: "sim",
+          then: Yup.number()
+            .required(errorMessages.fieldReq)
+            .positive(errorMessages.positiveNumber)
+            .integer(errorMessages.integerNumber),
+        }),
+        tShirtCoatSize: Yup.string().when("answer", {
+          is: "sim",
+          then: Yup.string().required(errorMessages.fieldReq),
+        }),
       }),
 
       workshop: Yup.array().min(1, errorMessages.minOneReq),
@@ -190,10 +220,13 @@ const validationSchema = Yup.object().shape({
 
       memberPastoralsMovements: Yup.object().shape({
         answer: Yup.string().required(errorMessages.fieldReq),
-        which: Yup.string().required(errorMessages.fieldReq),
+        which: Yup.string().when("answer", {
+          is: "sim",
+          then: Yup.string().required(errorMessages.fieldReq),
+        }),
       }),
     })
-  ),
+  ).optional(),
 });
 
 const CadastroFamilias = () => {
@@ -238,8 +271,18 @@ const CadastroFamilias = () => {
             memberPastoralsMovements: { answer: "", which: "" },
             residents: [emptyResident],
           }}
-          onSubmit={(values) => {
-             console.log(values)
+          onSubmit={async (values) => {
+            await new Promise((res) => setTimeout(res, 500));
+
+            let cadastroFamilia = {
+              id: new Date().getTime().toString(10),
+              ...values,
+            };
+
+            registrations.push(cadastroFamilia);
+            service.saveData(key, registrations);
+
+            console.log(cadastroFamilia);
           }}
         >
           {({ values }) => (
@@ -1216,14 +1259,7 @@ const CadastroFamilias = () => {
                   </FieldArray>
                 </fieldset>
               )}
-              {/* 
-                TODO: Arrumar o submit
-                -> Pq ele está submetendo somente quando todos os field required
-                 estiverem preenchidos (Lembrar que alguns não precisam. Ex: Os que respondem
-                     "não")
-                 -> Os campos que colocam sim e abrem mais inputs precisam ser limpados do objeto caso clique
-                       novamente em não depois de digitar nesses campos
-               */}
+
               <CustomButton
                 className="btn-margin"
                 value="Cadastrar"
@@ -1240,9 +1276,8 @@ const CadastroFamilias = () => {
 export default CadastroFamilias;
 
 /* TODO:
-    1. Criar as validações no campo "Moradores" (Yup) Ok
-    2. Limpar inputs onde se responde "sim" e abrem novos inputs pra escrever
-    3. Ver como fazer pra aparecer o campo "Moradores" quando clicar em botão (usar State???) OK --> PRECISA MELHORAR
-    4. Organizar layout OK
-    5. Implementar Submit (Salvar no Local Storage)
+    1. Limpar inputs onde se responde "sim" e abrem novos inputs pra escrever
+    2. Organizar layout - Precisa melhorar
+    3. Alterar onde pede roupas e etc. o input de texto pra select (Incluir entradas no arquivo options)
+    4. Colocar validação no Yup pra caso não clicar no botão de add morador
 */
