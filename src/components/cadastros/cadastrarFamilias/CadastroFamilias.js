@@ -14,6 +14,9 @@ import {
   optionsSacraments,
   optionsAttendanceMass,
   optionsChurchActivity,
+  optionsDiappers,
+  optionsPantsNumber,
+  optionsClothesSize,
 } from "../../../utils/formInputOptions";
 import { errorMessages } from "../../../utils/formErrorMessages";
 import CustomSelect from "../../customSelect/CustomSelect";
@@ -25,6 +28,7 @@ import { RiAddBoxFill, RiCloseFill } from "react-icons/ri";
 import * as Yup from "yup";
 import { phoneNumber } from "../../../utils/validations";
 import service from "../../../services/storage.service";
+import context from "react-bootstrap/esm/AccordionContext";
 
 const key = "cadastros";
 const storage = service.loadData(key);
@@ -122,16 +126,13 @@ const validationSchema = Yup.object().shape({
 
   needClothes: Yup.object().shape({
     answer: Yup.string().required(errorMessages.fieldReq),
-    pantsNumber: Yup.number().when("answer", {
+    pantsNumber: Yup.string().when("answer", {
       is: "sim",
-      then: Yup.number()
-        .required(errorMessages.fieldReq)
-        .positive(errorMessages.positiveNumber)
-        .integer(errorMessages.integerNumber),
+      then: Yup.string().ensure().required(errorMessages.fieldReq),
     }),
     tShirtCoatSize: Yup.string().when("answer", {
       is: "sim",
-      then: Yup.string().required(errorMessages.fieldReq),
+      then: Yup.string().ensure().required(errorMessages.fieldReq),
     }),
   }),
 
@@ -139,7 +140,7 @@ const validationSchema = Yup.object().shape({
     answer: Yup.string().required(errorMessages.fieldReq),
     size: Yup.string().when("answer", {
       is: "sim",
-      then: Yup.string().required(errorMessages.fieldReq),
+      then: Yup.string().ensure().required(errorMessages.fieldReq),
     }),
   }),
 
@@ -193,16 +194,13 @@ const validationSchema = Yup.object().shape({
 
       needClothes: Yup.object().shape({
         answer: Yup.string().required(errorMessages.fieldReq),
-        pantsNumber: Yup.number().when("answer", {
+        pantsNumber: Yup.string().when("answer", {
           is: "sim",
-          then: Yup.number()
-            .required(errorMessages.fieldReq)
-            .positive(errorMessages.positiveNumber)
-            .integer(errorMessages.integerNumber),
+          then: Yup.string().ensure().required(errorMessages.fieldReq),
         }),
         tShirtCoatSize: Yup.string().when("answer", {
           is: "sim",
-          then: Yup.string().required(errorMessages.fieldReq),
+          then: Yup.string().ensure().required(errorMessages.fieldReq),
         }),
       }),
 
@@ -226,7 +224,7 @@ const validationSchema = Yup.object().shape({
         }),
       }),
     })
-  ).optional(),
+  ),
 });
 
 const CadastroFamilias = () => {
@@ -620,12 +618,14 @@ const CadastroFamilias = () => {
                   />
                   {values.needClothes.answer === "sim" && (
                     <Container className="additionalFields">
+                      <label htmlFor="needClothes.pantsNumber">
+                        Tamanho das Calças*
+                      </label>
                       <Field
-                        component={AdditionalInput}
+                        component={CustomSelect}
                         id="needClothes.pantsNumber"
                         name="needClothes.pantsNumber"
-                        placeholder="Número da calça..."
-                        label="Número da Calça"
+                        options={optionsPantsNumber}
                       />
 
                       <ErrorMessage
@@ -634,12 +634,14 @@ const CadastroFamilias = () => {
                         name="needClothes.pantsNumber"
                       />
 
+                      <label htmlFor="needClothes.tShirtCoatSize">
+                        Tamanho Casaco/Camiseta*
+                      </label>
                       <Field
-                        component={AdditionalInput}
+                        component={CustomSelect}
                         id="needClothes.tShirtCoatSize"
                         name="needClothes.tShirtCoatSize"
-                        placeholder="Tamanho da camiseta/agasalho..."
-                        label="Tamanho da Camiseta/Agasalho"
+                        options={optionsClothesSize}
                       />
                       <ErrorMessage
                         component="div"
@@ -667,12 +669,12 @@ const CadastroFamilias = () => {
                   />
                   {values.needDiapers.answer === "sim" && (
                     <Container className="additionalFields">
+                      <label htmlFor="needDiapers.size">Tamanho*</label>
                       <Field
-                        component={AdditionalInput}
+                        component={CustomSelect}
                         id="needDiapers.size"
                         name="needDiapers.size"
-                        placeholder="Tamanho das fraldas..."
-                        label="Tamanho"
+                        options={optionsDiappers}
                       />
                       <ErrorMessage
                         component="div"
@@ -1001,12 +1003,16 @@ const CadastroFamilias = () => {
                                   {values.residents[index].needClothes
                                     .answer === "sim" && (
                                     <Container className="additionalFields">
+                                      <label
+                                        htmlFor={`residents[${index}].needClothes.pantsNumber`}
+                                      >
+                                        Tamanho das Calças*
+                                      </label>
                                       <Field
-                                        component={AdditionalInput}
+                                        component={CustomSelect}
                                         id={`residents[${index}].needClothes.pantsNumber`}
                                         name={`residents[${index}].needClothes.pantsNumber`}
-                                        placeholder="Número da calça..."
-                                        label="Número da Calça"
+                                        options={optionsPantsNumber}
                                       />
 
                                       <ErrorMessage
@@ -1015,12 +1021,16 @@ const CadastroFamilias = () => {
                                         name={`residents[${index}].needClothes.pantsNumber`}
                                       />
 
+                                      <label
+                                        htmlFor={`residents[${index}].needClothes.tShirtCoatSize`}
+                                      >
+                                        Tamanho Casaco/Camiseta*
+                                      </label>
                                       <Field
-                                        component={AdditionalInput}
+                                        component={CustomSelect}
                                         id={`residents[${index}].needClothes.tShirtCoatSize`}
                                         name={`residents[${index}].needClothes.tShirtCoatSize`}
-                                        placeholder="Tamanho da camiseta/agasalho..."
-                                        label="Tamanho da Camiseta/Agasalho"
+                                        options={optionsClothesSize}
                                       />
                                       <ErrorMessage
                                         component="div"
@@ -1278,6 +1288,9 @@ export default CadastroFamilias;
 /* TODO:
     1. Limpar inputs onde se responde "sim" e abrem novos inputs pra escrever
     2. Organizar layout - Precisa melhorar
-    3. Alterar onde pede roupas e etc. o input de texto pra select (Incluir entradas no arquivo options)
-    4. Colocar validação no Yup pra caso não clicar no botão de add morador
+    3. Alterar onde pede sapatos o input de texto pra select? (Incluir entradas no arquivo options)
+    4. Colocar validação no Yup pra caso não clicar no botão de add morador - Retirar o required dos campos? (Não é a melhor solução!)
+    5. Quando form estiver pronto, separar validações YUP em arquivo separado
+
+    6. Implementar a tabela de exibição dos cadastros
 */

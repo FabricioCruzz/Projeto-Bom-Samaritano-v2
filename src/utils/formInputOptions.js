@@ -84,3 +84,33 @@ export const optionsChurchActivity = [
     { value: 'pastorais-movimentos', label: 'Atuando em pastorais e movimentos' },
     { value: 'fazendo-oracoes-em-casa', label: 'Fazendo suas orações em casa' },
 ]
+
+export const optionsPantsNumber = [
+    { value: '34', label: '34' },
+    { value: '36', label: '36' },
+    { value: '38', label: '38' },
+    { value: '40', label: '40' },
+    { value: '42', label: '42' },
+    { value: '44', label: '44' },
+    { value: '46', label: '46' },
+    { value: '48', label: '48' },
+    { value: '50', label: '50' },
+    { value: '52', label: '52' },
+    { value: '54', label: '54' },
+    { value: '56', label: '56' },
+]
+
+export const optionsClothesSize = [
+    { value: 'P', label: 'P' },
+    { value: 'M', label: 'M' },
+    { value: 'G', label: 'G' },
+    { value: 'GG', label: 'GG' },
+]
+
+export const optionsDiappers = [
+    { value: 'P', label: 'P' },
+    { value: 'M', label: 'M' },
+    { value: 'G', label: 'G' },
+    { value: 'XG', label: 'XG' },
+    { value: 'XXG', label: 'XXG' },
+]
