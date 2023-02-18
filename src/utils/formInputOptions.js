@@ -85,20 +85,9 @@ export const optionsChurchActivity = [
     { value: 'fazendo-oracoes-em-casa', label: 'Fazendo suas orações em casa' },
 ]
 
-export const optionsPantsNumber = [
-    { value: '34', label: '34' },
-    { value: '36', label: '36' },
-    { value: '38', label: '38' },
-    { value: '40', label: '40' },
-    { value: '42', label: '42' },
-    { value: '44', label: '44' },
-    { value: '46', label: '46' },
-    { value: '48', label: '48' },
-    { value: '50', label: '50' },
-    { value: '52', label: '52' },
-    { value: '54', label: '54' },
-    { value: '56', label: '56' },
-]
+export const optionsShoesSize = fillOptions(33, 48, 1)
+
+export const optionsPantsNumber = fillOptions(34, 56, 2)
 
 export const optionsClothesSize = [
     { value: 'P', label: 'P' },
@@ -114,3 +103,11 @@ export const optionsDiappers = [
     { value: 'XG', label: 'XG' },
     { value: 'XXG', label: 'XXG' },
 ]
+
+function fillOptions(initialValue, finalValue, step) {
+    let arrayOptions = []
+    for(let i=initialValue; i <= finalValue; i += step){
+        arrayOptions.push({value: `${i}`, label: `${i}`})
+    }
+    return arrayOptions
+}

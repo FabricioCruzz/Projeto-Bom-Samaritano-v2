@@ -14,6 +14,7 @@ import {
   optionsSacraments,
   optionsAttendanceMass,
   optionsChurchActivity,
+  optionsShoesSize,
   optionsDiappers,
   optionsPantsNumber,
   optionsClothesSize,
@@ -277,8 +278,8 @@ const CadastroFamilias = () => {
               ...values,
             };
 
-            registrations.push(cadastroFamilia);
-            service.saveData(key, registrations);
+            registrations.push(cadastroFamilia)
+            service.saveData(key, registrations)
 
             console.log(cadastroFamilia);
           }}
@@ -587,12 +588,14 @@ const CadastroFamilias = () => {
 
                   {values.needShoes.answer === "sim" && (
                     <Container className="additionalFields">
+                      <label htmlFor="needShoes.number">
+                        Precisa de Calçados*
+                      </label>
                       <Field
-                        component={AdditionalInput}
+                        component={CustomSelect}
                         id="needShoes.number"
                         name="needShoes.number"
-                        placeholder="Número do calçado..."
-                        label="Número do Calçado"
+                        options={optionsShoesSize}
                       />
                       <ErrorMessage
                         component="div"
@@ -1062,12 +1065,16 @@ const CadastroFamilias = () => {
                                   {values.residents[index].needShoes.answer ===
                                     "sim" && (
                                     <Container className="additionalFields">
+                                      <label
+                                        htmlFor={`residents[${index}].needShoes.number`}
+                                      >
+                                        Número do Calçado*
+                                      </label>
                                       <Field
-                                        component={AdditionalInput}
+                                        component={CustomSelect}
                                         id={`residents[${index}].needShoes.number`}
                                         name={`residents[${index}].needShoes.number`}
-                                        placeholder="Número do calçado..."
-                                        label="Número do Calçado"
+                                        options={optionsShoesSize}
                                       />
                                       <ErrorMessage
                                         component="div"
@@ -1288,7 +1295,7 @@ export default CadastroFamilias;
 /* TODO:
     1. Limpar inputs onde se responde "sim" e abrem novos inputs pra escrever
     2. Organizar layout - Precisa melhorar
-    3. Alterar onde pede sapatos o input de texto pra select? (Incluir entradas no arquivo options)
+    3. 
     4. Colocar validação no Yup pra caso não clicar no botão de add morador - Retirar o required dos campos? (Não é a melhor solução!)
     5. Quando form estiver pronto, separar validações YUP em arquivo separado
 
