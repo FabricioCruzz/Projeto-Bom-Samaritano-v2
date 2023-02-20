@@ -7,6 +7,7 @@ import TabelaAlimentos from '../components/estoque/listarAlimentos/TabelaAliment
 import Menu from '../components/menu/Menu'
 import Cadastros from '../pages/cadastros/Cadastros'
 import CadastroFamilias from '../components/cadastros/cadastrarFamilias/CadastroFamilias'
+import TabelaFamilias from '../components/cadastros/listarFamilias/TabelaFamilias'
 
 export default function AppRoutes(){
     return (
@@ -19,6 +20,7 @@ export default function AppRoutes(){
                 <Route path="estoque/tabela" element={ <div> <Menu/> <TabelaAlimentos/> </div> }/>
                 <Route path="cadastros" element={ <Cadastros/> }/>
                 <Route path="cadastros/cadastrar" element={ <div> <Menu/> <CadastroFamilias/> </div> }/>
+                <Route path="cadastros/tabela" element={ <div> <Menu/> <TabelaFamilias/> </div> }/>
                 <Route path="*" element={ <h1>Not Found!!!</h1> }/>
             </Routes>
         </BrowserRouter>

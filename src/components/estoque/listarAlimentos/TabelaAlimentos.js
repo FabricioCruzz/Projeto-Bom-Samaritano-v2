@@ -86,7 +86,7 @@ const TabelaAlimentos = () => {
                 <Table striped bordered hover responsive>
                     <thead>
                         <tr className="pbs-tr">
-                        <th>ID</th>
+                        <th>#</th>
                         <th>Descrição</th>
                         <th>Tipo</th>
                         <th>Quantidade</th>

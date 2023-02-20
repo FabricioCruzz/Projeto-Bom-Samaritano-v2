@@ -29,7 +29,6 @@ import { RiAddBoxFill, RiCloseFill } from "react-icons/ri";
 import * as Yup from "yup";
 import { phoneNumber } from "../../../utils/validations";
 import service from "../../../services/storage.service";
-import context from "react-bootstrap/esm/AccordionContext";
 
 const key = "cadastros";
 const storage = service.loadData(key);
@@ -1299,5 +1298,5 @@ export default CadastroFamilias;
     4. Colocar validação no Yup pra caso não clicar no botão de add morador - Retirar o required dos campos? (Não é a melhor solução!)
     5. Quando form estiver pronto, separar validações YUP em arquivo separado
 
-    6. Implementar a tabela de exibição dos cadastros
+    6. Implementar a tabela de exibição dos cadastros - Priorizar!!!
 */
