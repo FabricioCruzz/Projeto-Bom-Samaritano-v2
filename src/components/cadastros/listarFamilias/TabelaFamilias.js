@@ -1,15 +1,19 @@
 import React from "react";
 import { Button, Table } from "react-bootstrap";
 import service from "../../../services/storage.service";
-import { BiEdit } from 'react-icons/bi'
-import { MdDelete } from 'react-icons/md';
+import { BiEdit } from "react-icons/bi";
+import { MdDelete } from "react-icons/md";
+import { IoEyeOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const key = "cadastros";
 const storage = service.loadData(key);
 const registrations = storage ? JSON.parse(storage) : [];
 
 const TabelaFamilias = () => {
-  console.log(`registros`, registrations);
+  // console.log(`registros`, registrations);
+
+  const navigate = useNavigate()
 
   const renderRow = (item) => {
     // console.log(`item`, item)
@@ -51,31 +55,35 @@ const TabelaFamilias = () => {
         <td>{maritalStatus}</td>
         <td className="pbs-flex pbs-row pbs-actions-td">
             <Button
-            className="btn-actions"
-            onClick={() => console.log(`Btn 1`)
-            }>
-                <BiEdit className="icon-actions btn-bkg"/>
-                Editar
+              className="btn-actions"
+              onClick={() => navigate(id)}
+            >
+              <IoEyeOutline className="icon-actions" />
+              Visualizar
             </Button>
 
-            <Button
-            className="btn-actions btn-bkg"
-            onClick={ () => onDelete(item) }
-            >
-                <MdDelete className="icon-actions"/>
-                Remover
-            </Button>
+          <Button className="btn-actions" onClick={() => console.log(`Btn 1`)}>
+            <BiEdit className="icon-actions" />
+            Editar
+          </Button>
+
+          <Button className="btn-actions" onClick={() => onDelete(item)}>
+            <MdDelete className="icon-actions" />
+            Remover
+          </Button>
         </td>
       </tr>
     );
   };
 
-  const onDelete = rowContent => {
-    const index = registrations.findIndex(element => element.id === rowContent.id)
-    registrations.splice(index, 1)
-    service.saveData(key, registrations)
-    document.location.reload(true)
-  }
+  const onDelete = (rowContent) => {
+    const index = registrations.findIndex(
+      (element) => element.id === rowContent.id
+    );
+    registrations.splice(index, 1);
+    service.saveData(key, registrations);
+    navigate(0)
+  };
 
   return (
     <div>
@@ -109,7 +117,7 @@ export default TabelaFamilias;
 /*
     TODO:
     1. Listar neste componente somente os dados mais importantes sobre a família
-    2. Colocar opção de selecionar um cadastro e abrir mais informações (Colocar no novo componente)
-
-
+    2. Colocar opção de selecionar um cadastro e abrir mais informações (Colocar no novo componente) - OK
+    3. Colocar a edição dos cadastros em modal ou jogar pra outra página
+    4. Organizar layout (principalmente botões)
 */

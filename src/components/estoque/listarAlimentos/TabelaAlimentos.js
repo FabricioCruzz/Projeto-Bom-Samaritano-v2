@@ -8,6 +8,7 @@ import { RiAddBoxFill } from 'react-icons/ri'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
 import { Button } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 
 const initialValues = {
     id: undefined,
@@ -28,6 +29,7 @@ const TabelaAlimentos = () => {
     const [showModalUpdate, setShowModalUpdate] = useState(false)
     const [showModalAdd, setShowModalAdd] = useState(false)
     const [values, setValues] = useState(initialValues)
+    const navigate = useNavigate()
 
     // TODO: Trazer dados do backend para popular tabela
     const renderRow = item => {
@@ -52,7 +54,7 @@ const TabelaAlimentos = () => {
                     </Button>            
 
                     <Button
-                    className="btn-actions btn-bkg"
+                    className="btn-actions"
                     onClick={ () => { 
                         setShowModalUpdate(true);
                         setValues(item);}
@@ -63,7 +65,7 @@ const TabelaAlimentos = () => {
                     </Button>
                     
                     <Button
-                    className="btn-actions btn-bkg"
+                    className="btn-actions"
                     onClick={ () =>  onDelete(item) }
                     >
                         <MdDelete className="icon-actions"/>
@@ -78,7 +80,7 @@ const TabelaAlimentos = () => {
        const index = itens.findIndex(element => element.product === rowContent)
        itens.splice(index, 1)
        service.saveData(key, itens)
-       document.location.reload(true)
+       navigate(0)
     }
     return (
         <div itemID="table-foods">
