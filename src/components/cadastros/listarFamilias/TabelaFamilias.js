@@ -11,13 +11,9 @@ const storage = service.loadData(key);
 const registrations = storage ? JSON.parse(storage) : [];
 
 const TabelaFamilias = () => {
-  // console.log(`registros`, registrations);
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const renderRow = (item) => {
-    // console.log(`item`, item)
-
     const {
       id,
       completeName,
@@ -37,13 +33,8 @@ const TabelaFamilias = () => {
       .reverse()
       .join("/");
     const address = `Rua ${street}, ${houseNumber} - Bairro ${district} - ${city}`;
-    const contact = `Telefone 1: ${phone1}
-                        ${
-                          phone2
-                            ? `Telefone 2:
-                                ${phone2}`
-                            : ""
-                        }`;
+    const contact1 = `Telefone 1: ${phone1}`;
+    const contact2 = `Telefone 2: ${phone2}`;
 
     return (
       <tr key={id}>
@@ -51,18 +42,20 @@ const TabelaFamilias = () => {
         <td>{completeName}</td>
         <td>{brazilianDateFormat}</td>
         <td>{address}</td>
-        <td>{contact}</td>
+        <td>
+          {contact1} <br /> {phone2 && contact2}
+        </td>
         <td>{maritalStatus}</td>
         <td className="pbs-flex pbs-row pbs-actions-td">
-            <Button
-              className="btn-actions"
-              onClick={() => navigate(id)}
-            >
-              <IoEyeOutline className="icon-actions" />
-              Visualizar
-            </Button>
+          <Button className="btn-actions" onClick={() => navigate(id)}>
+            <IoEyeOutline className="icon-actions" />
+            Visualizar
+          </Button>
 
-          <Button className="btn-actions" onClick={() => console.log(`Btn 1`)}>
+          <Button
+            className="btn-actions"
+            onClick={() => navigate(`/cadastros/editar/${id}`)}
+          >
             <BiEdit className="icon-actions" />
             Editar
           </Button>
@@ -82,7 +75,7 @@ const TabelaFamilias = () => {
     );
     registrations.splice(index, 1);
     service.saveData(key, registrations);
-    navigate(0)
+    navigate(0);
   };
 
   return (
@@ -116,8 +109,9 @@ export default TabelaFamilias;
 
 /*
     TODO:
-    1. Listar neste componente somente os dados mais importantes sobre a família
+    1. Listar neste componente somente os dados mais importantes sobre a família - OK
     2. Colocar opção de selecionar um cadastro e abrir mais informações (Colocar no novo componente) - OK
-    3. Colocar a edição dos cadastros em modal ou jogar pra outra página
+    3. Colocar a edição dos cadastros em modal ou jogar pra outra página - OK
     4. Organizar layout (principalmente botões)
+    5. Fazer paginação da tabela <----
 */

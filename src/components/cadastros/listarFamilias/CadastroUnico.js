@@ -20,5 +20,5 @@ export default CadastroUnico;
 
 /* TODO:
         1. Exibir as informações
-        2. Colocar botão pra levar pra edição???
+        2. Colocar botão pra levar pra edição
 */

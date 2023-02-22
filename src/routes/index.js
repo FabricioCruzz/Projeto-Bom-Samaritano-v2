@@ -14,15 +14,16 @@ export default function AppRoutes(){
     return (
             <Routes>
                 <Route path="/" element={ <Navigate to="/login"/> }/>
-                <Route path="/login" element={ <Login/> }/>
-                <Route path="dashboard" element={ <Dashboard/> }/>
-                <Route path="estoque" element={ <Estoque/> }/>
+                <Route path="login" element={ <Login/> }/>
+                <Route path="dashboard" element={ <div> <Menu/> <Dashboard/> </div> }/>
+                <Route path="estoque" element={ <div> <Menu/> <Estoque/> </div> }/>
                 <Route path="estoque/cadastrar" element={ <div> <Menu/> <CadastroAlimentos/> </div> }/>
                 <Route path="estoque/tabela" element={ <div> <Menu/> <TabelaAlimentos/> </div> }/>
-                <Route path="cadastros" element={ <Cadastros/> }/>
+                <Route path="cadastros" element={ <div> <Menu/> <Cadastros/> </div> }/>
                 <Route path="cadastros/cadastrar" element={ <div> <Menu/> <CadastroFamilias/> </div> }/>
                 <Route path="cadastros/tabela" element={ <div> <Menu/> <TabelaFamilias/> </div> }/>
                 <Route path="cadastros/tabela/:id" element={ <div> <Menu/> <CadastroUnico/> </div> }/>
+                <Route path="cadastros/editar/:id" element={ <div> <Menu/> <CadastroFamilias/> </div> }/>
                 <Route path="*" element={ <h1>Not Found!!!</h1> }/>
             </Routes>
     )

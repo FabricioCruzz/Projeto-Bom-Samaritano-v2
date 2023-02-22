@@ -29,6 +29,7 @@ import { RiAddBoxFill, RiCloseFill } from "react-icons/ri";
 import * as Yup from "yup";
 import { phoneNumber } from "../../../utils/validations";
 import service from "../../../services/storage.service";
+import { useParams } from "react-router-dom";
 
 const key = "cadastros";
 const storage = service.loadData(key);
@@ -59,6 +60,40 @@ const emptyResident = {
   attendanceMass: "",
   churchActivity: [],
   memberPastoralsMovements: { answer: "", which: "" },
+};
+
+const initialValues = {
+  completeName: "",
+  street: "",
+  houseNumber: "",
+  district: "",
+  addressComplement: "",
+  city: "",
+  phone1: "",
+  phone2: "",
+  birthDate: "",
+  maritalStatus: "",
+  schoolLevel: "",
+  occupation: "",
+  isWorking: "",
+  srcIncome: "",
+  numberOfResidents: "",
+  familyIncome: "",
+  housingSituation: "",
+  appliances: [],
+  needBlankets: "",
+  needShoes: { answer: "", number: "" },
+  needClothes: { answer: "", pantsNumber: "", tShirtCoatSize: "" },
+  needDiapers: { answer: "", size: "" },
+  specialNeed: "",
+  workshop: [],
+  religion: "",
+  receivedSacraments: [],
+  wishReceiveSacraments: [],
+  attendanceMass: "",
+  churchActivity: [],
+  memberPastoralsMovements: { answer: "", which: "" },
+  residents: [emptyResident],
 };
 
 const validationSchema = Yup.object().shape({
@@ -229,6 +264,9 @@ const validationSchema = Yup.object().shape({
 
 const CadastroFamilias = () => {
   const [show, setShow] = useState(false);
+  const { id } = useParams();
+
+  const bdValues = id ? service.getById(key, id) : initialValues;
 
   return (
     <Container id="cds-fam-container">
@@ -236,49 +274,22 @@ const CadastroFamilias = () => {
       <Container>
         <Formik
           validationSchema={validationSchema}
-          initialValues={{
-            completeName: "",
-            street: "",
-            houseNumber: "",
-            district: "",
-            addressComplement: "",
-            city: "",
-            phone1: "",
-            phone2: "",
-            birthDate: "",
-            maritalStatus: "",
-            schoolLevel: "",
-            occupation: "",
-            isWorking: "",
-            srcIncome: "",
-            numberOfResidents: "",
-            familyIncome: "",
-            housingSituation: "",
-            appliances: [],
-            needBlankets: "",
-            needShoes: { answer: "", number: "" },
-            needClothes: { answer: "", pantsNumber: "", tShirtCoatSize: "" },
-            needDiapers: { answer: "", size: "" },
-            specialNeed: "",
-            workshop: [],
-            religion: "",
-            receivedSacraments: [],
-            wishReceiveSacraments: [],
-            attendanceMass: "",
-            churchActivity: [],
-            memberPastoralsMovements: { answer: "", which: "" },
-            residents: [emptyResident],
-          }}
+          initialValues={bdValues}
           onSubmit={async (values) => {
             await new Promise((res) => setTimeout(res, 500));
 
             let cadastroFamilia = {
-              id: new Date().getTime().toString(10),
+              id: values.id ? values.id : new Date().getTime().toString(10),
               ...values,
             };
-
-            registrations.push(cadastroFamilia)
-            service.saveData(key, registrations)
+            const index = registrations.findIndex(el => el.id === values.id)
+            if(index !== -1){
+              registrations[index] = values              
+            }
+            else{
+              registrations.push(cadastroFamilia);
+            }
+            service.saveData(key, registrations);
 
             console.log(cadastroFamilia);
           }}
