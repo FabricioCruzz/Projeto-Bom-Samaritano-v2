@@ -5,6 +5,7 @@ import { BiEdit } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import usePagination from "../../../hooks/usePagination";
 
 const key = "cadastros";
 const storage = service.loadData(key);
@@ -12,6 +13,7 @@ const registrations = storage ? JSON.parse(storage) : [];
 
 const TabelaFamilias = () => {
   const navigate = useNavigate();
+  const { actualPage, setActualPage } = usePagination()
 
   const renderRow = (item) => {
     const {
@@ -101,6 +103,21 @@ const TabelaFamilias = () => {
           )}
         </tbody>
       </Table>
+
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        {
+          Array(5).fill('').map((_, index) => {
+            return <button
+            style={{ margin: '5px 5px', padding: '2px 10px' }}
+            key={index}
+            onClick={ () => setActualPage(index + 1) }
+            disabled={ index === actualPage - 1 }
+            >
+              { index + 1 }
+            </button>
+          })
+        }
+      </div>
     </div>
   );
 };
@@ -113,5 +130,7 @@ export default TabelaFamilias;
     2. Colocar opção de selecionar um cadastro e abrir mais informações (Colocar no novo componente) - OK
     3. Colocar a edição dos cadastros em modal ou jogar pra outra página - OK
     4. Organizar layout (principalmente botões)
-    5. Fazer paginação da tabela <----
+    5. Fazer paginação da tabela
+      5.1 - Condicionar a a atualização da página com a chamada da API dos cadastros (useEffect)
+      5.2 - Estilizar botões da paginação
 */
