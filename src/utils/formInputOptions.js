@@ -77,11 +77,11 @@ export const optionsAttendanceMass = [
 
 export const optionsChurchActivity = [
     { value: 'indo-as-missas', label: 'Indo às Missas' },
-    { value: 'particiando-festas-religiosas-procissoes', label: 'Participando de Festas Religiosas e Procissões' },
+    { value: 'participando-de-festas-religiosas-e-procissoes', label: 'Participando de Festas Religiosas e Procissões' },
     { value: 'radio-paraisopolis', label: 'Por meio da Rádio Paraisópolis' },
     { value: 'programas-televisivos', label: 'Por meio de Programas Televisivos' },
     { value: 'sites-internet', label: 'Sites na Internet' },
-    { value: 'pastorais-movimentos', label: 'Atuando em pastorais e movimentos' },
+    { value: 'pastorais-e-movimentos', label: 'Atuando em pastorais e movimentos' },
     { value: 'fazendo-oracoes-em-casa', label: 'Fazendo suas orações em casa' },
 ]
 
