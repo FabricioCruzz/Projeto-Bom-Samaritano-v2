@@ -16,62 +16,62 @@ const CadastroUnico = () => {
   };
 
   return (
-    <Container>
+    <Container id="cds-unico-component">
       <h1 className="pbs-title-h1">Visualizando Família</h1>
-      <Container>
-        <Container>
-          <h2>Dados Pessoais</h2>
+      <Container className="pbs-flex pbs-col">
+        <h2>Dados Pessoais</h2>
+        <Container className="cdsu-container-group">
           <Container>
-            <h4>Nome</h4>
-            <span>{item.completeName}</span>
+            <h3>Nome</h3>
+            <p>{item.completeName}</p>
           </Container>
 
           <Container>
             <h3>Endereço</h3>
             <div>
-              <span>
+              <p>
                 Rua {item.street}, {item.houseNumber}
-              </span>
+              </p>
               {item.addressComplement && (
-                <span>Ponto de Referência: {item.addressComplement}</span>
+                <p>Ponto de Referência: {item.addressComplement}</p>
               )}
-              <span>
+              <p>
                 {item.district} - {item.city}
-              </span>
+              </p>
             </div>
           </Container>
 
           <Container>
-            <h4>Data de Nascimento</h4>
-            <span>{brazilianDateFormat(item.birthDate)}</span>
+            <h3>Data de Nascimento</h3>
+            <p>{brazilianDateFormat(item.birthDate)}</p>
           </Container>
 
           <Container>
             <h3>Contato</h3>
             <div>
               <h4>Telefone 1:</h4>
-              <span>{item.phone1}</span>
+              <p>{item.phone1}</p>
             </div>
             {item.phone2 && (
               <div>
                 <h4>Telefone 2:</h4>
-                <span>{item.phone2}</span>
+                <p>{item.phone2}</p>
               </div>
             )}
           </Container>
 
           <Container>
-            <h4>Estado Civil</h4>
-            <span>{item.maritalStatus}</span>
+            <h3>Estado Civil</h3>
+            <p>{item.maritalStatus}</p>
           </Container>
 
           <Container>
-            <h4>Escolaridade</h4>
-            <span>{item.schoolLevel}</span>
+            <h3>Escolaridade</h3>
+            <p>{item.schoolLevel}</p>
           </Container>
 
           <Container>
-            <h4>Interesses em Oficinas</h4>
+            <h3>Interesses em Oficinas</h3>
             <ul>
               {item.workshop.map((element) => {
                 return <li key={element}>{element}</li>;
@@ -80,103 +80,104 @@ const CadastroUnico = () => {
           </Container>
         </Container>
 
-        <Container>
-          <h2>Situação Financeira</h2>
+        <h2>Situação Financeira</h2>
+        <Container className="cdsu-container-group">
           <Container>
             <div>
-              <h4>Profissão</h4>
-              <span>{item.occupation}</span>
-              <h4>Está trabalhando?</h4>
-              <span>{item.isWorking}</span>
+              <h3>Profissão</h3>
+              <p>{item.occupation}</p>
+              <h3>Está trabalhando?</h3>
+              <p>{item.isWorking}</p>
             </div>
           </Container>
 
           <Container>
-            <h4>Fonte de Renda</h4>
-            <span>{item.srcIncome}</span>
+            <h3>Fonte de Renda</h3>
+            <p>{item.srcIncome}</p>
           </Container>
 
           <Container>
-            <h4>Moram na casa</h4>
-            <span>{item.numberOfResidents} pessoas</span>
+            <h3>Moram na casa</h3>
+            <p>{item.numberOfResidents} pessoas</p>
           </Container>
 
           <Container>
-            <h4>Renda Familiar</h4>
-            <span>R$ {item.familyIncome}</span>
+            <h3>Renda Familiar</h3>
+            <p>R$ {item.familyIncome}</p>
           </Container>
           <Container>
-            <h4>Situação Habitacional</h4>
-            <span>Moram em {item.housingSituation.replace("-", " ")}</span>
+            <h3>Situação Habitacional</h3>
+            <p>Moram em {item.housingSituation.replace("-", " ")}</p>
           </Container>
         </Container>
 
-        <Container>
-          <h3>Bens e Necessidades</h3>
-
+        <h2>Bens e Necessidades</h2>
+        <Container className="cdsu-container-group">
           <Container>
-            <h4>Eletrodomésticos que Possuem</h4>
+            <h3>Eletrodomésticos que Possuem</h3>
             <ul>
               {item.appliances.map((appliance) => {
-                return <li key={appliance}>{appliance}</li>;
+                return (
+                  <li key={appliance}>{appliance.split("-").join(" ")}</li>
+                );
               })}
             </ul>
           </Container>
 
           <Container>
-            <h4>Necessita de Cobertores</h4>
-            <span>{item.needBlankets}</span>
+            <h3>Necessita de Cobertores</h3>
+            <p>{item.needBlankets}</p>
           </Container>
 
           <Container>
-            <h4>Necessita de Calçados</h4>
+            <h3>Necessita de Calçados</h3>
             {item.needShoes.answer === "sim" ? (
               <div>
-                <span>Número: {item.needShoes.number}</span>
+                <p>Número: {item.needShoes.number}</p>
               </div>
             ) : (
-              <span>Não há necessidade</span>
+              <p className="text-default">Não há necessidade</p>
             )}
           </Container>
 
           <Container>
-            <h4>Necessita de Roupas</h4>
+            <h3>Necessita de Roupas</h3>
             {item.needClothes.answer === "sim" ? (
               <div>
-                <span>Tamanho Calças: {item.needClothes.pantsNumber}</span>
-                <span>
+                <p>Tamanho Calças: {item.needClothes.pantsNumber}</p>
+                <p>
                   Tamanho Casaco/Camisetas: {item.needClothes.tShirtCoatSize}
-                </span>
+                </p>
               </div>
             ) : (
-              <span>Não há necessidade</span>
+              <p className="text-default">Não há necessidade</p>
             )}
           </Container>
 
           <Container>
-            <h4>Necessita de Fraldas</h4>
+            <h3>Necessita de Fraldas</h3>
             {item.needDiapers.answer === "sim" ? (
               <div>
-                <span>Tamanho: {item.needDiapers.size}</span>
+                <p>Tamanho: {item.needDiapers.size}</p>
               </div>
             ) : (
-              <span>Não há necessidade</span>
+              <p className="text-default">Não há necessidade</p>
             )}
           </Container>
 
           {item.specialNeed.length > 1 && (
             <Container>
-              <h4>Necessidade Especial</h4>
-              <p>{item.specialNeed}</p>
+              <h3>Necessidade Especial</h3>
+              <p className="text-default">{item.specialNeed}</p>
             </Container>
           )}
         </Container>
 
-        <Container>
-          <h2>Religião do Morador</h2>
+        <h2>Religião do Morador</h2>
+        <Container className="cdsu-container-group">
           <Container>
-            <h4>Religião</h4>
-            <span>{item.religion.split("-").join(" ")}</span>
+            <h3>Religião</h3>
+            <p>{item.religion.split("-").join(" ")}</p>
           </Container>
 
           <Container>
@@ -201,12 +202,12 @@ const CadastroUnico = () => {
           </Container>
 
           <Container>
-            <h4>Participação nas Missas</h4>
+            <h3>Participação nas Missas</h3>
             <span>{item.attendanceMass.split("-").join(" ")}</span>
           </Container>
 
           <Container>
-            <h4>Participação na Igreja</h4>
+            <h3>Participação na Igreja</h3>
             <ul>
               {item.churchActivity.map((activity) => {
                 return <li key={activity}>{activity.split("-").join(" ")}</li>;
@@ -215,7 +216,7 @@ const CadastroUnico = () => {
           </Container>
 
           <Container>
-            <h4>Participa de Pastorais/Movimentos</h4>
+            <h3>Participa de Pastorais/Movimentos</h3>
             {item.memberPastoralsMovements.answer === "sim" ? (
               <div>
                 <span>{item.memberPastoralsMovements.which}</span>
@@ -226,39 +227,39 @@ const CadastroUnico = () => {
           </Container>
         </Container>
 
-        {item.residents.length > -1 &&
+        {item.residents &&
           item.residents.map((resident, index) => {
             return (
               <Container key={index}>
-                <Container>
-                  <h2>Familiares e Moradores</h2>
-                  <h3>Dados Pessoais - Morador { index + 1 }</h3>
+                <h2>Familiares e Moradores</h2>
+                <h3>Dados Pessoais - Morador {index + 1}</h3>
+                <Container key={index} className="cdsu-container-group">
                   <Container>
                     <h4>Nome</h4>
-                    <span>{resident.completeName}</span>
+                    <p>{resident.completeName}</p>
                   </Container>
 
                   <Container>
                     <h4>Data de Nascimento</h4>
-                    <span>{brazilianDateFormat(resident.birthDate)}</span>
+                    <p>{brazilianDateFormat(resident.birthDate)}</p>
                   </Container>
 
                   <Container>
                     <h4>Parentesco</h4>
-                    <span>{resident.relationship}</span>
+                    <p>{resident.relationship}</p>
                   </Container>
 
                   <Container>
                     <h4>Escolaridade</h4>
-                    <span>{resident.schoolLevel}</span>
+                    <p>{resident.schoolLevel}</p>
                   </Container>
 
                   <Container>
                     <div>
                       <h4>Profissão</h4>
-                      <span>{resident.occupation}</span>
+                      <p>{resident.occupation}</p>
                       <h4>Está trabalhando?</h4>
-                      <span>{resident.isWorking}</span>
+                      <p>{resident.isWorking}</p>
                     </div>
                   </Container>
 
@@ -279,10 +280,10 @@ const CadastroUnico = () => {
                       <h4>Necessita de Calçados</h4>
                       {resident.needShoes.answer === "sim" ? (
                         <div>
-                          <span>Número: {resident.needShoes.number}</span>
+                          <p>Número: {resident.needShoes.number}</p>
                         </div>
                       ) : (
-                        <span>Não há necessidade</span>
+                        <p className="text-default">Não há necessidade</p>
                       )}
                     </Container>
 
@@ -290,25 +291,25 @@ const CadastroUnico = () => {
                       <h4>Necessita de Roupas</h4>
                       {resident.needClothes.answer === "sim" ? (
                         <div>
-                          <span>
+                          <p>
                             Tamanho Calças: {resident.needClothes.pantsNumber}
-                          </span>
-                          <span>
+                          </p>
+                          <p>
                             Tamanho Casaco/Camisetas:{" "}
                             {resident.needClothes.tShirtCoatSize}
-                          </span>
+                          </p>
                         </div>
                       ) : (
-                        <span>Não há necessidade</span>
+                        <p className="text-default">Não há necessidade</p>
                       )}
                     </Container>
                   </Container>
 
+                  <h2>Religião do Morador {index + 1}</h2>
                   <Container>
-                    <h2>Religião do Morador { index + 1 }</h2>
                     <Container>
                       <h4>Religião</h4>
-                      <span>{resident.religion.split("-").join(" ")}</span>
+                      <p>{resident.religion.split("-").join(" ")}</p>
                     </Container>
 
                     <Container>
@@ -342,7 +343,7 @@ const CadastroUnico = () => {
 
                     <Container>
                       <h4>Participação nas Missas</h4>
-                      <span>{resident.attendanceMass.split("-").join(" ")}</span>
+                      <p>{resident.attendanceMass.split("-").join(" ")}</p>
                     </Container>
 
                     <Container>
@@ -362,10 +363,12 @@ const CadastroUnico = () => {
                       <h4>Participa de Pastorais/Movimentos</h4>
                       {resident.memberPastoralsMovements.answer === "sim" ? (
                         <div>
-                          <span>{resident.memberPastoralsMovements.which}</span>
+                          <p>{resident.memberPastoralsMovements.which}</p>
                         </div>
                       ) : (
-                        <span>Não participa de nenhuma pastoral/movimento</span>
+                        <p className="text-default">
+                          Não participa de nenhuma pastoral/movimento
+                        </p>
                       )}
                     </Container>
                   </Container>
@@ -384,4 +387,5 @@ export default CadastroUnico;
         1. Exibir as informações - OK
         2. Colocar botão pra levar pra edição
         3. Organizar Layout
+          3.1 Ajustar a parte dos moradores
 */

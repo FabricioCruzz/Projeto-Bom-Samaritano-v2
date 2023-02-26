@@ -1,3 +1,80 @@
-span{
-    display: block;
+@import "../../../assets/styles/variables.scss";
+
+#cds-unico-component {
+  :has(h2, h3, h4) {
+    h2 {
+      color: red;
+      font-size: 2.1rem;
+      text-transform: uppercase;
+      text-align: center;
+      font-weight: bold;
+
+      // &::after {
+      //   content: "";
+      //   margin-left: auto;
+      //   margin-right: auto;
+      //   display: block;
+      //   min-width: 240px;
+      //   width: 40%;
+      //   border-bottom: 3px solid black;
+      //   border-radius: 10px;
+      //   margin-bottom: 1.5rem;
+      // }
+    }
+
+    h3 {
+      font-size: 1.565rem;
+    }
+
+    h4 {
+      font-size: 1.3125rem;
+    }
+
+    h3,
+    h4 {
+      color: springgreen;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+  }
+
+  :has(li) {
+    li {
+      list-style: circle;
+      text-transform: capitalize;
+    }
+  }
+  > .container {
+    :has(div) {
+      margin-top: 1rem;
+      padding: 1rem 0;
+    }
+    border: 1px solid black;
+    padding: 1.5rem 3rem !important;
+
+    p {
+      margin: 0.8rem 0 !important;
+      text-transform: capitalize;
+    }
+  }
+}
+.text-default {
+  text-transform: initial !important;
+}
+
+.cdsu-container-group {
+  display: flex;
+  flex-flow: row wrap;
+  min-width: 0;
+  padding: 1rem 1.5rem;
+  // border: 1px solid black;
+  border-radius: 8px;
+  width: 100%;
+  margin: 1rem auto;
+
+  > .container {
+    margin: 2rem auto;
+    flex-basis: 40%;
+    flex-grow: 1;
+  }
 }

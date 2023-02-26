@@ -1,5 +1,4 @@
 import React from 'react'
-import './Cadastros.scss'
 import Options from '../../components/options/Options'
 
 const Cadastros = () => {
