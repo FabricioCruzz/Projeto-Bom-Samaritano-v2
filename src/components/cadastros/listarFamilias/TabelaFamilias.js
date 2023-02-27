@@ -82,7 +82,7 @@ const TabelaFamilias = () => {
 
   return (
     <div>
-      <h2 className="pbs-title-h2">Famílias Cadastradas</h2>
+      <h1 className="pbs-title-h1">Famílias Cadastradas</h1>
       <Table striped bordered hover responsive>
         <thead>
           <tr className="pbs-tr">

@@ -270,7 +270,7 @@ const CadastroFamilias = () => {
 
   return (
     <Container id="cds-fam-container">
-      <h2 className="pbs-title-h2">Cadastrar Família</h2>
+      <h1 className="pbs-title-h1">Cadastrar Família</h1>
       <Container>
         <Formik
           validationSchema={validationSchema}
@@ -1308,6 +1308,4 @@ export default CadastroFamilias;
     3. 
     4. Colocar validação no Yup pra caso não clicar no botão de add morador - Retirar o required dos campos? (Não é a melhor solução!)
     5. Quando form estiver pronto, separar validações YUP em arquivo separado
-
-    6. Implementar a tabela de exibição dos cadastros - Priorizar!!!
 */

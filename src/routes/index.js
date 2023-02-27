@@ -8,7 +8,7 @@ import Menu from '../components/menu/Menu'
 import Cadastros from '../pages/cadastros/Cadastros'
 import CadastroFamilias from '../components/cadastros/cadastrarFamilias/CadastroFamilias'
 import TabelaFamilias from '../components/cadastros/listarFamilias/TabelaFamilias'
-import CadastroUnico from '../components/cadastros/listarFamilias/CadastroUnico'
+import VisualizarCadastro from '../components/cadastros/listarFamilias/VisualizarCadastro'
 
 export default function AppRoutes(){
     return (
@@ -22,7 +22,7 @@ export default function AppRoutes(){
                 <Route path="cadastros" element={ <div> <Menu/> <Cadastros/> </div> }/>
                 <Route path="cadastros/cadastrar" element={ <div> <Menu/> <CadastroFamilias/> </div> }/>
                 <Route path="cadastros/tabela" element={ <div> <Menu/> <TabelaFamilias/> </div> }/>
-                <Route path="cadastros/tabela/:id" element={ <div> <Menu/> <CadastroUnico/> </div> }/>
+                <Route path="cadastros/tabela/:id" element={ <div> <Menu/> <VisualizarCadastro/> </div> }/>
                 <Route path="cadastros/editar/:id" element={ <div> <Menu/> <CadastroFamilias/> </div> }/>
                 <Route path="*" element={ <h1>Not Found!!!</h1> }/>
             </Routes>

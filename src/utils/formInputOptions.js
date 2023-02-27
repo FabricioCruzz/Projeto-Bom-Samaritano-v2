@@ -16,73 +16,73 @@ export const optionsSchoolLevel = [
 
 export const optionsYesOrNo = [
     { value: 'sim', label: 'Sim' },
-    { value: 'nao', label: 'Não' },
+    { value: 'não', label: 'Não' },
 ]
 
 export const optionsSrcIncome = [
     { value: 'trabalho-fixo', label: 'Trabalho Fixo' },
     { value: 'bicos', label: 'Bicos' },
-    { value: 'aposentadoria_pensaoinss', label: 'Aposentadoria/Pensão INSS' },
-    { value: 'bolsa-familia', label: 'Bolsa Família' },
-    { value: 'auxilio-emergencial', label: 'Auxílio Emergencial' },
+    { value: 'aposentadoria-ou-pensao-inss', label: 'Aposentadoria/Pensão INSS' },
+    { value: 'bolsa-família', label: 'Bolsa Família' },
+    { value: 'auxílio-emergencial', label: 'Auxílio Emergencial' },
     { value: 'seguro-desemprego', label: 'Seguro Desemprego' },
     { value: 'sem-renda', label: 'Sem Renda' },
 ]
 
 export const optionsHousingSituation = [
-    { value: 'casa-propria', label: 'Casa Própria' },
+    { value: 'casa-própria', label: 'Casa Própria' },
     { value: 'casa-alugada', label: 'Casa Alugada' },
     { value: 'casa-cedida', label: 'Casa Cedida' },
 ]
 
 export const optionsAppliances = [
-    { value: 'fogao-gas', label: 'Fogão a Gás' },
-    { value: 'fogao-lenha', label: 'Fogão a Lenha' },
+    { value: 'fogão-a-gás', label: 'Fogão a Gás' },
+    { value: 'fogão-a-lenha', label: 'Fogão a Lenha' },
     { value: 'geladeira', label: 'Geladeira' },
-    { value: 'nenhuma-das-opcoes', label: 'Nehuma das Opções' },
+    { value: 'nenhuma-das-opções', label: 'Nehuma das Opções' },
 ]
 
 export const optionsWorkshop = [
-    { value: 'atividade-fisica', label: 'Atividade Física' },
-    { value: 'musica', label: 'Música' },
+    { value: 'atividade-física', label: 'Atividade Física' },
+    { value: 'música', label: 'Música' },
     { value: 'artesanato', label: 'Artesanato' },
-    { value: 'nao', label: 'Não' },
+    { value: 'não', label: 'Não' },
 ]
 
 export const optionsReligion = [
-    { value: 'catolica-apostolica-romana', label: 'Católica Apostólica Romana' },
-    { value: 'evangelica', label: 'Evangélica' },
-    { value: 'espirita', label: 'Espírita' },
-    { value: 'religiosidade-multipla', label: 'Religiosidade Múltipla' },
+    { value: 'católica-apostólica-romana', label: 'Católica Apostólica Romana' },
+    { value: 'evangélica', label: 'Evangélica' },
+    { value: 'espírita', label: 'Espírita' },
+    { value: 'religiosidade-múltipla', label: 'Religiosidade Múltipla' },
     { value: 'nenhuma', label: 'Nenhuma' },
 ]
 
 export const optionsSacraments = [
     { value: 'batismo', label: 'Batismo' },
-    { value: 'primeira-comunhao', label: 'Primeira Comunhão' },
+    { value: 'primeira-comunhão', label: 'Primeira Comunhão' },
     { value: 'crisma', label: 'Crisma' },
-    { value: 'confissao', label: 'Confissão' },
-    { value: 'matrimonio', label: 'Matrimônio' },
+    { value: 'confissão', label: 'Confissão' },
+    { value: 'matrimônio', label: 'Matrimônio' },
     { value: 'nenhum', label: 'Nenhum' },
 ]
 
 export const optionsAttendanceMass = [
     { value: 'mais-de-uma-vez-por-semana', label: 'Mais de uma vez por semana' },
     { value: 'todos-finais-de-semana', label: 'Todos os finais de semana' },
-    { value: 'uma-vez-por-mes', label: 'Uma vez por mês' },
+    { value: 'uma-vez-por-mês', label: 'Uma vez por mês' },
     { value: 'raramente', label: 'Raramente' },
-    { value: 'apenas-festas-religiosas-ocasioes-especiais', label: 'Apenas em festas religiosas/Ocasiões especiais' },
-    { value: 'nao-participa', label: 'Não participa' },
+    { value: 'apenas-em-festas-religiosas-e-ocasiões-especiais', label: 'Apenas em festas religiosas/Ocasiões especiais' },
+    { value: 'não-participa', label: 'Não participa' },
 ]
 
 export const optionsChurchActivity = [
-    { value: 'indo-as-missas', label: 'Indo às Missas' },
-    { value: 'participando-de-festas-religiosas-e-procissoes', label: 'Participando de Festas Religiosas e Procissões' },
-    { value: 'radio-paraisopolis', label: 'Por meio da Rádio Paraisópolis' },
+    { value: 'indo-às-missas', label: 'Indo às Missas' },
+    { value: 'participando-de-festas-religiosas-e-procissões', label: 'Participando de Festas Religiosas e Procissões' },
+    { value: 'rádio-paraisópolis', label: 'Por meio da Rádio Paraisópolis' },
     { value: 'programas-televisivos', label: 'Por meio de Programas Televisivos' },
     { value: 'sites-internet', label: 'Sites na Internet' },
     { value: 'pastorais-e-movimentos', label: 'Atuando em pastorais e movimentos' },
-    { value: 'fazendo-oracoes-em-casa', label: 'Fazendo suas orações em casa' },
+    { value: 'fazendo-suas-orações-em-casa', label: 'Fazendo suas orações em casa' },
 ]
 
 export const optionsShoesSize = fillOptions(33, 48, 1)

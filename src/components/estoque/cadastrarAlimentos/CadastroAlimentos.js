@@ -57,7 +57,7 @@ const CadastroAlimentos = () => {
         <Container id="cds-ali-container">
             <Container className="container-form">
 
-                <h2 className="pbs-title-h2">Cadastrar Alimento</h2>
+                <h1 className="pbs-title-h1">Cadastrar Alimento</h1>
 
                 <Form className="pbs-flex pbs-col pbs-form" onSubmit={ handleSubmit }>
                     <Form.Group className="form-box">

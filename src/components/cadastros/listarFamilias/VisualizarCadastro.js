@@ -1,26 +1,29 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-import "./CadastroUnico.scss";
+import { useNavigate, useParams } from "react-router-dom";
+import "./VisualizarCadastro.scss";
+import CustomButton from "../../buttons/CustomButton";
 import service from "../../../services/storage.service";
 
 const key = "cadastros";
 
-const CadastroUnico = () => {
+const VisualizarCadastro = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const item = service.getById(key, id);
-  console.log(`item`, item);
 
   const brazilianDateFormat = (date) => {
     return date.toString().split("-").reverse().join("/");
   };
 
   return (
-    <Container id="cds-unico-component">
+    <Container id="cds-vc-component">
       <h1 className="pbs-title-h1">Visualizando Família</h1>
       <Container className="pbs-flex pbs-col">
-        <h2>Dados Pessoais</h2>
-        <Container className="cdsu-container-group">
+        <h2>
+          <span>Dados Pessoais</span>
+        </h2>
+        <Container className="cdsv-container-group">
           <Container>
             <h3>Nome</h3>
             <p>{item.completeName}</p>
@@ -80,8 +83,10 @@ const CadastroUnico = () => {
           </Container>
         </Container>
 
-        <h2>Situação Financeira</h2>
-        <Container className="cdsu-container-group">
+        <h2>
+          <span>Situação Financeira</span>
+        </h2>
+        <Container className="cdsv-container-group">
           <Container>
             <div>
               <h3>Profissão</h3>
@@ -111,8 +116,10 @@ const CadastroUnico = () => {
           </Container>
         </Container>
 
-        <h2>Bens e Necessidades</h2>
-        <Container className="cdsu-container-group">
+        <h2>
+          <span>Bens e Necessidades</span>
+        </h2>
+        <Container className="cdsv-container-group">
           <Container>
             <h3>Eletrodomésticos que Possuem</h3>
             <ul>
@@ -173,8 +180,10 @@ const CadastroUnico = () => {
           )}
         </Container>
 
-        <h2>Religião do Morador</h2>
-        <Container className="cdsu-container-group">
+        <h2>
+          <span>Religião do Morador</span>
+        </h2>
+        <Container className="cdsv-container-group">
           <Container>
             <h3>Religião</h3>
             <p>{item.religion.split("-").join(" ")}</p>
@@ -203,7 +212,7 @@ const CadastroUnico = () => {
 
           <Container>
             <h3>Participação nas Missas</h3>
-            <span>{item.attendanceMass.split("-").join(" ")}</span>
+            <p>{item.attendanceMass.split("-").join(" ")}</p>
           </Container>
 
           <Container>
@@ -219,10 +228,10 @@ const CadastroUnico = () => {
             <h3>Participa de Pastorais/Movimentos</h3>
             {item.memberPastoralsMovements.answer === "sim" ? (
               <div>
-                <span>{item.memberPastoralsMovements.which}</span>
+                <p>{item.memberPastoralsMovements.which}</p>
               </div>
             ) : (
-              <span>Não participa de nenhuma pastoral/movimento</span>
+              <p>Não participa de nenhuma pastoral/movimento</p>
             )}
           </Container>
         </Container>
@@ -230,10 +239,12 @@ const CadastroUnico = () => {
         {item.residents &&
           item.residents.map((resident, index) => {
             return (
-              <Container key={index}>
-                <h2>Familiares e Moradores</h2>
-                <h3>Dados Pessoais - Morador {index + 1}</h3>
-                <Container key={index} className="cdsu-container-group">
+              <Container key={index} className="pbs-flex pbs-col">
+                <h2>
+                  <span>Familiares e Moradores</span>
+                </h2>
+                <h3 className="mt-3">Dados Pessoais - Morador {index + 1}</h3>
+                <Container key={index} className="cdsv-container-group">
                   <Container>
                     <h4>Nome</h4>
                     <p>{resident.completeName}</p>
@@ -274,8 +285,8 @@ const CadastroUnico = () => {
                     </ul>
                   </Container>
 
-                  <Container>
-                    <h3>Necessidades</h3>
+                  <Container className="cdsv-container-group">
+                    <h3 className="flex-basis-100">Necessidades</h3>
                     <Container>
                       <h4>Necessita de Calçados</h4>
                       {resident.needShoes.answer === "sim" ? (
@@ -305,8 +316,10 @@ const CadastroUnico = () => {
                     </Container>
                   </Container>
 
-                  <h2>Religião do Morador {index + 1}</h2>
-                  <Container>
+                  <h2 className="flex-basis-100">
+                    <span>Religião do Morador {index + 1}</span>
+                  </h2>
+                  <Container className="cdsv-container-group">
                     <Container>
                       <h4>Religião</h4>
                       <p>{resident.religion.split("-").join(" ")}</p>
@@ -376,12 +389,18 @@ const CadastroUnico = () => {
               </Container>
             );
           })}
+        <CustomButton
+          className="m-auto"
+          value="Editar"
+          type="button"
+          onClick={() => navigate(`/cadastros/editar/${id}`)}
+        />
       </Container>
     </Container>
   );
 };
 
-export default CadastroUnico;
+export default VisualizarCadastro;
 
 /* TODO:
         1. Exibir as informações - OK
