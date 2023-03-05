@@ -1,49 +1,56 @@
 @import "../../../assets/styles/variables.scss";
 
 .pbs-actions-td {
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-around;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-around;
 }
 
-.btn-actions{
-    margin: auto 0.5rem;
-    display: inherit;
-    flex-direction: inherit;
-    align-items: center;
-    border: 0.5px solid $black-025;
-    background-color: $red-primary;
+.btn-actions {
+  margin: auto 0.5rem;
+  display: inherit;
+  flex-direction: inherit;
+  align-items: center;
+  border: 0.5px solid $black-025;
+  background-color: $red-primary;
 
-    &:hover{
-        transition: 0.4s;
-        cursor: pointer;
-        background: $red-primary-transparent;
-        border-color: $black-025;
-    }
+  &:hover {
+    transition: 0.4s;
+    cursor: pointer;
+    background: $red-primary-transparent;
+    border-color: $black-025;
+  }
 }
 
-.icon-actions{
-    margin-right: 0.5rem;
+.icon-actions {
+  margin-right: 0.5rem;
 }
 
-.table-responsive{
-    margin: auto 0.5rem;
+.table-responsive {
+  margin: auto 0.5rem;
 }
 
-.pbs-tr{
-    th:nth-child(1){
+#tba-table {
+  > thead {
+    th {
+      text-align: center;
+      vertical-align: middle;
+
+      &:nth-child(1) {
         width: 1vw;
-    }
-    
-    th:nth-child(3){
+      }
+
+      &:nth-child(3) {
         width: 5vw;
-    }
-    
-    th:nth-child(4){
+      }
+
+      &:nth-child(4) {
         width: 10vw;
-    }
-    
-    th:nth-child(5){
+      }
+
+      &:nth-child(5) {
         width: 25vw;
+      }
     }
+  }
 }

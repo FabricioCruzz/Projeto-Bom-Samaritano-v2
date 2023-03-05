@@ -1,4 +1,5 @@
 import React from "react";
+import './TabelaFamilias.scss';
 import { Button, Table } from "react-bootstrap";
 import service from "../../../services/storage.service";
 import { BiEdit } from "react-icons/bi";
@@ -13,7 +14,7 @@ const registrations = storage ? JSON.parse(storage) : [];
 
 const TabelaFamilias = () => {
   const navigate = useNavigate();
-  const { actualPage, setActualPage } = usePagination()
+  const { actualPage, setActualPage } = usePagination();
 
   const renderRow = (item) => {
     const {
@@ -83,9 +84,9 @@ const TabelaFamilias = () => {
   return (
     <div>
       <h1 className="pbs-title-h1">Famílias Cadastradas</h1>
-      <Table striped bordered hover responsive>
+      <Table id="tbf-table" striped bordered hover responsive>
         <thead>
-          <tr className="pbs-tr">
+          <tr>
             <th>#</th>
             <th>Nome</th>
             <th>Data de Nascimento</th>
@@ -104,19 +105,21 @@ const TabelaFamilias = () => {
         </tbody>
       </Table>
 
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        {
-          Array(5).fill('').map((_, index) => {
-            return <button
-            style={{ margin: '5px 5px', padding: '2px 10px' }}
-            key={index}
-            onClick={ () => setActualPage(index + 1) }
-            disabled={ index === actualPage - 1 }
-            >
-              { index + 1 }
-            </button>
-          })
-        }
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {Array(5)
+          .fill("")
+          .map((_, index) => {
+            return (
+              <button
+                style={{ margin: "5px 5px", padding: "2px 10px" }}
+                key={index}
+                onClick={() => setActualPage(index + 1)}
+                disabled={index === actualPage - 1}
+              >
+                {index + 1}
+              </button>
+            );
+          })}
       </div>
     </div>
   );
@@ -129,7 +132,7 @@ export default TabelaFamilias;
     1. Listar neste componente somente os dados mais importantes sobre a família - OK
     2. Colocar opção de selecionar um cadastro e abrir mais informações (Colocar no novo componente) - OK
     3. Colocar a edição dos cadastros em modal ou jogar pra outra página - OK
-    4. Organizar layout (principalmente botões)
+    4. Organizar layout (principalmente botões) - OK +/-
     5. Fazer paginação da tabela
       5.1 - Condicionar a a atualização da página com a chamada da API dos cadastros (useEffect)
       5.2 - Estilizar botões da paginação

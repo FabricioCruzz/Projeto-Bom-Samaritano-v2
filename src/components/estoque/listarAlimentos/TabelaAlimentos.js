@@ -85,9 +85,9 @@ const TabelaAlimentos = () => {
     return (
         <div itemID="table-foods">
             <h1 className="pbs-title-h1">Estoque de Alimentos</h1>
-                <Table striped bordered hover responsive>
+                <Table id="tba-table" striped bordered hover responsive>
                     <thead>
-                        <tr className="pbs-tr">
+                        <tr>
                         <th>#</th>
                         <th>Descrição</th>
                         <th>Tipo</th>
