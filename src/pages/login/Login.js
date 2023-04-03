@@ -1,5 +1,6 @@
 import React, { useState } from "react"
-import logo from '../../assets/logos/Logo.png'
+// import logo from '../../assets/logos/Logo.png'
+import logo from '../../assets/logos/Logo-PBS.svg'
 import './Login.scss'
 import { FaUser } from 'react-icons/fa'
 import { RiLockPasswordFill } from 'react-icons/ri'

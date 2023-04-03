@@ -1308,4 +1308,5 @@ export default CadastroFamilias;
     3. 
     4. Colocar validação no Yup pra caso não clicar no botão de add morador - Retirar o required dos campos? (Não é a melhor solução!)
     5. Quando form estiver pronto, separar validações YUP em arquivo separado
+    6. MODO EDIÇÃO: Radio's e Checkboxes não vem marcados embora tenham value - CORRIGIR - Usar o hook do Formik?
 */

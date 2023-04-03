@@ -401,10 +401,3 @@ const VisualizarCadastro = () => {
 };
 
 export default VisualizarCadastro;
-
-/* TODO:
-        1. Exibir as informações - OK
-        2. Colocar botão pra levar pra edição
-        3. Organizar Layout
-          3.1 Ajustar a parte dos moradores
-*/

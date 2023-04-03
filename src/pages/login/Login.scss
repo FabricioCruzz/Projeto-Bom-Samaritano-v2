@@ -1,62 +1,62 @@
 @import "../../assets/styles/variables.scss";
 
-.login-container, .formLogin {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    box-sizing: border-box;
+.login-container,
+.formLogin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
 }
 
-.logo{
-  height: 400px;
-  width: 500px;
+.logo {
+  height: 30%;
+  width: 30%;
   margin: 15vh auto 5vh auto;
 }
 
-.input-icons{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+.input-icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 
-    & > input{
-        padding-left: 15%;
-    }
+  & > input {
+    padding-left: 15%;
+  }
 }
 
-.user-icon{
-    width: 20px;
-    height: 20px;
-    z-index: 1;
-    position: relative;
-    left: 45px;
+.user-icon {
+  width: 20px;
+  height: 20px;
+  z-index: 1;
+  position: relative;
+  left: 45px;
 }
 
-.formLogin div:nth-last-child(2){
-    margin-bottom: 3.1rem;
+.formLogin div:nth-last-child(2) {
+  margin-bottom: 3.1rem;
 }
 
-.btnSubmit{
-    height: 48px;
-    width: 199px;
-    border-radius: 12px;
-    border: 0.5px solid $black-03;
-    background-color: $red-primary;
-    color: $white;
-    box-shadow: 0px 4px 4px $black-03;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 17px;
-    text-align: center;
-    text-transform: uppercase;
+.btnSubmit {
+  height: 48px;
+  width: 199px;
+  border-radius: 12px;
+  border: 0.5px solid $black-03;
+  background-color: $red-primary;
+  color: $white;
+  box-shadow: 0px 4px 4px $black-03;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 17px;
+  text-align: center;
+  text-transform: uppercase;
 
-    &:hover{
-        transition: 0.4s;
-        cursor: pointer;
-        background: $red-primary-transparent;
-    }
-
+  &:hover {
+    transition: 0.4s;
+    cursor: pointer;
+    background: $red-primary-transparent;
+  }
 }
