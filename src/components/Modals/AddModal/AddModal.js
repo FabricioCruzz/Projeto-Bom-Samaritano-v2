@@ -13,7 +13,7 @@ const AddModal = ({item = {}, onClose = ()=>{}}) => {
 
     const [values, setValues] = useState(item)
     
-    const oldValueQtd = item.amount
+    const oldValueQtd = Number(item.amount)
     
     const handleChange = e => {
         const { name, value } = e.target
