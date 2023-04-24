@@ -27,7 +27,7 @@ const Login = () => {
         // TODO: Verificar como enviar dados para o backend
         if(!data.user || !data.password){
             alert('Por favor, preencha todos os campos!')
-            return
+            navigate(0)
         }
 
         else{
