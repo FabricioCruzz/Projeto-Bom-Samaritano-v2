@@ -4,6 +4,7 @@ import service from '../../../services/storage.service'
 import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import { useNavigate } from 'react-router-dom'
 
 const key = 'itens'
 let storage = service.loadData(key)
@@ -13,6 +14,8 @@ const AddModal = ({item = {}, onClose = ()=>{}}) => {
 
     const [values, setValues] = useState(item)
     
+    const navigate = useNavigate()
+
     const oldValueQtd = Number(item.amount)
     
     const handleChange = e => {
@@ -33,6 +36,7 @@ const AddModal = ({item = {}, onClose = ()=>{}}) => {
         itens[index] = item
         service.saveData(key, itens)
         onClose()
+        navigate(0)
         
     }
 

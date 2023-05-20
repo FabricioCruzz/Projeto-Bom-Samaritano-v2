@@ -3,6 +3,7 @@ import service from '../../../services/storage.service'
 import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import { useNavigate } from 'react-router-dom'
 
 const datalistValues = [
     '',
@@ -23,7 +24,7 @@ const EditModal = ({item = {}, onClose = ()=>{}, children}) => {
     console.log(item)
 
     const [values, setValues] = useState(item)
-
+    const navigate = useNavigate()
 
     const handleChange = e => {
         const { name, value } = e.target
@@ -43,6 +44,7 @@ const EditModal = ({item = {}, onClose = ()=>{}, children}) => {
         itens[index] = item
         service.saveData(key, itens)
         onClose()
+        navigate(0)
         
     }
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./CadastroFamilias.scss";
 import { Container } from "react-bootstrap";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
@@ -265,6 +266,7 @@ const validationSchema = Yup.object().shape({
 const CadastroFamilias = () => {
   const [show, setShow] = useState(false);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const bdValues = id ? service.getById(key, id) : initialValues;
 
@@ -282,14 +284,16 @@ const CadastroFamilias = () => {
               id: values.id ? values.id : new Date().getTime().toString(10),
               ...values,
             };
-            const index = registrations.findIndex(el => el.id === values.id)
-            if(index !== -1){
-              registrations[index] = values              
-            }
-            else{
+            const index = registrations.findIndex((el) => el.id === values.id);
+            if (index !== -1) {
+              registrations[index] = values;
+            } else {
               registrations.push(cadastroFamilia);
             }
             service.saveData(key, registrations);
+
+            alert("Cadastro realizado com sucesso!");
+            navigate(0);
 
             console.log(cadastroFamilia);
           }}
@@ -599,7 +603,7 @@ const CadastroFamilias = () => {
                   {values.needShoes.answer === "sim" && (
                     <Container className="additionalFields">
                       <label htmlFor="needShoes.number">
-                        Precisa de Calçados*
+                        Número do calçado*
                       </label>
                       <Field
                         component={CustomSelect}

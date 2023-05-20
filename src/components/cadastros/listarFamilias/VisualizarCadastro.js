@@ -77,7 +77,7 @@ const VisualizarCadastro = () => {
             <h3>Interesses em Oficinas</h3>
             <ul>
               {item.workshop.map((element) => {
-                return <li key={element}>{element}</li>;
+                return <li key={element}>{element.replace("-", " ")}</li>;
               })}
             </ul>
           </Container>
