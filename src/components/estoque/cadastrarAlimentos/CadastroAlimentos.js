@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import "./CadastroAlimentos.scss";
-import service from "../../../services/storage.service";
+import api from "../../../services/api.service";
 import Form from "react-bootstrap/Form";
 import CustomButton from "../../buttons/CustomButton";
 import { Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const defaultValues = {
   id: undefined,
@@ -14,12 +15,9 @@ const defaultValues = {
 
 const datalistValues = ["", "KG", "UN", "PCT", "L", "CX12", "CX30"];
 
-let key = "itens";
-let storage = service.loadData(key);
-let itens = storage ? JSON.parse(storage) : [];
-
 const CadastroAlimentos = () => {
   const [values, setValues] = useState(defaultValues);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,15 +28,13 @@ const CadastroAlimentos = () => {
     e.preventDefault();
 
     let item = {
-      id: new Date().getTime().toString(10),
       product: values.product,
-      type: values.type,
-      amount: values.amount,
+      productType: values.productType,
+      amount: Number(values.amount),
     };
-    itens.push(item);
-    service.saveData(key, itens);
-    // TODO: Enviar dados para o backend
-    console.log(values);
+    api.post("products", item);
+    alert("Produto cadastrado com sucesso!");
+    navigate(0);
   };
 
   return (
@@ -63,7 +59,7 @@ const CadastroAlimentos = () => {
               <Form.Select
                 className="pbs-custom-select"
                 aria-label="Selecionar tipo"
-                name="type"
+                name="productType"
                 onChange={handleChange}
               >
                 {/* TODO: Colocar validação para o usuário não enviar um valor vazio (Tipo do Produto:) */}

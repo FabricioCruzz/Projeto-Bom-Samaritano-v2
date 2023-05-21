@@ -8,12 +8,8 @@ import { useNavigate } from "react-router-dom";
 const datalistValues = ["", "KG", "UN", "PCT", "L", "CX12", "CX30"];
 
 const EditModal = ({ item = {}, onClose = () => {} }) => {
-  console.log("item", item);
-
   const [values, setValues] = useState(item);
   const navigate = useNavigate();
-
-  console.log("values", values);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
