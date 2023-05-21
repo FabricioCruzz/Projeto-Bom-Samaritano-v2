@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./TabelaAlimentos.scss";
-import service from "../../../services/storage.service";
 import api from "../../../services/api.service";
 import Table from "react-bootstrap/Table";
 import EditModal from "../../Modals/EditModal/EditModal";
@@ -18,11 +17,7 @@ const initialValues = {
   amount: 0,
 };
 
-const key = "itens";
-let storage = service.loadData(key);
-let itens = storage ? JSON.parse(storage) : [];
-
-// TODO:
+let itens;
 
 const TabelaAlimentos = () => {
   const [showModalUpdate, setShowModalUpdate] = useState(false);
@@ -30,6 +25,7 @@ const TabelaAlimentos = () => {
   const [values, setValues] = useState(initialValues);
   const navigate = useNavigate();
 
+  //TODO: Corrigir erro de reload na hora de trazer os dados (tem hora que não aparece)
   useEffect(() => {
     api.get("products").then((res) => {
       console.log(res.data);
@@ -78,9 +74,7 @@ const TabelaAlimentos = () => {
   };
 
   const onDelete = (rowContent) => {
-    const index = itens.findIndex((element) => element.product === rowContent);
-    itens.splice(index, 1);
-    service.saveData(key, itens);
+    api.delete(`products/${rowContent.id_product}`);
     navigate(0);
   };
   return (
