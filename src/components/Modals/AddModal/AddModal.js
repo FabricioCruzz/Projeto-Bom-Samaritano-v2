@@ -23,7 +23,7 @@ const AddModal = ({ item = {}, onClose = () => {} }) => {
     let item = {
       id: values.id_product,
       product: values.product,
-      type: values.type,
+      productType: values.productType,
       amount: oldValueQtd + Number(values.amount),
     };
     api.put(`products/${item.id}`, item);
