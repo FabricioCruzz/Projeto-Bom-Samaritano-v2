@@ -3,13 +3,15 @@ import api from "../../../services/api.service";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { useNavigate } from "react-router-dom";
 
 const datalistValues = ["", "KG", "UN", "PCT", "L", "CX12", "CX30"];
 
 const EditModal = ({ item = {}, onClose = () => {} }) => {
   const [values, setValues] = useState(item);
-  const navigate = useNavigate();
+
+  const updateProduct = async (item) => {
+    await api.put(`products/${item.id}`, item);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,9 +27,8 @@ const EditModal = ({ item = {}, onClose = () => {} }) => {
       productType: values.productType,
       amount: Number(values.amount),
     };
-    api.put(`products/${item.id}`, item);
+    updateProduct(item);
     onClose();
-    navigate(0);
   };
 
   return (

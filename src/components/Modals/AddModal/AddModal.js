@@ -4,14 +4,15 @@ import api from "../../../services/api.service";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { useNavigate } from "react-router-dom";
 
 const AddModal = ({ item = {}, onClose = () => {} }) => {
   const [values, setValues] = useState(item);
 
-  const navigate = useNavigate();
-
   const oldValueQtd = Number(item.amount);
+
+  const updateProduct = async (item) => {
+    await api.put(`products/${item.id}`, item);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,9 +27,8 @@ const AddModal = ({ item = {}, onClose = () => {} }) => {
       productType: values.productType,
       amount: oldValueQtd + Number(values.amount),
     };
-    api.put(`products/${item.id}`, item);
+    updateProduct(item);
     onClose();
-    navigate(0);
   };
 
   return (

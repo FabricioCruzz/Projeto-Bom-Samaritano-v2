@@ -8,30 +8,24 @@ import { RiAddBoxFill } from "react-icons/ri";
 import { BiEdit } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-
-const initialValues = {
-  id: undefined,
-  product: "",
-  type: "",
-  amount: 0,
-};
-
-let itens;
 
 const TabelaAlimentos = () => {
   const [showModalUpdate, setShowModalUpdate] = useState(false);
   const [showModalAdd, setShowModalAdd] = useState(false);
-  const [values, setValues] = useState(initialValues);
-  const navigate = useNavigate();
+  const [values, setValues] = useState({});
+  const [products, setProducts] = useState(null);
 
-  //TODO: Corrigir erro de reload na hora de trazer os dados (tem hora que não aparece - quando dá refresh os dados somem)
+  const fetchProducts = async () => {
+    await api.get("products").then((res) => setProducts(res.data));
+  };
+
+  const deleteProduct = async (product) => {
+    await api.delete(`products/${product.id_product}`);
+  };
+
   useEffect(() => {
-    api.get("products").then((res) => {
-      console.log(res.data);
-      itens = res.data;
-    });
-  }, []);
+    fetchProducts();
+  }, [products]);
 
   const renderRow = (item) => {
     const { id_product, product, productType, amount } = item;
@@ -74,8 +68,7 @@ const TabelaAlimentos = () => {
   };
 
   const onDelete = (rowContent) => {
-    api.delete(`products/${rowContent.id_product}`);
-    navigate(0);
+    deleteProduct(rowContent);
   };
   return (
     <div itemID="table-foods">
@@ -91,10 +84,10 @@ const TabelaAlimentos = () => {
           </tr>
         </thead>
         <tbody>
-          {itens == null || itens.length === 0 ? (
+          {products == null || products.length === 0 ? (
             <tr></tr>
           ) : (
-            itens.map(renderRow)
+            products.map(renderRow)
           )}
         </tbody>
       </Table>
