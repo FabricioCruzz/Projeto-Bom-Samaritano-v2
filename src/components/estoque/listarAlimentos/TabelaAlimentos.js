@@ -25,7 +25,7 @@ const TabelaAlimentos = () => {
   const [values, setValues] = useState(initialValues);
   const navigate = useNavigate();
 
-  //TODO: Corrigir erro de reload na hora de trazer os dados (tem hora que não aparece)
+  //TODO: Corrigir erro de reload na hora de trazer os dados (tem hora que não aparece - quando dá refresh os dados somem)
   useEffect(() => {
     api.get("products").then((res) => {
       console.log(res.data);

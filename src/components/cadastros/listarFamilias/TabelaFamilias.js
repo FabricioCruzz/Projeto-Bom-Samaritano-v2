@@ -1,24 +1,29 @@
-import React from "react";
-import './TabelaFamilias.scss';
+import React, { useEffect, useState } from "react";
+import "./TabelaFamilias.scss";
 import { Button, Table } from "react-bootstrap";
-import service from "../../../services/storage.service";
+import api from "../../../services/api.service";
 import { BiEdit } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import usePagination from "../../../hooks/usePagination";
 
-const key = "cadastros";
-const storage = service.loadData(key);
-const registrations = storage ? JSON.parse(storage) : [];
-
 const TabelaFamilias = () => {
   const navigate = useNavigate();
+  const [registers, setRegisters] = useState(null);
   const { actualPage, setActualPage } = usePagination();
 
-  const renderRow = (item) => {
+  const fetchRegister = async () => {
+    await api.get("registers").then((res) => setRegisters(res.data));
+  };
+
+  useEffect(() => {
+    fetchRegister();
+  }, [registers]);
+
+  const renderRow = (register) => {
     const {
-      id,
+      id_person,
       completeName,
       birthDate,
       street,
@@ -28,42 +33,48 @@ const TabelaFamilias = () => {
       phone1,
       phone2,
       maritalStatus,
-    } = item;
+    } = register;
 
-    const brazilianDateFormat = birthDate
-      .toString()
-      .split("-")
-      .reverse()
-      .join("/");
+    const brazilianDateFormat = (date) => {
+      const dateParts = date.split("T")[0].split("-");
+      const year = dateParts[0];
+      const month = dateParts[1];
+      const day = dateParts[2];
+      return day + "/" + month + "/" + year;
+    };
+
     const address = `Rua ${street}, ${houseNumber} - Bairro ${district} - ${city}`;
     const contact1 = `Telefone 1: ${phone1}`;
     const contact2 = `Telefone 2: ${phone2}`;
 
     return (
-      <tr key={id}>
-        <td>{id}</td>
+      <tr key={id_person}>
+        <td>{id_person}</td>
         <td>{completeName}</td>
-        <td>{brazilianDateFormat}</td>
+        <td>{brazilianDateFormat(birthDate)}</td>
         <td>{address}</td>
         <td>
           {contact1} <br /> {phone2 && contact2}
         </td>
         <td>{maritalStatus}</td>
         <td className="pbs-flex pbs-row pbs-actions-td">
-          <Button className="btn-actions" onClick={() => navigate(id)}>
+          <Button
+            className="btn-actions"
+            onClick={() => navigate(`${id_person}`)}
+          >
             <IoEyeOutline className="icon-actions" />
             Visualizar
           </Button>
 
           <Button
             className="btn-actions"
-            onClick={() => navigate(`/cadastros/editar/${id}`)}
+            onClick={() => navigate(`/cadastros/editar/${id_person}`)}
           >
             <BiEdit className="icon-actions" />
             Editar
           </Button>
 
-          <Button className="btn-actions" onClick={() => onDelete(item)}>
+          <Button className="btn-actions" onClick={() => onDelete(register)}>
             <MdDelete className="icon-actions" />
             Remover
           </Button>
@@ -73,11 +84,7 @@ const TabelaFamilias = () => {
   };
 
   const onDelete = (rowContent) => {
-    const index = registrations.findIndex(
-      (element) => element.id === rowContent.id
-    );
-    registrations.splice(index, 1);
-    service.saveData(key, registrations);
+    api.delete(`registers/${rowContent.id_person}`);
     navigate(0);
   };
 
@@ -97,10 +104,10 @@ const TabelaFamilias = () => {
           </tr>
         </thead>
         <tbody>
-          {registrations == null || registrations.length === 0 ? (
+          {registers == null || registers.length === 0 ? (
             <tr></tr>
           ) : (
-            registrations.map(renderRow)
+            registers.map(renderRow)
           )}
         </tbody>
       </Table>

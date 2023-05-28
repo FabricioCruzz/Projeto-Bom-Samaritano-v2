@@ -30,6 +30,7 @@ import { RiAddBoxFill, RiCloseFill } from "react-icons/ri";
 import * as Yup from "yup";
 import { phoneNumber } from "../../../utils/validations";
 import service from "../../../services/storage.service";
+import api from "../../../services/api.service";
 import { useParams } from "react-router-dom";
 
 const key = "cadastros";
@@ -268,7 +269,8 @@ const CadastroFamilias = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const bdValues = id ? service.getById(key, id) : initialValues;
+  const bdValues = id ? api.get(`registers/${id}`) : initialValues;
+  // service.getById(key, id)
 
   return (
     <Container id="cds-fam-container">
