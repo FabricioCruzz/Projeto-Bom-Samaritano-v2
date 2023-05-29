@@ -303,8 +303,18 @@ const CadastroFamilias = () => {
           onSubmit={async (values) => {
             await new Promise((res) => setTimeout(res, 500));
 
+            values["houseNumber"] = String(values["houseNumber"]);
+            values["needShoes_number"] = Number(values["needShoes_number"]);
+            values["needClothes_pantsNumber"] = Number(
+              values["needClothes_pantsNumber"]
+            );
             values["birthDate"] = formatToLocaleDate(values.birthDate);
-            // Iterar os dependents para alterar o birthDate de cada um para o formato dd/mm/yyyy
+            values["dependents"] = values["dependents"].map((dep) => {
+              dep.birthDate = formatToLocaleDate(dep.birthDate);
+              dep.needShoes_number = Number(dep.needShoes_number);
+              dep.needClothes_pantsNumber = Number(dep.needClothes_pantsNumber);
+              return dep;
+            });
             api.post("registers", values);
             alert("Cadastro realizado com sucesso!");
             // navigate(0);
