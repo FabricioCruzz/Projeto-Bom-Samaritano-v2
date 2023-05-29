@@ -17,6 +17,10 @@ const TabelaFamilias = () => {
     await api.get("registers").then((res) => setRegisters(res.data));
   };
 
+  const deleteRegister = async (register) => {
+    await api.delete(`registers/${register.id_person}`);
+  };
+
   useEffect(() => {
     fetchRegister();
   }, [registers]);
@@ -84,8 +88,7 @@ const TabelaFamilias = () => {
   };
 
   const onDelete = (rowContent) => {
-    api.delete(`registers/${rowContent.id_person}`);
-    navigate(0);
+    deleteRegister(rowContent);
   };
 
   return (

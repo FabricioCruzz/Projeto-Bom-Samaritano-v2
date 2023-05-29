@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./CadastroFamilias.scss";
 import { Container } from "react-bootstrap";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
@@ -31,7 +31,6 @@ import * as Yup from "yup";
 import { phoneNumber } from "../../../utils/validations";
 import service from "../../../services/storage.service";
 import api from "../../../services/api.service";
-import { useParams } from "react-router-dom";
 
 const key = "cadastros";
 const storage = service.loadData(key);
@@ -40,28 +39,41 @@ const registrations = storage ? JSON.parse(storage) : [];
 const getFormatedDate = (currentDate) =>
   currentDate.split("/").reverse().join("-");
 
+const formatToLocaleDate = (dateToFormat) => {
+  const date = new Date(dateToFormat);
+  const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+  return date.toLocaleDateString("pt-BR", options);
+};
+
 const minDate = "01/01/1900";
 
-const emptyResident = {
+const emptyDependents = {
   completeName: "",
   birthDate: "",
   relationship: "",
   schoolLevel: "",
   occupation: "",
   isWorking: "",
-  needShoes: { answer: "", number: "" },
-  needClothes: {
-    answer: "",
-    pantsNumber: "",
-    tShirtCoatSize: "",
-  },
+  // needShoes: { answer: "", number: "" },
+  needShoes_answer: "",
+  needShoes_number: "",
+  // needClothes: {
+  //   answer: "",
+  //   pantsNumber: "",
+  //   tShirtCoatSize: "",
+  // },
+  needClothes_answer: "",
+  needClothes_pantsNumber: "",
+  needClothes_tShirtCoatSize: "",
   workshop: [],
   religion: "",
   receivedSacraments: [],
   wishReceiveSacraments: [],
   attendanceMass: "",
   churchActivity: [],
-  memberPastoralsMovements: { answer: "", which: "" },
+  // memberPastoralsMovements: { answer: "", which: "" },
+  memberPastoralsMovements_answer: "",
+  memberPastoralsMovements_which: "",
 };
 
 const initialValues = {
@@ -84,9 +96,16 @@ const initialValues = {
   housingSituation: "",
   appliances: [],
   needBlankets: "",
-  needShoes: { answer: "", number: "" },
-  needClothes: { answer: "", pantsNumber: "", tShirtCoatSize: "" },
-  needDiapers: { answer: "", size: "" },
+  // needShoes: { answer: "", number: "" },
+  needShoes_answer: "",
+  needShoes_number: "",
+  // needClothes: { answer: "", pantsNumber: "", tShirtCoatSize: "" },
+  needClothes_answer: "",
+  needClothes_pantsNumber: "",
+  needClothes_tShirtCoatSize: "",
+  // needDiapers: { answer: "", size: "" },
+  needDiapers_answer: "",
+  needDiapers_size: "",
   specialNeed: "",
   workshop: [],
   religion: "",
@@ -94,8 +113,10 @@ const initialValues = {
   wishReceiveSacraments: [],
   attendanceMass: "",
   churchActivity: [],
-  memberPastoralsMovements: { answer: "", which: "" },
-  residents: [emptyResident],
+  // memberPastoralsMovements: { answer: "", which: "" },
+  memberPastoralsMovements_answer: "",
+  memberPastoralsMovements_which: "",
+  dependents: [emptyDependents],
 };
 
 const validationSchema = Yup.object().shape({
@@ -277,27 +298,18 @@ const CadastroFamilias = () => {
       <h1 className="pbs-title-h1">Cadastrar Família</h1>
       <Container>
         <Formik
-          validationSchema={validationSchema}
+          // validationSchema={validationSchema}
           initialValues={bdValues}
           onSubmit={async (values) => {
             await new Promise((res) => setTimeout(res, 500));
 
-            let cadastroFamilia = {
-              id: values.id ? values.id : new Date().getTime().toString(10),
-              ...values,
-            };
-            const index = registrations.findIndex((el) => el.id === values.id);
-            if (index !== -1) {
-              registrations[index] = values;
-            } else {
-              registrations.push(cadastroFamilia);
-            }
-            service.saveData(key, registrations);
-
+            values["birthDate"] = formatToLocaleDate(values.birthDate);
+            // Iterar os dependents para alterar o birthDate de cada um para o formato dd/mm/yyyy
+            api.post("registers", values);
             alert("Cadastro realizado com sucesso!");
-            navigate(0);
+            // navigate(0);
 
-            console.log(cadastroFamilia);
+            console.log(values);
           }}
         >
           {({ values }) => (
@@ -594,118 +606,118 @@ const CadastroFamilias = () => {
                 </Container>
 
                 <Container>
-                  <label htmlFor="needShoes.answer">Precisa de Calçados*</label>
+                  <label htmlFor="needShoes_answer">Precisa de Calçados*</label>
                   <Field
                     component={CustomRadioButton}
-                    id="needShoes.answer"
-                    name="needShoes.answer"
+                    id="needShoes_answer"
+                    name="needShoes_answer"
                     options={optionsYesOrNo}
                   />
 
-                  {values.needShoes.answer === "sim" && (
+                  {values.needShoes_answer === "sim" && (
                     <Container className="additionalFields">
-                      <label htmlFor="needShoes.number">
+                      <label htmlFor="needShoes_number">
                         Número do calçado*
                       </label>
                       <Field
                         component={CustomSelect}
-                        id="needShoes.number"
-                        name="needShoes.number"
+                        id="needShoes_number"
+                        name="needShoes_number"
                         options={optionsShoesSize}
                       />
                       <ErrorMessage
                         component="div"
                         className="formErrorMsg"
-                        name="needShoes.number"
+                        name="needShoes_number"
                       />
                     </Container>
                   )}
                   <ErrorMessage
                     component="div"
                     className="formErrorMsg"
-                    name="needShoes.answer"
+                    name="needShoes_answer"
                   />
                 </Container>
 
                 <Container>
-                  <label htmlFor="needClothes.answer">Precisa de Roupas*</label>
+                  <label htmlFor="needClothes_answer">Precisa de Roupas*</label>
                   <Field
                     component={CustomRadioButton}
-                    id="needClothes.answer"
-                    name="needClothes.answer"
+                    id="needClothes_answer"
+                    name="needClothes_answer"
                     options={optionsYesOrNo}
                   />
-                  {values.needClothes.answer === "sim" && (
+                  {values.needClothes_answer === "sim" && (
                     <Container className="additionalFields">
-                      <label htmlFor="needClothes.pantsNumber">
+                      <label htmlFor="needClothes_pantsNumber">
                         Tamanho das Calças*
                       </label>
                       <Field
                         component={CustomSelect}
-                        id="needClothes.pantsNumber"
-                        name="needClothes.pantsNumber"
+                        id="needClothes_pantsNumber"
+                        name="needClothes_pantsNumber"
                         options={optionsPantsNumber}
                       />
 
                       <ErrorMessage
                         component="div"
                         className="formErrorMsg"
-                        name="needClothes.pantsNumber"
+                        name="needClothes_pantsNumber"
                       />
 
-                      <label htmlFor="needClothes.tShirtCoatSize">
+                      <label htmlFor="needClothes_tShirtCoatSize">
                         Tamanho Casaco/Camiseta*
                       </label>
                       <Field
                         component={CustomSelect}
-                        id="needClothes.tShirtCoatSize"
-                        name="needClothes.tShirtCoatSize"
+                        id="needClothes_tShirtCoatSize"
+                        name="needClothes_tShirtCoatSize"
                         options={optionsClothesSize}
                       />
                       <ErrorMessage
                         component="div"
                         className="formErrorMsg"
-                        name="needClothes.tShirtCoatSize"
+                        name="needClothes_tShirtCoatSize"
                       />
                     </Container>
                   )}
                   <ErrorMessage
                     component="div"
                     className="formErrorMsg"
-                    name="needClothes.answer"
+                    name="needClothes_answer"
                   />
                 </Container>
 
                 <Container>
-                  <label htmlFor="needDiapers.answer">
+                  <label htmlFor="needDiapers_answer">
                     Precisa de Fraldas*
                   </label>
                   <Field
                     component={CustomRadioButton}
-                    id="needDiapers.answer"
-                    name="needDiapers.answer"
+                    id="needDiapers_answer"
+                    name="needDiapers_answer"
                     options={optionsYesOrNo}
                   />
-                  {values.needDiapers.answer === "sim" && (
+                  {values.needDiapers_answer === "sim" && (
                     <Container className="additionalFields">
-                      <label htmlFor="needDiapers.size">Tamanho*</label>
+                      <label htmlFor="needDiapers_size">Tamanho*</label>
                       <Field
                         component={CustomSelect}
-                        id="needDiapers.size"
-                        name="needDiapers.size"
+                        id="needDiapers_size"
+                        name="needDiapers_size"
                         options={optionsDiappers}
                       />
                       <ErrorMessage
                         component="div"
                         className="formErrorMsg"
-                        name="needDiapers.size"
+                        name="needDiapers_size"
                       />
                     </Container>
                   )}
                   <ErrorMessage
                     component="div"
                     className="formErrorMsg"
-                    name="needDiapers.answer"
+                    name="needDiapers_answer"
                   />
                 </Container>
 
@@ -826,43 +838,37 @@ const CadastroFamilias = () => {
                 </Container>
 
                 <Container>
-                  <label htmlFor="memberPastoralsMovements.answer">
+                  <label htmlFor="memberPastoralsMovements_answer">
                     Participa de Pastoral/Movimento na Igreja*
                   </label>
                   <Field
                     component={CustomRadioButton}
-                    id="memberPastoralsMovements.answer"
-                    name="memberPastoralsMovements.answer"
+                    id="memberPastoralsMovements_answer"
+                    name="memberPastoralsMovements_answer"
                     options={optionsYesOrNo}
                   />
-                  {values.memberPastoralsMovements.answer === "sim" && (
+                  {values.memberPastoralsMovements_answer === "sim" && (
                     <Container className="additionalFields">
                       <Field
                         component={AdditionalInput}
-                        id="memberPastoralsMovements.which"
-                        name="memberPastoralsMovements.which"
+                        id="memberPastoralsMovements_which"
+                        name="memberPastoralsMovements_which"
                         placeholder="Pastoral/movimento..."
                         label="Qual?"
                       />
                       <ErrorMessage
                         component="div"
                         className="formErrorMsg"
-                        name="memberPastoralsMovements.which"
+                        name="memberPastoralsMovements_which"
                       />
                     </Container>
                   )}
                   <ErrorMessage
                     component="div"
                     className="formErrorMsg"
-                    name="memberPastoralsMovements.answer"
+                    name="memberPastoralsMovements_answer"
                   />
                 </Container>
-
-                {/* TODO: Continuar implementando o fomulário
-                                        Incluir botão para adicionar mais moradores
-                                     ----->   Usar FieldArray pra gerar os campos?     <----
-                                        Ver o video nos favoritos do navegador de novo
-                                    */}
               </fieldset>
 
               <CustomButton
@@ -881,248 +887,248 @@ const CadastroFamilias = () => {
                 <fieldset>
                   <legend>Moradores</legend>
 
-                  <FieldArray name="residents">
+                  <FieldArray name="dependents">
                     {(fieldArrayProps) => {
                       const { push, remove, form } = fieldArrayProps;
                       const { values } = form;
-                      const { residents } = values;
+                      const { dependents } = values;
 
                       return (
                         <div>
-                          {residents.map((_, index) => (
-                            <div className="new-resident" key={index}>
+                          {dependents.map((_, index) => (
+                            <div className="new-dependents" key={index}>
                               <fieldset>
                                 <legend>Morador {index + 1}</legend>
                                 <Container>
                                   <label
-                                    htmlFor={`residents[${index}].completeName`}
+                                    htmlFor={`dependents[${index}].completeName`}
                                   >
                                     Nome*
                                   </label>
                                   <Field
                                     type="text"
-                                    id={`residents[${index}].completeName`}
-                                    name={`residents[${index}].completeName`}
+                                    id={`dependents[${index}].completeName`}
+                                    name={`dependents[${index}].completeName`}
                                     placeholder="Digite o nome completo..."
                                   />
                                   <ErrorMessage
                                     component="div"
                                     className="formErrorMsg"
-                                    name={`residents[${index}].completeName`}
+                                    name={`dependents[${index}].completeName`}
                                   />
                                 </Container>
 
                                 <Container>
                                   <label
-                                    htmlFor={`residents[${index}].birthDate`}
+                                    htmlFor={`dependents[${index}].birthDate`}
                                   >
                                     Data de Nascimento*
                                   </label>
                                   <Field
                                     type="date"
-                                    id={`residents[${index}].birthDate`}
-                                    name={`residents[${index}].birthDate`}
+                                    id={`dependents[${index}].birthDate`}
+                                    name={`dependents[${index}].birthDate`}
                                   />
                                   <ErrorMessage
                                     component="div"
                                     className="formErrorMsg"
-                                    name={`residents[${index}].birthDate`}
+                                    name={`dependents[${index}].birthDate`}
                                   />
                                 </Container>
 
                                 <Container>
                                   <label
-                                    htmlFor={`residents[${index}].relationship`}
+                                    htmlFor={`dependents[${index}].relationship`}
                                   >
                                     Parentesco*
                                   </label>
                                   <Field
                                     type="text"
-                                    id={`residents[${index}].relationship`}
-                                    name={`residents[${index}].relationship`}
+                                    id={`dependents[${index}].relationship`}
+                                    name={`dependents[${index}].relationship`}
                                     placeholder="Filho, irmão, tio, sobrinho..."
                                   />
                                   <ErrorMessage
                                     component="div"
                                     className="formErrorMsg"
-                                    name={`residents[${index}].relationship`}
+                                    name={`dependents[${index}].relationship`}
                                   />
                                 </Container>
 
                                 <Container>
                                   <label
-                                    htmlFor={`residents[${index}].schoolLevel`}
+                                    htmlFor={`dependents[${index}].schoolLevel`}
                                   >
                                     Escolaridade*
                                   </label>
                                   <Field
-                                    name={`residents[${index}].schoolLevel`}
-                                    id={`residents[${index}].schoolLevel`}
+                                    name={`dependents[${index}].schoolLevel`}
+                                    id={`dependents[${index}].schoolLevel`}
                                     component={CustomSelect}
                                     options={optionsSchoolLevel}
                                   />
                                   <ErrorMessage
                                     component="div"
                                     className="formErrorMsg"
-                                    name={`residents[${index}].schoolLevel`}
+                                    name={`dependents[${index}].schoolLevel`}
                                   />
                                 </Container>
 
                                 <Container>
                                   <label
-                                    htmlFor={`residents[${index}].occupation`}
+                                    htmlFor={`dependents[${index}].occupation`}
                                   >
                                     Profissão*
                                   </label>
                                   <Field
                                     type="text"
-                                    id={`residents[${index}].occupation`}
-                                    name={`residents[${index}].occupation`}
+                                    id={`dependents[${index}].occupation`}
+                                    name={`dependents[${index}].occupation`}
                                     placeholder="Digite a profissão..."
                                   />
                                   <ErrorMessage
                                     component="div"
                                     className="formErrorMsg"
-                                    name={`residents[${index}].occupation`}
+                                    name={`dependents[${index}].occupation`}
                                   />
                                 </Container>
 
                                 <Container>
                                   <label
-                                    htmlFor={`residents[${index}].isWorking`}
+                                    htmlFor={`dependents[${index}].isWorking`}
                                   >
                                     Está trabalhando?*
                                   </label>
                                   <Field
                                     component={CustomRadioButton}
-                                    id={`residents[${index}].isWorking`}
-                                    name={`residents[${index}].isWorking`}
+                                    id={`dependents[${index}].isWorking`}
+                                    name={`dependents[${index}].isWorking`}
                                     options={optionsYesOrNo}
                                   />
                                   <ErrorMessage
                                     component="div"
                                     className="formErrorMsg"
-                                    name={`residents[${index}].isWorking`}
+                                    name={`dependents[${index}].isWorking`}
                                   />
                                 </Container>
 
                                 <Container>
                                   <label
-                                    htmlFor={`residents[${index}].needClothes.answer`}
+                                    htmlFor={`dependents[${index}].needClothes_answer`}
                                   >
                                     Precisa de Roupas*
                                   </label>
                                   <Field
                                     component={CustomRadioButton}
-                                    id={`residents[${index}].needClothes.answer`}
-                                    name={`residents[${index}].needClothes.answer`}
+                                    id={`dependents[${index}].needClothes_answer`}
+                                    name={`dependents[${index}].needClothes_answer`}
                                     options={optionsYesOrNo}
                                   />
 
-                                  {values.residents[index].needClothes
-                                    .answer === "sim" && (
+                                  {values.dependents[index]
+                                    .needClothes_answer === "sim" && (
                                     <Container className="additionalFields">
                                       <label
-                                        htmlFor={`residents[${index}].needClothes.pantsNumber`}
+                                        htmlFor={`dependents[${index}].needClothes_pantsNumber`}
                                       >
                                         Tamanho das Calças*
                                       </label>
                                       <Field
                                         component={CustomSelect}
-                                        id={`residents[${index}].needClothes.pantsNumber`}
-                                        name={`residents[${index}].needClothes.pantsNumber`}
+                                        id={`dependents[${index}].needClothes_pantsNumber`}
+                                        name={`dependents[${index}].needClothes_pantsNumber`}
                                         options={optionsPantsNumber}
                                       />
 
                                       <ErrorMessage
                                         component="div"
                                         className="formErrorMsg"
-                                        name={`residents[${index}].needClothes.pantsNumber`}
+                                        name={`dependents[${index}].needClothes_pantsNumber`}
                                       />
 
                                       <label
-                                        htmlFor={`residents[${index}].needClothes.tShirtCoatSize`}
+                                        htmlFor={`dependents[${index}].needClothes_tShirtCoatSize`}
                                       >
                                         Tamanho Casaco/Camiseta*
                                       </label>
                                       <Field
                                         component={CustomSelect}
-                                        id={`residents[${index}].needClothes.tShirtCoatSize`}
-                                        name={`residents[${index}].needClothes.tShirtCoatSize`}
+                                        id={`dependents[${index}].needClothes_tShirtCoatSize`}
+                                        name={`dependents[${index}].needClothes_tShirtCoatSize`}
                                         options={optionsClothesSize}
                                       />
                                       <ErrorMessage
                                         component="div"
                                         className="formErrorMsg"
-                                        name={`residents[${index}].needClothes.tShirtCoatSize`}
+                                        name={`dependents[${index}].needClothes_tShirtCoatSize`}
                                       />
                                     </Container>
                                   )}
                                   <ErrorMessage
                                     component="div"
                                     className="formErrorMsg"
-                                    name={`residents[${index}].needClothes.answer`}
+                                    name={`dependents[${index}].needClothes_answer`}
                                   />
                                 </Container>
 
                                 <Container>
                                   <label
-                                    htmlFor={`residents[${index}].needShoes.answer`}
+                                    htmlFor={`dependents[${index}].needShoes_answer`}
                                   >
                                     Precisa de Calçados*
                                   </label>
                                   <Field
                                     component={CustomRadioButton}
-                                    id={`residents[${index}].needShoes.answer`}
-                                    name={`residents[${index}].needShoes.answer`}
+                                    id={`dependents[${index}].needShoes_answer`}
+                                    name={`dependents[${index}].needShoes_answer`}
                                     options={optionsYesOrNo}
                                   />
 
-                                  {values.residents[index].needShoes.answer ===
+                                  {values.dependents[index].needShoes_answer ===
                                     "sim" && (
                                     <Container className="additionalFields">
                                       <label
-                                        htmlFor={`residents[${index}].needShoes.number`}
+                                        htmlFor={`dependents[${index}].needShoes_number`}
                                       >
                                         Número do Calçado*
                                       </label>
                                       <Field
                                         component={CustomSelect}
-                                        id={`residents[${index}].needShoes.number`}
-                                        name={`residents[${index}].needShoes.number`}
+                                        id={`dependents[${index}].needShoes_number`}
+                                        name={`dependents[${index}].needShoes_number`}
                                         options={optionsShoesSize}
                                       />
                                       <ErrorMessage
                                         component="div"
                                         className="formErrorMsg"
-                                        name={`residents[${index}].needShoes.number`}
+                                        name={`dependents[${index}].needShoes_number`}
                                       />
                                     </Container>
                                   )}
                                   <ErrorMessage
                                     component="div"
                                     className="formErrorMsg"
-                                    name={`residents[${index}].needShoes.answer`}
+                                    name={`dependents[${index}].needShoes_answer`}
                                   />
                                 </Container>
 
                                 <Container>
                                   <label
-                                    htmlFor={`residents[${index}].workshop`}
+                                    htmlFor={`dependents[${index}].workshop`}
                                   >
                                     Tem Interesse de Participar de Alguma
                                     Oficina*
                                   </label>
                                   <Field
                                     component={CustomCheckbox}
-                                    id={`residents[${index}].workshop`}
-                                    name={`residents[${index}].workshop`}
+                                    id={`dependents[${index}].workshop`}
+                                    name={`dependents[${index}].workshop`}
                                     options={optionsWorkshop}
                                   />
                                   <ErrorMessage
                                     component="div"
                                     className="formErrorMsg"
-                                    name={`residents[${index}].workshop`}
+                                    name={`dependents[${index}].workshop`}
                                   />
                                 </Container>
                               </fieldset>
@@ -1133,133 +1139,133 @@ const CadastroFamilias = () => {
                                 </legend>
                                 <Container>
                                   <label
-                                    htmlFor={`residents[${index}].religion`}
+                                    htmlFor={`dependents[${index}].religion`}
                                   >
                                     Religião*
                                   </label>
                                   <Field
                                     component={CustomRadioButton}
-                                    id={`residents[${index}].religion`}
-                                    name={`residents[${index}].religion`}
+                                    id={`dependents[${index}].religion`}
+                                    name={`dependents[${index}].religion`}
                                     options={optionsReligion}
                                   />
                                   <ErrorMessage
                                     component="div"
                                     className="formErrorMsg"
-                                    name={`residents[${index}].religion`}
+                                    name={`dependents[${index}].religion`}
                                   />
                                 </Container>
 
                                 <Container>
                                   <label
-                                    htmlFor={`residents[${index}].receivedSacraments`}
+                                    htmlFor={`dependents[${index}].receivedSacraments`}
                                   >
                                     Sacramentos Recebidos*
                                   </label>
                                   <Field
                                     component={CustomCheckbox}
-                                    id={`residents[${index}].receivedSacraments`}
-                                    name={`residents[${index}].receivedSacraments`}
+                                    id={`dependents[${index}].receivedSacraments`}
+                                    name={`dependents[${index}].receivedSacraments`}
                                     options={optionsSacraments}
                                   />
                                   <ErrorMessage
                                     component="div"
                                     className="formErrorMsg"
-                                    name={`residents[${index}].receivedSacraments`}
+                                    name={`dependents[${index}].receivedSacraments`}
                                   />
                                 </Container>
 
                                 <Container>
                                   <label
-                                    htmlFor={`residents[${index}].wishReceiveSacraments`}
+                                    htmlFor={`dependents[${index}].wishReceiveSacraments`}
                                   >
                                     Sacramentos que Deseja Receber*
                                   </label>
                                   <Field
                                     component={CustomCheckbox}
-                                    id={`residents[${index}].wishReceiveSacraments`}
-                                    name={`residents[${index}].wishReceiveSacraments`}
+                                    id={`dependents[${index}].wishReceiveSacraments`}
+                                    name={`dependents[${index}].wishReceiveSacraments`}
                                     options={optionsSacraments}
                                   />
                                   <ErrorMessage
                                     component="div"
                                     className="formErrorMsg"
-                                    name={`residents[${index}].wishReceiveSacraments`}
+                                    name={`dependents[${index}].wishReceiveSacraments`}
                                   />
                                 </Container>
 
                                 <Container>
                                   <label
-                                    htmlFor={`residents[${index}].attendanceMass`}
+                                    htmlFor={`dependents[${index}].attendanceMass`}
                                   >
                                     Qual a frequência nas Missas*
                                   </label>
                                   <Field
                                     component={CustomRadioButton}
-                                    id={`residents[${index}].attendanceMass`}
-                                    name={`residents[${index}].attendanceMass`}
+                                    id={`dependents[${index}].attendanceMass`}
+                                    name={`dependents[${index}].attendanceMass`}
                                     options={optionsAttendanceMass}
                                   />
                                   <ErrorMessage
                                     component="div"
                                     className="formErrorMsg"
-                                    name={`residents[${index}].attendanceMass`}
+                                    name={`dependents[${index}].attendanceMass`}
                                   />
                                 </Container>
 
                                 <Container>
                                   <label
-                                    htmlFor={`residents[${index}].churchActivity`}
+                                    htmlFor={`dependents[${index}].churchActivity`}
                                   >
                                     Participação na Igreja*
                                   </label>
                                   <Field
                                     component={CustomCheckbox}
-                                    id={`residents[${index}].churchActivity`}
-                                    name={`residents[${index}].churchActivity`}
+                                    id={`dependents[${index}].churchActivity`}
+                                    name={`dependents[${index}].churchActivity`}
                                     options={optionsChurchActivity}
                                   />
                                   <ErrorMessage
                                     component="div"
                                     className="formErrorMsg"
-                                    name={`residents[${index}].churchActivity`}
+                                    name={`dependents[${index}].churchActivity`}
                                   />
                                 </Container>
 
                                 <Container>
                                   <label
-                                    htmlFor={`residents[${index}].memberPastoralsMovements.answer`}
+                                    htmlFor={`dependents[${index}].memberPastoralsMovements_answer`}
                                   >
                                     Participa de Pastoral/Movimento na Igreja*
                                   </label>
                                   <Field
                                     component={CustomRadioButton}
-                                    id={`residents[${index}].memberPastoralsMovements.answer`}
-                                    name={`residents[${index}].memberPastoralsMovements.answer`}
+                                    id={`dependents[${index}].memberPastoralsMovements_answer`}
+                                    name={`dependents[${index}].memberPastoralsMovements_answer`}
                                     options={optionsYesOrNo}
                                   />
-                                  {values.residents[index]
-                                    .memberPastoralsMovements.answer ===
+                                  {values.dependents[index]
+                                    .memberPastoralsMovements_answer ===
                                     "sim" && (
                                     <Container className="additionalFields">
                                       <Field
                                         component={AdditionalInput}
-                                        id={`residents[${index}].memberPastoralsMovements.which`}
-                                        name={`residents[${index}].memberPastoralsMovements.which`}
+                                        id={`dependents[${index}].memberPastoralsMovements_which`}
+                                        name={`dependents[${index}].memberPastoralsMovements_which`}
                                         placeholder="Pastoral/movimento..."
                                         label="Qual?"
                                       />
                                       <ErrorMessage
                                         component="div"
                                         className="formErrorMsg"
-                                        name={`residents[${index}].memberPastoralsMovements.which`}
+                                        name={`dependents[${index}].memberPastoralsMovements_which`}
                                       />
                                     </Container>
                                   )}
                                   <ErrorMessage
                                     component="div"
                                     className="formErrorMsg"
-                                    name={`residents[${index}].memberPastoralsMovements.answer`}
+                                    name={`dependents[${index}].memberPastoralsMovements_answer`}
                                   />
                                 </Container>
                               </fieldset>
@@ -1279,7 +1285,7 @@ const CadastroFamilias = () => {
                                   className="btn-side-margin btn-actions btn-flex"
                                   value="Adicionar Morador"
                                   type="button"
-                                  onClick={() => push(emptyResident)}
+                                  onClick={() => push(emptyDependents)}
                                 >
                                   <RiAddBoxFill className="icon-actions" />
                                 </CustomButton>
