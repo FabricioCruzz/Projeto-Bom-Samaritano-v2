@@ -115,19 +115,18 @@ const TabelaFamilias = () => {
         </tbody>
       </Table>
 
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div id="pagination-area">
         {Array(5)
           .fill("")
           .map((_, index) => {
             return (
-              <button
-                style={{ margin: "5px 5px", padding: "2px 10px" }}
+              <Button
                 key={index}
                 onClick={() => setActualPage(index + 1)}
                 disabled={index === actualPage - 1}
               >
                 {index + 1}
-              </button>
+              </Button>
             );
           })}
       </div>
