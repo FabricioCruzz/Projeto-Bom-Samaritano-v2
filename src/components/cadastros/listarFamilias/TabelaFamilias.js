@@ -47,7 +47,7 @@ const TabelaFamilias = () => {
       return day + "/" + month + "/" + year;
     };
 
-    const address = `Rua ${street}, ${houseNumber} - Bairro ${district} - ${city}`;
+    const address = `${street}, ${houseNumber} - Bairro ${district} - ${city}`;
     const contact1 = `Telefone 1: ${phone1}`;
     const contact2 = `Telefone 2: ${phone2}`;
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./CadastroFamilias.scss";
 import { Container } from "react-bootstrap";
@@ -29,12 +29,7 @@ import CustomButton from "../../buttons/CustomButton";
 import { RiAddBoxFill, RiCloseFill } from "react-icons/ri";
 import * as Yup from "yup";
 import { phoneNumber } from "../../../utils/validations";
-import service from "../../../services/storage.service";
 import api from "../../../services/api.service";
-
-const key = "cadastros";
-const storage = service.loadData(key);
-const registrations = storage ? JSON.parse(storage) : [];
 
 const getFormatedDate = (currentDate) =>
   currentDate.split("/").reverse().join("-");
@@ -54,14 +49,8 @@ const emptyDependents = {
   schoolLevel: "",
   occupation: "",
   isWorking: "",
-  // needShoes: { answer: "", number: "" },
   needShoes_answer: "",
   needShoes_number: "",
-  // needClothes: {
-  //   answer: "",
-  //   pantsNumber: "",
-  //   tShirtCoatSize: "",
-  // },
   needClothes_answer: "",
   needClothes_pantsNumber: "",
   needClothes_tShirtCoatSize: "",
@@ -71,12 +60,11 @@ const emptyDependents = {
   wishReceiveSacraments: [],
   attendanceMass: "",
   churchActivity: [],
-  // memberPastoralsMovements: { answer: "", which: "" },
   memberPastoralsMovements_answer: "",
   memberPastoralsMovements_which: "",
 };
 
-const initialValues = {
+let initialValues = {
   completeName: "",
   street: "",
   houseNumber: "",
@@ -96,14 +84,11 @@ const initialValues = {
   housingSituation: "",
   appliances: [],
   needBlankets: "",
-  // needShoes: { answer: "", number: "" },
   needShoes_answer: "",
   needShoes_number: "",
-  // needClothes: { answer: "", pantsNumber: "", tShirtCoatSize: "" },
   needClothes_answer: "",
   needClothes_pantsNumber: "",
   needClothes_tShirtCoatSize: "",
-  // needDiapers: { answer: "", size: "" },
   needDiapers_answer: "",
   needDiapers_size: "",
   specialNeed: "",
@@ -113,7 +98,6 @@ const initialValues = {
   wishReceiveSacraments: [],
   attendanceMass: "",
   churchActivity: [],
-  // memberPastoralsMovements: { answer: "", which: "" },
   memberPastoralsMovements_answer: "",
   memberPastoralsMovements_which: "",
   dependents: [emptyDependents],
@@ -287,11 +271,27 @@ const validationSchema = Yup.object().shape({
 
 const CadastroFamilias = () => {
   const [show, setShow] = useState(false);
+  const [register, setRegister] = useState(initialValues);
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const bdValues = id ? api.get(`registers/${id}`) : initialValues;
-  // service.getById(key, id)
+  useEffect(() => {
+    if (id) {
+      getRegisterById();
+    }
+  }, []);
+
+  const createRegister = async (register) => {
+    await api.post("registers", register);
+  };
+
+  const getRegisterById = async () => {
+    await api.get(`registers/${id}`).then((res) => setRegister(res.data));
+  };
+
+  const updateRegister = async (register) => {
+    await api.put(`registers/${id}`, register);
+  };
 
   return (
     <Container id="cds-fam-container">
@@ -299,7 +299,8 @@ const CadastroFamilias = () => {
       <Container>
         <Formik
           // validationSchema={validationSchema}
-          initialValues={bdValues}
+          initialValues={register}
+          enableReinitialize
           onSubmit={async (values) => {
             await new Promise((res) => setTimeout(res, 500));
 
@@ -315,7 +316,13 @@ const CadastroFamilias = () => {
               dep.needClothes_pantsNumber = Number(dep.needClothes_pantsNumber);
               return dep;
             });
-            api.post("registers", values);
+
+            if (values.id_person) {
+              updateRegister(values);
+            } else {
+              createRegister(values);
+            }
+
             alert("Cadastro realizado com sucesso!");
             // navigate(0);
 
