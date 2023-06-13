@@ -155,35 +155,33 @@ const validationSchema = Yup.object().shape({
 
   needBlankets: Yup.string().required(errorMessages.fieldReq),
 
-  needShoes: Yup.object().shape({
-    answer: Yup.string().required(errorMessages.fieldReq),
-    number: Yup.number().when("answer", {
-      is: "sim",
-      then: Yup.number()
-        .required(errorMessages.fieldReq)
-        .positive(errorMessages.positiveNumber)
-        .integer(errorMessages.integerNumber),
-    }),
+  needShoes_answer: Yup.string().required(errorMessages.fieldReq),
+
+  needShoes_number: Yup.number().when("needShoes_answer", {
+    is: "sim",
+    then: Yup.number()
+      .required(errorMessages.fieldReq)
+      .positive(errorMessages.positiveNumber)
+      .integer(errorMessages.integerNumber),
   }),
 
-  needClothes: Yup.object().shape({
-    answer: Yup.string().required(errorMessages.fieldReq),
-    pantsNumber: Yup.string().when("answer", {
-      is: "sim",
-      then: Yup.string().ensure().required(errorMessages.fieldReq),
-    }),
-    tShirtCoatSize: Yup.string().when("answer", {
-      is: "sim",
-      then: Yup.string().ensure().required(errorMessages.fieldReq),
-    }),
+  needClothes_answer: Yup.string().required(errorMessages.fieldReq),
+
+  needClothes_pantsNumber: Yup.string().when("needClothes_answer", {
+    is: "sim",
+    then: Yup.string().ensure().required(errorMessages.fieldReq),
   }),
 
-  needDiapers: Yup.object().shape({
-    answer: Yup.string().required(errorMessages.fieldReq),
-    size: Yup.string().when("answer", {
-      is: "sim",
-      then: Yup.string().ensure().required(errorMessages.fieldReq),
-    }),
+  needClothes_tShirtCoatSize: Yup.string().when("needClothes_answer", {
+    is: "sim",
+    then: Yup.string().ensure().required(errorMessages.fieldReq),
+  }),
+
+  needDiapers_answer: Yup.string().required(errorMessages.fieldReq),
+
+  needDiapers_size: Yup.string().when("needDiapers_answer", {
+    is: "sim",
+    then: Yup.string().ensure().required(errorMessages.fieldReq),
   }),
 
   workshop: Yup.array().min(1, errorMessages.minOneReq),
@@ -198,15 +196,19 @@ const validationSchema = Yup.object().shape({
 
   churchActivity: Yup.array().min(1, errorMessages.minOneReq),
 
-  memberPastoralsMovements: Yup.object().shape({
-    answer: Yup.string().required(errorMessages.fieldReq),
-    which: Yup.string().when("answer", {
+  memberPastoralsMovements_answer: Yup.string().required(
+    errorMessages.fieldReq
+  ),
+
+  memberPastoralsMovements_which: Yup.string().when(
+    "memberPastoralsMovements_answer",
+    {
       is: "sim",
       then: Yup.string().required(errorMessages.fieldReq),
-    }),
-  }),
+    }
+  ),
 
-  residents: Yup.array().of(
+  dependents: Yup.array().of(
     Yup.object().shape({
       completeName: Yup.string().required(errorMessages.fieldReq),
 
@@ -223,27 +225,25 @@ const validationSchema = Yup.object().shape({
 
       isWorking: Yup.string().required(errorMessages.fieldReq),
 
-      needShoes: Yup.object().shape({
-        answer: Yup.string().required(errorMessages.fieldReq),
-        number: Yup.number().when("answer", {
-          is: "sim",
-          then: Yup.number()
-            .required(errorMessages.fieldReq)
-            .positive(errorMessages.positiveNumber)
-            .integer(errorMessages.integerNumber),
-        }),
+      needShoes_answer: Yup.string().required(errorMessages.fieldReq),
+
+      needShoes_number: Yup.number().when("needShoes_answer", {
+        is: "sim",
+        then: Yup.number()
+          .required(errorMessages.fieldReq)
+          .positive(errorMessages.positiveNumber)
+          .integer(errorMessages.integerNumber),
       }),
 
-      needClothes: Yup.object().shape({
-        answer: Yup.string().required(errorMessages.fieldReq),
-        pantsNumber: Yup.string().when("answer", {
-          is: "sim",
-          then: Yup.string().ensure().required(errorMessages.fieldReq),
-        }),
-        tShirtCoatSize: Yup.string().when("answer", {
-          is: "sim",
-          then: Yup.string().ensure().required(errorMessages.fieldReq),
-        }),
+      needClothes_answer: Yup.string().required(errorMessages.fieldReq),
+
+      needClothes_pantsNumber: Yup.string().when("needClothes_answer", {
+        is: "sim",
+        then: Yup.string().ensure().required(errorMessages.fieldReq),
+      }),
+      needClothes_tShirtCoatSize: Yup.string().when("needClothes_answer", {
+        is: "sim",
+        then: Yup.string().ensure().required(errorMessages.fieldReq),
       }),
 
       workshop: Yup.array().min(1, errorMessages.minOneReq),
@@ -258,13 +258,17 @@ const validationSchema = Yup.object().shape({
 
       churchActivity: Yup.array().min(1, errorMessages.minOneReq),
 
-      memberPastoralsMovements: Yup.object().shape({
-        answer: Yup.string().required(errorMessages.fieldReq),
-        which: Yup.string().when("answer", {
+      memberPastoralsMovements_answer: Yup.string().required(
+        errorMessages.fieldReq
+      ),
+
+      memberPastoralsMovements_which: Yup.string().when(
+        "memberPastoralsMovements_answer",
+        {
           is: "sim",
           then: Yup.string().required(errorMessages.fieldReq),
-        }),
-      }),
+        }
+      ),
     })
   ),
 });
@@ -298,8 +302,7 @@ const CadastroFamilias = () => {
       <h1 className="pbs-title-h1">Cadastrar Família</h1>
       <Container>
         <Formik
-          //TODO: Reajustar as validações
-          // validationSchema={validationSchema}
+          validationSchema={validationSchema}
           initialValues={register}
           enableReinitialize
           onSubmit={async (values) => {
@@ -325,7 +328,7 @@ const CadastroFamilias = () => {
             }
 
             alert("Cadastro realizado com sucesso!");
-            // navigate(0);
+            navigate(0);
 
             console.log(values);
           }}

@@ -109,7 +109,7 @@ const VisualizarCadastro = () => {
 
             <Container>
               <h3>Fonte de Renda</h3>
-              <p>{register.srcIncome}</p>
+              <p>{register.srcIncome.replace("-", " ")}</p>
             </Container>
 
             <Container>
@@ -257,164 +257,161 @@ const VisualizarCadastro = () => {
             </Container>
           </Container>
 
-          {register.dependents &&
-            register.dependents.map((resident, index) => {
-              return (
-                <Container key={resident.id_dep} className="pbs-flex pbs-col">
-                  <h2>
-                    <span>Familiares e Moradores</span>
+          {register.dependents?.map((resident, index) => {
+            return (
+              <Container key={resident.id_dep} className="pbs-flex pbs-col">
+                <h2>
+                  <span>Familiares e Moradores</span>
+                </h2>
+                <h3 className="mt-3">Dados Pessoais - Morador {index + 1}</h3>
+                <Container
+                  key={resident.id_dep}
+                  className="cdsv-container-group"
+                >
+                  <Container>
+                    <h4>Nome</h4>
+                    <p>{resident.completeName}</p>
+                  </Container>
+
+                  <Container>
+                    <h4>Data de Nascimento</h4>
+                    <p>{brazilianDateFormat(resident.birthDate)}</p>
+                  </Container>
+
+                  <Container>
+                    <h4>Parentesco</h4>
+                    <p>{resident.relationship}</p>
+                  </Container>
+
+                  <Container>
+                    <h4>Escolaridade</h4>
+                    <p>{resident.schoolLevel}</p>
+                  </Container>
+
+                  <Container>
+                    <div>
+                      <h4>Profissão</h4>
+                      <p>{resident.occupation}</p>
+                      <h4>Está trabalhando?</h4>
+                      <p>{resident.isWorking}</p>
+                    </div>
+                  </Container>
+
+                  <Container>
+                    <h4>Interesses em Oficinas</h4>
+                    <ul>
+                      {resident.workshop.map((element) => {
+                        return (
+                          <li key={element}>{element.split("-").join(" ")}</li>
+                        );
+                      })}
+                    </ul>
+                  </Container>
+
+                  <Container className="cdsv-container-group">
+                    <h3 className="flex-basis-100">Necessidades</h3>
+                    <Container>
+                      <h4>Necessita de Calçados</h4>
+                      {resident.needShoes_answer === "sim" ? (
+                        <div>
+                          <p>Número: {resident.needShoes_number}</p>
+                        </div>
+                      ) : (
+                        <p className="text-default">Não há necessidade</p>
+                      )}
+                    </Container>
+
+                    <Container>
+                      <h4>Necessita de Roupas</h4>
+                      {resident.needClothes_answer === "sim" ? (
+                        <div>
+                          <p>
+                            Tamanho Calças: {resident.needClothes_pantsNumber}
+                          </p>
+                          <p>
+                            Tamanho Casaco/Camisetas:{" "}
+                            {resident.needClothes_tShirtCoatSize}
+                          </p>
+                        </div>
+                      ) : (
+                        <p className="text-default">Não há necessidade</p>
+                      )}
+                    </Container>
+                  </Container>
+
+                  <h2 className="flex-basis-100">
+                    <span>Religião do Morador {index + 1}</span>
                   </h2>
-                  <h3 className="mt-3">Dados Pessoais - Morador {index + 1}</h3>
-                  <Container
-                    key={resident.id_dep}
-                    className="cdsv-container-group"
-                  >
+                  <Container className="cdsv-container-group">
                     <Container>
-                      <h4>Nome</h4>
-                      <p>{resident.completeName}</p>
+                      <h4>Religião</h4>
+                      <p>{resident.religion.split("-").join(" ")}</p>
                     </Container>
 
                     <Container>
-                      <h4>Data de Nascimento</h4>
-                      <p>{brazilianDateFormat(resident.birthDate)}</p>
-                    </Container>
-
-                    <Container>
-                      <h4>Parentesco</h4>
-                      <p>{resident.relationship}</p>
-                    </Container>
-
-                    <Container>
-                      <h4>Escolaridade</h4>
-                      <p>{resident.schoolLevel}</p>
-                    </Container>
-
-                    <Container>
+                      <h3>Sacramentos</h3>
                       <div>
-                        <h4>Profissão</h4>
-                        <p>{resident.occupation}</p>
-                        <h4>Está trabalhando?</h4>
-                        <p>{resident.isWorking}</p>
+                        <h4>Já recebeu</h4>
+                        <ul>
+                          {resident.receivedSacraments.map((sacrament) => {
+                            return (
+                              <li key={sacrament}>
+                                {sacrament.replace("-", " ")}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h4>Deseja receber</h4>
+                        <ul>
+                          {resident.wishReceiveSacraments.map((sacrament) => {
+                            return (
+                              <li key={sacrament}>
+                                {sacrament.replace("-", " ")}
+                              </li>
+                            );
+                          })}
+                        </ul>
                       </div>
                     </Container>
 
                     <Container>
-                      <h4>Interesses em Oficinas</h4>
+                      <h4>Participação nas Missas</h4>
+                      <p>{resident.attendanceMass.split("-").join(" ")}</p>
+                    </Container>
+
+                    <Container>
+                      <h4>Participação na Igreja</h4>
                       <ul>
-                        {resident.workshop.map((element) => {
+                        {resident.churchActivity.map((activity) => {
                           return (
-                            <li key={element}>
-                              {element.split("-").join(" ")}
+                            <li key={activity}>
+                              {activity.split("-").join(" ")}
                             </li>
                           );
                         })}
                       </ul>
                     </Container>
 
-                    <Container className="cdsv-container-group">
-                      <h3 className="flex-basis-100">Necessidades</h3>
-                      <Container>
-                        <h4>Necessita de Calçados</h4>
-                        {resident.needShoes_answer === "sim" ? (
-                          <div>
-                            <p>Número: {resident.needShoes_number}</p>
-                          </div>
-                        ) : (
-                          <p className="text-default">Não há necessidade</p>
-                        )}
-                      </Container>
-
-                      <Container>
-                        <h4>Necessita de Roupas</h4>
-                        {resident.needClothes_answer === "sim" ? (
-                          <div>
-                            <p>
-                              Tamanho Calças: {resident.needClothes_pantsNumber}
-                            </p>
-                            <p>
-                              Tamanho Casaco/Camisetas:{" "}
-                              {resident.needClothes_tShirtCoatSize}
-                            </p>
-                          </div>
-                        ) : (
-                          <p className="text-default">Não há necessidade</p>
-                        )}
-                      </Container>
-                    </Container>
-
-                    <h2 className="flex-basis-100">
-                      <span>Religião do Morador {index + 1}</span>
-                    </h2>
-                    <Container className="cdsv-container-group">
-                      <Container>
-                        <h4>Religião</h4>
-                        <p>{resident.religion.split("-").join(" ")}</p>
-                      </Container>
-
-                      <Container>
-                        <h3>Sacramentos</h3>
+                    <Container>
+                      <h4>Participa de Pastorais/Movimentos</h4>
+                      {resident.memberPastoralsMovements_answer === "sim" ? (
                         <div>
-                          <h4>Já recebeu</h4>
-                          <ul>
-                            {resident.receivedSacraments.map((sacrament) => {
-                              return (
-                                <li key={sacrament}>
-                                  {sacrament.replace("-", " ")}
-                                </li>
-                              );
-                            })}
-                          </ul>
+                          <p>{resident.memberPastoralsMovements_which}</p>
                         </div>
-
-                        <div>
-                          <h4>Deseja receber</h4>
-                          <ul>
-                            {resident.wishReceiveSacraments.map((sacrament) => {
-                              return (
-                                <li key={sacrament}>
-                                  {sacrament.replace("-", " ")}
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </div>
-                      </Container>
-
-                      <Container>
-                        <h4>Participação nas Missas</h4>
-                        <p>{resident.attendanceMass.split("-").join(" ")}</p>
-                      </Container>
-
-                      <Container>
-                        <h4>Participação na Igreja</h4>
-                        <ul>
-                          {resident.churchActivity.map((activity) => {
-                            return (
-                              <li key={activity}>
-                                {activity.split("-").join(" ")}
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </Container>
-
-                      <Container>
-                        <h4>Participa de Pastorais/Movimentos</h4>
-                        {resident.memberPastoralsMovements_answer === "sim" ? (
-                          <div>
-                            <p>{resident.memberPastoralsMovements_which}</p>
-                          </div>
-                        ) : (
-                          <p className="text-default">
-                            Não participa de nenhuma pastoral/movimento
-                          </p>
-                        )}
-                      </Container>
+                      ) : (
+                        <p className="text-default">
+                          Não participa de nenhuma pastoral/movimento
+                        </p>
+                      )}
                     </Container>
                   </Container>
                 </Container>
-              );
-            })}
+              </Container>
+            );
+          })}
           <CustomButton
             className="m-auto"
             value="Editar"
