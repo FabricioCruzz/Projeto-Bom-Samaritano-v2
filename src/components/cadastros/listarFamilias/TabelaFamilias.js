@@ -62,26 +62,28 @@ const TabelaFamilias = () => {
         </td>
         <td>{maritalStatus}</td>
         <td className="pbs-flex pbs-row pbs-actions-td">
-          <Button
-            className="btn-actions"
-            onClick={() => navigate(`${id_person}`)}
-          >
-            <IoEyeOutline className="icon-actions" />
-            Visualizar
-          </Button>
+          <div>
+            <Button
+              className="btn-actions"
+              onClick={() => navigate(`${id_person}`)}
+            >
+              <IoEyeOutline className="icon-actions" />
+              Visualizar
+            </Button>
 
-          <Button
-            className="btn-actions"
-            onClick={() => navigate(`/cadastros/editar/${id_person}`)}
-          >
-            <BiEdit className="icon-actions" />
-            Editar
-          </Button>
+            <Button
+              className="btn-actions"
+              onClick={() => navigate(`/cadastros/editar/${id_person}`)}
+            >
+              <BiEdit className="icon-actions" />
+              Editar
+            </Button>
 
-          <Button className="btn-actions" onClick={() => onDelete(register)}>
-            <MdDelete className="icon-actions" />
-            Remover
-          </Button>
+            <Button className="btn-actions" onClick={() => onDelete(register)}>
+              <MdDelete className="icon-actions" />
+              Remover
+            </Button>
+          </div>
         </td>
       </tr>
     );

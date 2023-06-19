@@ -42,7 +42,21 @@
         min-height: 10vh;
       }
     }
+    .pbs-actions-td {
+      display: table-cell;
+
+      > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 8.75rem;
+      }
+    }
   }
+}
+
+.pbs-actions-td div {
+  height: 100%;
 }
 
 #pagination-area {
