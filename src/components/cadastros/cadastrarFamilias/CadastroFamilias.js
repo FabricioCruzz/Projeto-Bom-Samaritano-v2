@@ -214,8 +214,8 @@ const validationSchema = Yup.object().shape({
 
       birthDate: Yup.date()
         .required(errorMessages.fieldReq)
-        .min(getFormatedDate(minDate), errorMessages.tooOldDate)
-        .max(new Date().getFullYear() - 18, errorMessages.needToBeEighteen),
+        .min(getFormatedDate(minDate), errorMessages.tooOldDate),
+      // .max(new Date().getFullYear() - 18, errorMessages.needToBeEighteen),
 
       relationship: Yup.string().required(errorMessages.fieldReq),
 
